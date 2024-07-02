@@ -1,9 +1,9 @@
 <?php
-/*
+/**
 Ultra Prod WPUSSC Functions
-Version: v1.3.9
+Version: v1.4.1
 */
-/*
+/**
 	This program is free software; you can redistribute it
 	under the terms of the GNU General Public License version 2,
 	as published by the Free Software Foundation.
@@ -16,7 +16,7 @@ Version: v1.3.9
 
 $__UP_plug_prefix = "wpussc";
 
-/* jasonwoof utility functions for sanitizing and encoding data */
+/** jasonwoof utility functions for sanitizing and encoding data */
 function jasonwoof_enc_html($str) {
 	$str = str_replace('&', '&amp;', $str);
 	$str = str_replace('<', '&lt;', $str);
@@ -40,9 +40,26 @@ function jasonwoof_format_int_1($str) {
 	}
 	return $str;
 }
-/* end jasonwoof */
+/** end jasonwoof */
 
-/* */
+function do_price($val)
+{
+    if( is_float($val) || is_int($val) ) 
+    { 
+		$format = get_option('cart_payment_currency');
+		echo $format;
+        setlocale(LC_MONETARY, $format);
+        $price = number_format($val, 2, '.', '');
+    }
+    else
+    {
+        $price = $val;
+    }
+
+    return $price;
+}
+
+/** */
 function always_show_cart_handler($atts) {
 	return print_wpus_shopping_cart();
 }
@@ -98,11 +115,11 @@ function reset_wp_cart() {
 
 function get_the_price( $pricestr ){
 	$pos = stripos($pricestr, ",");
+	$price = (int)$pricestr;
+
 	if( $pos !== false ) {
 		$pricearray = explode(",", $pricestr );
 		$price = $pricearray[1];
-	} else {
-		$price = $pricestr;
 	}
 	return $price;
 }
@@ -130,6 +147,8 @@ function get_the_name( $namestr ) {
 
 function get_the_empty_cart_content() {
 
+    $output = (empty($output))? '' : $output;
+
 	$wp_cart_visit_shop_text = get_option('wp_cart_visit_shop_text');
 	$empty_cart_text = get_option('wp_cart_empty_text');
 	$emptyCartAllowDisplay = get_option('wpus_shopping_cart_empty_hide');
@@ -138,13 +157,14 @@ function get_the_empty_cart_content() {
 
 	if(!empty($empty_cart_text)) {
 		if(preg_match("/http/", $empty_cart_text)) {
-			$output .= '<img src="'.$empty_cart_text.'" alt="'.$empty_cart_text.'" />';
+			$output .= '<img src="'.esc_url($empty_cart_text).'" alt="'.esc_attr($empty_cart_text).'" />';
 		} else {
-			$output .= '<span class="empty-cart-text">'.$empty_cart_text.'</span>';
+			$output .= '<span class="empty-cart-text">'.esc_html($empty_cart_text).'</span>';
 		}
 	}
 
 	$cart_products_page_url = get_option('cart_products_page_url');
+
 	if(!empty($cart_products_page_url)) {
 		$output .= '<a rel="nofollow" href="'.$cart_products_page_url.'">'.$wp_cart_visit_shop_text.'</a>';
 	}
@@ -161,9 +181,9 @@ function wp_cart_add_custom_field() {
 	if(function_exists('wp_aff_platform_install')) {
 		$output = '';
 		if(!empty($_SESSION['ap_id'])) {
-			$output = '<input type="hidden" name="custom" value="'.$_SESSION['ap_id'].'" id="wp_affiliate" />';
+			$output = '<input type="hidden" name="custom" value="'.esc_attr($_SESSION['ap_id']).'" id="wp_affiliate" />';
 		} elseif (isset($_COOKIE['ap_id'])) {
-			$output = '<input type="hidden" name="custom" value="'.$_COOKIE['ap_id'].'" id="wp_affiliate" />';
+			$output = '<input type="hidden" name="custom" value="'.esc_attr($_COOKIE['ap_id']).'" id="wp_affiliate" />';
 		}
 		return 	$output;
 	}
@@ -242,24 +262,25 @@ function print_payment_currency($price, $symbol, $decimal, $defaultSymbolOrder) 
 }
 
 function wp_paypal_shopping_cart_widget_control() {
-	echo "<p>" . __("Set the Plugin Settings from the Settings menu", "WUSPSC") . "</p>";
+	echo "<p>" . __("Set the Plugin Settings from the Settings menu", "wp-ultra-simple-paypal-shopping-cart") . "</p>";
 }
 
 function widget_wp_paypal_shopping_cart_init() {
 
 	$widget_options = array(
 		'classname' => 'widget_wp_paypal_shopping_cart',
-		'description' => __("Display WP Ultra Simple Paypal Shopping Cart.", "WUSPSC")
+		'description' => __("Display WP Ultra Simple Paypal Shopping Cart.", "wp-ultra-simple-paypal-shopping-cart")
 	);
 
-	wp_register_sidebar_widget( 'wp_paypal_shopping_cart_widgets', __("WP Ultra Simple Paypal Shopping Cart", "WUSPSC"), 'show_wp_paypal_shopping_cart_widget', $widget_options);
-	wp_register_widget_control('wp_paypal_shopping_cart_widgets', __("WP Ultra Simple Paypal Shopping Cart", "WUSPSC"), 'wp_paypal_shopping_cart_widget_control' );
+	wp_register_sidebar_widget( 'wp_paypal_shopping_cart_widgets', __("WP Ultra Simple Paypal Shopping Cart", "wp-ultra-simple-paypal-shopping-cart"), 'show_wp_paypal_shopping_cart_widget', $widget_options);
+
+	wp_register_widget_control('wp_paypal_shopping_cart_widgets', __("WP Ultra Simple Paypal Shopping Cart", "wp-ultra-simple-paypal-shopping-cart"), 'wp_paypal_shopping_cart_widget_control' );
 }
 
 // Add the settings link
 function wp_ultra_simple_cart_add_settings_link($links, $file) {
 	if($file == plugin_basename(__FILE__)){
-		$settings_link = '<a href="options-general.php?page='.dirname(plugin_basename(__FILE__)).'/wp_ultra_simple_shopping_cart.php">'.__("Settings", "WUSPSC").'</a>';
+		$settings_link = '<a href="options-general.php?page='.dirname(plugin_basename(__FILE__)).'/wp_ultra_simple_shopping_cart.php">'.__("Settings", "wp-ultra-simple-paypal-shopping-cart").'</a>';
 		array_unshift($links, $settings_link);
 	}
 	return $links;
@@ -277,24 +298,24 @@ function cart_not_empty() {
 	}
 }
 
-/* add front-end CSS */
+/** add front-end CSS */
 function wuspsc_cart_css() {
-	$siteurl = get_option('siteurl');
-	$url = $siteurl . '/wp-content/plugins/' . basename(dirname(__FILE__)) . '/wp_ultra_simple_shopping_cart_style.css';
-	echo "<link rel='stylesheet' type='text/css' href='$url' />\n";
+
+	wp_enqueue_style('wp_ultra_simple_shopping_cart_style', plugin_dir_url(__FILE__) . '/wp_ultra_simple_shopping_cart_style.css', array(), '1.0.0', 'all');
+
 }
 
 
-
-/* add admin CSS */
+/** add admin CSS */
 function wuspsc_admin_register_head_cart_css() {
-	$siteurl = get_option('siteurl');
-	$url = $siteurl . '/wp-content/plugins/' . basename(dirname(__FILE__)) . '/wp_ultra_simple_shopping_cart_admin_style.css';
-	echo "<link rel='stylesheet' type='text/css' href='{$url}' />\n";
 
-	$ui_url = "//ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/smoothness/jquery-ui.css";
-	echo "<link rel='stylesheet' type='text/css' href='{$ui_url}' />\n";
+	wp_register_style( 'wp_ultra_simple_shopping_cart_admin_style', plugin_dir_url(__FILE__) . '/wp_ultra_simple_shopping_cart_admin_style.css', false, '1.0.0' );
 
+	wp_enqueue_style( 'wp_ultra_simple_shopping_cart_admin_style' );
+
+	wp_register_style( 'wp_ultra_simple_shopping_cart_admin_themes_smoothness', plugin_dir_url(__FILE__) . '/css/smooth-theme.min.css', false, '1.0.0' );
+
+	wp_enqueue_style( 'wp_ultra_simple_shopping_cart_admin_themes_smoothness');
 
 }
 
@@ -302,7 +323,9 @@ if ( function_exists( 'add_image_size' ) ) {
 	add_image_size( 'wuspsc-product-thumb', 64, 64, true ); //(cropped)
 }
 
-/* WP Hooks : http://codex.wordpress.org/Function_Reference/add_action */
-add_action('wp_head', 'wuspsc_cart_css');
-add_action('admin_head', 'wuspsc_admin_register_head_cart_css');
+/** WP Hooks : http://codex.wordpress.org/Function_Reference/add_action */
+
+add_action( 'wp_enqueue_scripts', 'wuspsc_cart_css'  );
+add_action( 'admin_enqueue_scripts',  'wuspsc_admin_register_head_cart_css' );
+
 

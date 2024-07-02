@@ -19,7 +19,7 @@ function show_wp_paypal_shopping_cart_widget($args) {
 	$cart_title = get_option('wp_cart_title');
 	$cart_validation_url = get_option('cart_validate_url');
 
-	if(empty($cart_title)) $cart_title = __("Shopping Cart", "WUSPSC");
+	if(empty($cart_title)) $cart_title = __("Shopping Cart", "wp-ultra-simple-paypal-shopping-cart");
 
 	echo $before_widget;
 
