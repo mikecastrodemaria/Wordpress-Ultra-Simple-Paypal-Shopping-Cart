@@ -229,7 +229,6 @@ if (!empty($_POST)) {
     empty(isset($_POST["quantity"]) ? intval($_POST["quantity"]) : 0) 
     ) {
     $products = $_SESSION["ultraSimpleCart"];
-    error_log(print_r($products, true));
     if (!empty($products)) {
       foreach ($products as $key => $item) {
         if (

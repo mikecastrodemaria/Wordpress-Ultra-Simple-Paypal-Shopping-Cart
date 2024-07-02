@@ -546,7 +546,6 @@ echo '<div id="tabs-4">
 
 			<h4><?php _e("Do you like the WP Ultra Simple Paypal Shopping Cart Plugin?", "wp-ultra-simple-paypal-shopping-cart") ?></h4>
 			<p><?php _e("Please", "wp-ultra-simple-paypal-shopping-cart") ?> <a target="_blank" href="https://wordpress.org/plugins/wp-ultra-simple-paypal-shopping-cart/"><?php _e("give it a good rating", "wp-ultra-simple-paypal-shopping-cart") ?></a> <?php _e("on Wordpress website", "wp-ultra-simple-paypal-shopping-cart") ?>.</p>
-			<p><?php foreach ($_SESSION["ultraSimpleCart"] as $key => $value) {echo "<li>$key: " . var_export($value,true) . "</li>";}?>
 		</div>
 	</div>
 
