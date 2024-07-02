@@ -4,7 +4,7 @@ Contributors: mikecastrodemaria , franckmaussand
 Donate link: [ultra-prod.com](http://www.ultra-prod.com/)
 Tags:  shop, cart, checkout, e-shop, e-commerce, shopping, cart, paypal, sell, store, payments, widget, products, service, selling, ecommerce, shopping cart
 Requires at least: 2.6
-Tested up to: 4.8.1
+Tested up to: 6.5.5
 Stable tag: trunk
 License: GPLv3 or later
 
@@ -230,6 +230,9 @@ Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 * Enhancement : WP 4.7 validation
 = V4.3.9.5 =
 * Bugfix : duplicate amount_x field from the form
+= V4.6.0 =
+* Enhancement : compatibility with php 8 and code cleaning
+(thanks MaitreyaLeLion)
 
 ## Upgrade Notice
 
