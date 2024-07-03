@@ -283,9 +283,10 @@ Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 * Enhancement : code cleaning, 5.5.3 tests, and update to follow recent WP.org requirement security and guideline check (Thanks Dang Dung Ha N.)
 = V4.5.2 =
 * Enhancement : new code cleaning
-= V4.6.0 =
+= V4.5.3 =
 * Enhancement : compatibility with php 8 and code cleaning
 (thanks MaitreyaLeLion)
+= V4.6.0 =
 
 == Upgrade Notice ==
 
