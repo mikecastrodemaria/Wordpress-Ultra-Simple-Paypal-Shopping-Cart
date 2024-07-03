@@ -1,14 +1,8 @@
 <?php
-/**
-Ultra Prod WPUSSC Admin Options
-Version: v1.3
-*/
+include_once('../../../wp-load.php');
+$debug_log = "ipn_handle_debug.log"; // Debug log file name
 
-$debug_log = uniqid('ipn_')."_debug.log";
-//$debug_log = "ipn_handle_debug.log"; // Debug log file name
-
-class paypal_ipn_handler 
-{
+class paypal_ipn_handler {
 
    var $last_error;                 // holds the last error encountered
    var $ipn_log;                    // bool: log IPN results to text file?
@@ -21,7 +15,7 @@ class paypal_ipn_handler
    	{
         $this->paypal_url = 'https://www.paypal.com/cgi-bin/webscr';
       	$this->last_error = '';
-      	$this->ipn_log_file = $this->debug_log; //'ipn_handle_debug.log';
+      	$this->ipn_log_file = 'ipn_handle_debug.log';
       	$this->ipn_response = '';
     }
 
@@ -159,8 +153,6 @@ class paypal_ipn_handler
       // generate the post string from the _POST vars aswell as load the _POST vars into an arry
       $post_string = '';
       foreach ($_POST as $field=>$value) {
-		  $field = esc_attr($field);
-		  $value = esc_html($value);
          $this->ipn_data["$field"] = $value;
          $post_string .= $field.'='.urlencode(stripslashes($value)).'&';
       }
@@ -262,42 +254,37 @@ class paypal_ipn_handler
 }
 
 // Start of IPN handling (script execution)
-$debug_enabled = false; 
-$debug_enabled = (!empty(get_option('wp_cart_enable_debug')))? get_option('wp_cart_enable_debug') : false;
 
-$sandbox = false;
-$sandbox = (!empty(get_option('is_sandbox')))? get_option('is_sandbox') : false;
+$ipn_handler_instance = new paypal_ipn_handler();
 
-// rename previous debug file if exist 
-if (file_exists("ipn_handle_debug.log") && is_writable("ipn_handle_debug.log") ) rename("ipn_handle_debug.log",uniqid('ipn_')."_debug.log");
+$debug_enabled = true; //get_option('wp_cart_enable_debug');
 
 if ($debug_enabled)
 {
-
-	$ipn_handler_instance = new paypal_ipn_handler();
-
-	echo 'Debug is enabled. Check the '.$debug_log.' file from plugin folder for debug output.';
+	echo 'Debug is enabled. Check the '.$debug_log.' file for debug output.';
 	$ipn_handler_instance->ipn_log = true;
 	$ipn_handler_instance->ipn_log_file = $debug_log;
-
-	if ($sandbox) // Enable sandbox testing
-	{
-		$ipn_handler_instance->paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
-	}
-
-	$ipn_handler_instance->debug_log('Paypal Class Initiated by '.$_SERVER['REMOTE_ADDR'],true);
-
-	// Validate the IPN
-	if ($ipn_handler_instance->validate_ipn())
-	{
-		$ipn_handler_instance->debug_log('Creating prodcut Information to send.',true);
-
-		if(!$ipn_handler_instance->validate_and_dispatch_product())
-		{
-			$ipn_handler_instance->debug_log('IPN product validation failed.',false);
-		}
-	}
-	$ipn_handler_instance->debug_log('Paypal class finished.',true,true);
 }
+
+$sandbox = false; //get_option('wp_cart_enable_sandbox');
+
+if ($sandbox) // Enable sandbox testing
+{
+	$ipn_handler_instance->paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+}
+
+$ipn_handler_instance->debug_log('Paypal Class Initiated by '.$_SERVER['REMOTE_ADDR'],true);
+
+// Validate the IPN
+if ($ipn_handler_instance->validate_ipn())
+{
+	$ipn_handler_instance->debug_log('Creating prodcut Information to send.',true);
+
+      if(!$ipn_handler_instance->validate_and_dispatch_product())
+      {
+          $ipn_handler_instance->debug_log('IPN product validation failed.',false);
+      }
+}
+$ipn_handler_instance->debug_log('Paypal class finished.',true,true);
 
 ?>

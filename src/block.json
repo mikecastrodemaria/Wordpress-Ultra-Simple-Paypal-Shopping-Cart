@@ -1,0 +1,19 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "create-block/copyright-date-block",
+    "version": "0.1.0",
+    "title": "Copyright Date Block",
+    "category": "widgets",
+    "icon": "smiley",
+    "description": "Display your site's copyright date.",
+    "example": {},
+    "supports": {
+        "html": false
+    },
+    "textdomain": "copyright-date-block",
+    "editorScript": "file:./js/edit.js",
+    "editorStyle": "file:./wp_ultra_simple_shopping_cart_admin_style.css",
+    "style": "file:./wp_ultra_simple_shopping_cart_admin_style.css",
+    "render": "file:./render.php"
+}

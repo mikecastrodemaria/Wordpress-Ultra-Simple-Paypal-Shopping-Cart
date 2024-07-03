@@ -1,3 +1,18 @@
+/*
+Ultra Prod WPUSSC CSS
+Version: v1.2
+*/
+/*
+	This program is free software; you can redistribute it
+	under the terms of the GNU General Public License version 3,
+	as published by the Free Software Foundation.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+*/
+
 .shopping_cart{
 	font-size:12px;
 }
@@ -14,17 +29,17 @@
 	width: auto;
 }
 
-input[type=submit], 
+input[type=submit],
 input[type=reset] {
  	cursor:pointer;
 }
 
-input[type=submit]:hover, 
+input[type=submit]:hover,
 input[type=reset]:hover {
 	cursor:pointer;
 }
- 
-input[type=submit]:active, 
+
+input[type=submit]:active,
 input[type=reset]:active {
  cursor:pointer;
 }
@@ -40,16 +55,16 @@ input[type=reset]:active {
     vertical-align: middle;
     display: block;
     position: relative;
-    margin: 10px 0; 
+    margin: 10px 0;
 }
 
 
-.wp_cart_checkout_button, 
-.wp_cart_button { 
-	margin: 4px 0 ; 
+.wp_cart_checkout_button,
+.wp_cart_button {
+	margin: 4px 0 ;
 }
 
-.wp_cart_checkout_button:hover, 
+.wp_cart_checkout_button:hover,
 .wp_cart_button:hover{
 	opacity:0.7;
 }
@@ -59,17 +74,17 @@ input[type=reset]:active {
 }
 
 .vsubmit,
-.sv-select, 
-.sp-select, 
-.ss-select, 
-.lv-select, 
-.lp-select 
+.sv-select,
+.sp-select,
+.ss-select,
+.lv-select,
+.lp-select
 .ls-select {
 	font-size:16px;
 }
 
-.lv-select, 
-.lp-select 
+.lv-select,
+.lp-select
 .ls-select
 {
 	display: block;
@@ -93,17 +108,24 @@ input[type=reset]:active {
 .subcell,
 .shipcell,
 .vatcell,
-.totalcel 
+.totalcel
 {
-	font-weight: bold; 
+	font-weight: bold;
 	text-align: right;
 	padding-right: 3px;
 }
 
+.header-del{
+    text-align: right;
+}
+
+.header-qty,
 .center {
 	text-align: center;
 }
 
+.header-price,
+.header-name,
 .left {
 	text-align: left;
 }
