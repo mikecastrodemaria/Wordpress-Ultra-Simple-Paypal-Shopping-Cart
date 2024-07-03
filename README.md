@@ -230,9 +230,10 @@ Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 * Enhancement : WP 4.7 validation
 = V4.3.9.5 =
 * Bugfix : duplicate amount_x field from the form
-= V4.6.0 =
+= V4.3.9.6 =
 * Enhancement : compatibility with php 8 and code cleaning
 (thanks MaitreyaLeLion)
+= V4.6.0 =
 
 ## Upgrade Notice
 
