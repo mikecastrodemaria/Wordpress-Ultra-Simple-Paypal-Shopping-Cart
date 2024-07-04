@@ -287,6 +287,8 @@ Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 * Enhancement : compatibility with php 8 and code cleaning
 (thanks MaitreyaLeLion)
 = V4.6.0 =
+* New version with block of gutenberg editor
+= V5.0.0 =
 == Upgrade Notice ==
 
 Always backup you WP before any upgrade. After the upgrade it's too late.
