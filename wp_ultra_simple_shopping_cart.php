@@ -83,6 +83,8 @@ require "up-function.php";
 require "wpussc-function.php";
 require "wpussc-option.php";
 require "wpussc-widget.php";
+require "blockCreator/simple-add-cart-block.php";
+// require "simple-variation-add-cart-block/simple-variation-add-cart-block.php";
 
 // Reset the Cart as this is a returned customer from Paypal
 if (isset($_GET["merchant_return_link"])) {
@@ -917,10 +919,10 @@ function print_wp_cart_action($content)
     $css_class_addcart_style,
     $displaybuttontext
   );
-
+  
   $pattern = "#\[wp_cart:.+:price:.+:end]#";
   preg_match_all($pattern, $content, $matches);
-
+  
   foreach ($matches[0] as $match) {
     $replacement = "";
     $var_output = "";

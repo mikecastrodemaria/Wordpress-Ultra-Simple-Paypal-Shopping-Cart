@@ -230,9 +230,25 @@ Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 * Enhancement : WP 4.7 validation
 = V4.3.9.5 =
 * Bugfix : duplicate amount_x field from the form
-= V4.6.0 =
+= V4.3.9.6 =
+* Bugfix : remove PHP notice, clean more CSS, change translation way to make it more compatible, and add features, now if you add 0 as qty of an item, it removes the item and update cart
+= V4.3.9.7 =
+* Bugfix : php 5.5 compatibility
+= V4.4 =
+* Enhancement : add debug on/off and dynamic log file creation for better security (Thanks Paul King)
+= V4.5 =
+* security : add nonce WP system for better security against XSS (https://codex.wordpress.org/Function_Reference/wp_verify_nonce) ( thanks Yuta Kikuchi / Sukhdevi K )
+= V4.5.1 =
+* Enhancement : code cleaning, 5.5.3 tests, and update to follow recent WP.org requirement security and guideline check (Thanks Dang Dung Ha N.)
+= V4.5.2 =
+* Enhancement : new code cleaning
+= V4.5.3 =
 * Enhancement : compatibility with php 8 and code cleaning
 (thanks MaitreyaLeLion)
+= V4.6.0 =
+* New version with block of gutenberg editor
+= V5.0.0 =
+
 
 ## Upgrade Notice
 
