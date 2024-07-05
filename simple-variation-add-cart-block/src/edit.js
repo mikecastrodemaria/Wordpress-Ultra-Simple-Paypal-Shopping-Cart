@@ -171,24 +171,66 @@ function sanitizeTextField(text) {
 }
 
 export default function Edit({ attributes, setAttributes }) {
-	const { productName, productPrice, variationNumber, variationName } =
-		attributes;
+	const {
+		productName,
+		productPrice,
+		variationNumber,
+		variationName,
+		variations,
+	} = attributes;
 
 	// Generate TextControls for variations
 	const variationControls = [];
+	if (!variations) {
+		let nArray = [];
+		if (variationNumber > 0) {
+			for (let i = 0; i < variationNumber; i++) {
+				nArray.push("");
+			}
+		}
+		setAttributes({ variations: nArray });
+	}
+	if (variations.length < variationNumber && variationNumber > 0) {
+		let nArray = [];
+		if (Array.isArray(variations)) {
+			nArray = variations;
+		}
+		while (nArray.length < variationNumber) {
+			nArray.push("");
+		}
+
+		setAttributes({ variations: nArray });
+	}
+	if (variations.length > variationNumber && variationNumber > 0) {
+		let nArray = [];
+		nArray = variations;
+		while (nArray.length > variationNumber) {
+			nArray.pop();
+		}
+		setAttributes({ variations: nArray });
+	}
+
 	for (let i = 0; i < variationNumber; i++) {
 		variationControls.push(
 			<TextControl
 				className="variations"
-				key={i} // It's important to provide a unique key for each element in a list
 				label={__(
 					"Variation " + (i + 1),
 					"wp-ultra-simple-paypal-shopping-cart",
 				)}
-				value={attributes[`variation${i}`] || ""}
+				value={variations && variations[i] ? variations[i] : ""}
 				onChange={(value) => {
-					const newAttributes = { ...attributes, [`variation${i}`]: value };
-					setAttributes(newAttributes);
+					// Clone the variations array to create a new reference
+					let newArray = variations.map((variation, index) => {
+						if (index === i) {
+							// For the current index, return a new array with the updated value
+							return sanitizeTextField(value);
+						}
+						return variation;
+					});
+
+					// Update the state with the new array
+					setAttributes({ variations: newArray });
 				}}
 			/>,
 		);
@@ -205,6 +247,8 @@ export default function Edit({ attributes, setAttributes }) {
 						className="product-details"
 						style={{
 							display: "flex",
+							flexWrap: "wrap",
+							flexDirection: "row",
 							justifyContent: "space-between",
 							marginBottom: "10px",
 						}}
@@ -237,7 +281,10 @@ export default function Edit({ attributes, setAttributes }) {
 							/>
 						</div>
 					</div>
-					<div className="product-details" style={{ display: "flex" }}>
+					<div
+						className="product-details"
+						style={{ display: "flex", flexDirection: "column" }}
+					>
 						<TextControl
 							className="variationTag"
 							label={__(
@@ -267,7 +314,16 @@ export default function Edit({ attributes, setAttributes }) {
 								setAttributes(newAttributes);
 							}}
 						/>
-						<div>{variationControls}</div>
+						<div
+							style={{
+								display: "flex",
+								flexWrap: "wrap",
+								flexDirection: "row",
+								justifyContent: "space-between",
+							}}
+						>
+							{variationControls}
+						</div>
 					</div>
 				</div>
 			</div>

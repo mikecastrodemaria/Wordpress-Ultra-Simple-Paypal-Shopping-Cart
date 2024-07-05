@@ -1,18 +1,18 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "create-block/copyright-date-block",
+  "name": "create-block/simple-add-cart-block",
   "version": "0.1.0",
-  "title": "Copyright Date Block",
+  "title": "Simple add cart block",
   "category": "widgets",
-  "description": "Display your site's copyright date.",
+  "description": "Display a simple add to cart button for a product with a price.",
   "example": {},
   "attributes": {
     "productName": {
       "type": "string"
     },
     "productPrice": {
-      "type": "number"
+      "type": "string"
     }
   },
   "supports": {

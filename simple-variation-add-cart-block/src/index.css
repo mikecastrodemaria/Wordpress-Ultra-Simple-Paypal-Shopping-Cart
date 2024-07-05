@@ -1,4 +1,4 @@
-.wp-block-create-block-copyright-date-block {
+.wp-block-create-block-simple-variation-add-cart-block {
 	border: 1px dotted red;
 }
 
@@ -12,14 +12,4 @@
 	display: flex;
 	justify-content: space-between;
 
-	.producTag {
-		flex: 1;
-	}
-	.variationTag {
-		flex: 1;
-	}
-
-	.variations {
-		flex: 1;
-	}
 }

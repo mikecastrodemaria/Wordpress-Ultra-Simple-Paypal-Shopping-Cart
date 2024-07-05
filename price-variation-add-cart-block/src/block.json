@@ -1,18 +1,15 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "create-block/copyright-date-block",
+	"name": "create-block/price-variation-add-cart-block",
 	"version": "0.1.0",
-	"title": "Copyright Date Block",
+	"title": "Price variation add cart block",
 	"category": "widgets",
-	"description": "Display your site's copyright date.",
+	"description": "Display a simple add to cart button for a product with variation. The price can be different in each variation",
 	"example": {},
 	"attributes": {
 		"productName": {
 			"type": "string"
-		},
-		"productPrice": {
-			"type": "number"
 		},
 		"variationNumber": {
 			"type": "string"

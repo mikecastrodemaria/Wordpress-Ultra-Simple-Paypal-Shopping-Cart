@@ -86,15 +86,6 @@ function Edit({
 
   // Generate TextControls for variations
   const variationControls = [];
-  // console.log(variations);
-  // if (
-  // 	variationNumber > 0 &&
-  // 	(variations == undefined || variations.length !== variationNumber)
-  // ) {
-  // 	setAttributes({
-  // 		variations: Array.from({ length: variationNumber }, () => ["", ""]),
-  // 	});
-  // }
   if ((!variations || variations.length != variationNumber) && variationNumber > 0) {
     let nArray = [];
     if (variations) {
@@ -268,7 +259,7 @@ const calendarIcon = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg",
   "aria-hidden": "true",
   focusable: "false"
 }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
-  d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm.5 16c0 .3-.2.5-.5.5H5c-.3 0-.5-.2-.5-.5V7h15v12zM9 10H7v2h2v-2zm0 4H7v2h2v-2zm4-4h-2v2h2v-2zm4 0h-2v2h2v-2zm-4 4h-2v2h2v-2zm4 0h-2v2h2v-2z"
+  d: "M4.75 4a.75.75 0 0 0-.75.75v7.826c0 .2.08.39.22.53l6.72 6.716a2.313 2.313 0 0 0 3.276-.001l5.61-5.611-.531-.53.532.528a2.315 2.315 0 0 0 0-3.264L13.104 4.22a.75.75 0 0 0-.53-.22H4.75ZM19 12.576a.815.815 0 0 1-.236.574l-5.61 5.611a.814.814 0 0 1-1.153 0L5.5 12.264V5.5h6.763l6.5 6.502a.816.816 0 0 1 .237.574ZM8.75 9.75a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
 }));
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_4__.name, {
   icon: calendarIcon,
@@ -358,7 +349,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/copyright-date-block","version":"0.1.0","title":"Copyright Date Block","category":"widgets","description":"Display your site\'s copyright date.","example":{},"attributes":{"productName":{"type":"string"},"productPrice":{"type":"number"},"variationNumber":{"type":"string"},"variationName":{"type":"string"},"variations":{"type":"array"}},"supports":{"color":{"background":false,"text":true},"html":false,"typography":{"fontSize":true}},"textdomain":"wp-ultra-simple-paypal-shopping-cart","editorScript":"file:./index.js","editorStyle":"file:./index.css","render":"file:./render.php"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/price-variation-add-cart-block","version":"0.1.0","title":"Price variation add cart block","category":"widgets","description":"Display a simple add to cart button for a product with variation. The price can be different in each variation","example":{},"attributes":{"productName":{"type":"string"},"variationNumber":{"type":"string"},"variationName":{"type":"string"},"variations":{"type":"array"}},"supports":{"color":{"background":false,"text":true},"html":false,"typography":{"fontSize":true}},"textdomain":"wp-ultra-simple-paypal-shopping-cart","editorScript":"file:./index.js","editorStyle":"file:./index.css","render":"file:./render.php"}');
 
 /***/ })
 
