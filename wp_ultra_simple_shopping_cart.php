@@ -395,16 +395,16 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
 
   $wp_cart_update_quantity_text = get_option("wp_cart_update_quantiy_text");
 
-  $output .= '<script type="text/javascript">
-		var $j=jQuery.noConflict();
-		$j(document).ready(function(){
-			$j(".pinfo").hide();
-			$j(".iquantity").keypress( function() {
-				$j(".paypalbutton").hide("slow");
-				$j(".pinfo").show("slow");
-			});
-		});
-	</script>';
+  // $output .= '<script type="text/javascript">
+  // 	var $j=jQuery.noConflict();
+  // 	$j(document).ready(function(){
+  // 		$j(".pinfo").hide();
+  // 		$j(".iquantity").keypress( function() {
+  // 			$j(".paypalbutton").hide("slow");
+  // 			$j(".pinfo").show("slow");
+  // 		});
+  // 	});
+  // </script>';
 
   if ($_SESSION["ultraSimpleCart"] && is_array($_SESSION["ultraSimpleCart"])) {
     // TODO : add message on each action
