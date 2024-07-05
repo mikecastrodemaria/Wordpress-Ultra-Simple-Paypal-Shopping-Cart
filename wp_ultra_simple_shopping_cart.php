@@ -11,14 +11,14 @@ Text Domain: wp-ultra-simple-paypal-shopping-cart
 Domain Path: /languages
  */
 /**
-	This program is free software; you can redistribute it
-	under the terms of the GNU General Public License version 2,
-	as published by the Free Software Foundation.
+  This program is free software; you can redistribute it
+  under the terms of the GNU General Public License version 2,
+  as published by the Free Software Foundation.
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
  */
 
 // http://j.mp/paypal-create-account => https://www.paypal.com/fr/mrb/pal=CH4PZVAK2GJAJ
@@ -83,8 +83,8 @@ require "up-function.php";
 require "wpussc-function.php";
 require "wpussc-option.php";
 require "wpussc-widget.php";
-require "blockCreator/simple-add-cart-block.php";
-// require "simple-variation-add-cart-block/simple-variation-add-cart-block.php";
+// require "blockCreator/price-variation-add-cart-block.php";
+require "wpussc-gblock.php";
 
 // Reset the Cart as this is a returned customer from Paypal
 if (isset($_GET["merchant_return_link"])) {
@@ -140,10 +140,10 @@ if (!empty($_POST)) {
     }
 
     if ($new == true) {
-      $price = !empty($_POST[sanitize_text_field($_POST["product"])])
-        ? floatval($_POST[sanitize_text_field($_POST["product"])])
-        : floatval($_POST["price"]);
 
+      $price = strpos($_POST["price"], ",") !== false
+        ? floatval(explode(",", $_POST["price"])[1])
+        : floatval($_POST["price"]);
       $item_number = !empty($_POST["item_number"])
         ? esc_attr(sanitize_text_field($_POST["item_number"]))
         : "";
@@ -166,7 +166,6 @@ if (!empty($_POST)) {
         "cartLink" => $cartLink,
         "item_number" => $item_number,
       ];
-
       array_push($products, $product);
     }
 
@@ -220,16 +219,15 @@ if (!empty($_POST)) {
       }
       sort($products);
     }
-
     $_SESSION["ultraSimpleCart"] = $products;
   }
-  
-  
+
+
   if (
     empty(isset($_POST["addcart"]) ? sanitize_text_field($_POST["addcart"]) : '') &&
     !empty(isset($_POST["delcart"]) ? sanitize_text_field($_POST["delcart"]) : '') ||
-    empty(isset($_POST["quantity"]) ? intval($_POST["quantity"]) : 0) 
-    ) {
+    empty(isset($_POST["quantity"]) ? intval($_POST["quantity"]) : 0)
+  ) {
     $products = $_SESSION["ultraSimpleCart"];
     if (!empty($products)) {
       foreach ($products as $key => $item) {
@@ -253,9 +251,9 @@ if (!empty($_POST)) {
       !empty($_POST["quantity"]) &&
       !empty($_POST["cquantity"]) &&
       (int) $_POST["quantity"] !== (int) $_POST["cquantity"]
-        ? (int) stripslashes($_POST["quantity"])
-        : (int) stripslashes($_POST["cquantity"]);
-    
+      ? (int) stripslashes($_POST["quantity"])
+      : (int) stripslashes($_POST["cquantity"]);
+
     $name = !empty($products[$idx]["name"])
       ? get_the_name(stripslashes($products[$idx]["name"]))
       : "";
@@ -281,10 +279,10 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
 
   $emptyCartAllowDisplay = get_option("wpus_shopping_cart_empty_hide");
   /*if( $emptyCartAllowDisplay )
-	{
-		$output = get_the_empty_cart_content();
-	}
-	*/
+  {
+    $output = get_the_empty_cart_content();
+  }
+  */
   if (!cart_not_empty()) {
     $output = get_the_empty_cart_content();
   }
@@ -341,11 +339,11 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
 
   $notify = WUSPSC_CART_URL . "/paypal.php";
 
- /*  if ($use_affiliate_platform) {
-    if (function_exists("wp_aff_platform_install")) {
-      $notify = WP_AFF_PLATFORM_URL . "/api/ipn_handler.php";
-    }
-  } */
+  /*  if ($use_affiliate_platform) {
+     if (function_exists("wp_aff_platform_install")) {
+       $notify = WP_AFF_PLATFORM_URL . "/api/ipn_handler.php";
+     }
+   } */
 
   if (!empty($notify)) {
     $urls .=
@@ -372,12 +370,12 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
 
   // TODO : add message if option checked and define string for each kind of actions
   /*
-	if(get_option('wpus_shopping_cart_action_msg'))
-	{
-	    $wp_add_message = (!empty(get_option('wpus_shopping_cart_add_msg')))? get_option('wpus_shopping_cart_add_msg') : '';
-	    $wp_del_message = (!empty(get_option('wpus_shopping_cart_del_msg')))? get_option('wpus_shopping_cart_del_msg') : '';
-	    $wp_upd_message = (!empty(get_option('wpus_shopping_cart_upd_msg')))? get_option('wpus_shopping_cart_upd_msg') : '';
-	}
+  if(get_option('wpus_shopping_cart_action_msg'))
+  {
+      $wp_add_message = (!empty(get_option('wpus_shopping_cart_add_msg')))? get_option('wpus_shopping_cart_add_msg') : '';
+      $wp_del_message = (!empty(get_option('wpus_shopping_cart_del_msg')))? get_option('wpus_shopping_cart_del_msg') : '';
+      $wp_upd_message = (!empty(get_option('wpus_shopping_cart_upd_msg')))? get_option('wpus_shopping_cart_upd_msg') : '';
+  }
 */
 
   if (!get_option("wpus_shopping_cart_image_hide")) {
@@ -389,11 +387,11 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
     );
   }
   /*if(!empty($title))
-	{
-		$output .= '<h2>';
-		$output .= $title;
-		$output .= '</h2>';
-	}*/
+  {
+    $output .= '<h2>';
+    $output .= $title;
+    $output .= '</h2>';
+  }*/
 
   $wp_cart_update_quantity_text = get_option("wp_cart_update_quantiy_text");
 
@@ -411,13 +409,13 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
   if ($_SESSION["ultraSimpleCart"] && is_array($_SESSION["ultraSimpleCart"])) {
     // TODO : add message on each action
     /*
-    	$msg_type = $_SESSION['ultraSimpleCart']['action_message'];
+      $msg_type = $_SESSION['ultraSimpleCart']['action_message'];
 
         if( get_option('wpus_shopping_cart_action_msg') && !empty($msg_type) )
-    	{
+      {
 
-    	    $output .= "<div class=\"add-msg\"></div>";
-    	}
+          $output .= "<div class=\"add-msg\"></div>";
+      }
 */
 
     $output .= '<table style="width: 100%;">';
@@ -445,9 +443,8 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
         '</th>
 			</tr>';
     }
-
     foreach ($_SESSION["ultraSimpleCart"] as $item) {
-      $total += (int)$item["quantity"] * get_the_price($item["price"]);
+      $total += (int) $item["quantity"] * get_the_price($item["price"]);
 
       $item_shipping = get_the_price($item["shipping"]);
       $wpus_shopping_cart_shipping_per_items = get_option(
@@ -499,6 +496,7 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
 
     foreach ($_SESSION["ultraSimpleCart"] as $item) {
       $price = get_the_price($item["price"]);
+
       $name = get_the_name($item["name"]);
 
       $wpus_display_link_in_cart = get_option("wpus_display_link_in_cart");
@@ -614,8 +612,8 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
 
       $item_tax =
         !empty($display_vat) && is_numeric($display_vat)
-          ? round(($price * $display_vat) / 100, 2)
-          : 0;
+        ? round(($price * $display_vat) / 100, 2)
+        : 0;
       if (!empty($item_tax)) {
         $form .=
           "<input type=\"hidden\" name=\"tax_{$count}\"  value=\"" .
@@ -919,18 +917,18 @@ function print_wp_cart_action($content)
     $css_class_addcart_style,
     $displaybuttontext
   );
-  
+
   $pattern = "#\[wp_cart:.+:price:.+:end]#";
   preg_match_all($pattern, $content, $matches);
-  
+
   foreach ($matches[0] as $match) {
     $replacement = "";
     $var_output = "";
     $pos = strpos($match, ":var1");
 
     /*
-			/ free variation combo
-			*/
+      / free variation combo
+      */
     $isVariation = strpos($match, ":var");
     if ($isVariation > 0) {
       $match_tmp = $match;
@@ -1029,16 +1027,15 @@ function print_wp_cart_action($content)
       '" >';
 
     /*
-			/ price variation combo
-			/ test if the price is unique or have variation
-			*/
+      / price variation combo
+      / test if the price is unique or have variation
+      */
 
     if (preg_match("/\[(?P<label>\w+)/", $pieces["1"])) {
       $priceVariation = str_replace("[", "", $pieces["1"]);
       $priceVariation = str_replace("]", "", $priceVariation);
       $priceVariationArray = explode("|", $priceVariation);
       $variation_name = $priceVariationArray[0];
-
       $replacement .=
         '<label class="lp-label ' .
         __UP_strtolower_utf8($variation_name) .
@@ -1047,28 +1044,32 @@ function print_wp_cart_action($content)
         ' :</label><select class="sp-select price" name="price">';
       for ($i = 1; $i < sizeof($priceVariationArray); $i++) {
         $priceDigitAndWordArray = explode(",", $priceVariationArray[$i]);
+
         $replacement .=
           '<option value="' .
           esc_attr($priceDigitAndWordArray[0]) .
           "," .
-          esc_attr($priceDigitAndWordArray[1]) .
+          esc_attr($priceDigitAndWordArray[1] . "." . $priceDigitAndWordArray[2]) .
           '">' .
           esc_html($priceDigitAndWordArray[0]) .
           "</option>";
+
       }
+
       $replacement .= "</select>" . $option_break;
     } elseif ($pieces["1"] != "") {
       $replacement .=
         '<input type="hidden" name="price" value="' .
         esc_attr($pieces["1"]) .
         '" >';
+
     } else {
       echo _("Error: no price configured");
     }
 
     /*
-			/ shipping variation combo
-			*/
+      / shipping variation combo
+      */
 
     if (strpos($match, ":shipping") > 0) {
       if (preg_match("/\[(?P<label>\w+)/", $pieces["2"])) {
@@ -1108,8 +1109,8 @@ function print_wp_cart_action($content)
     }
 
     /*
-			/ all missing hidden fields
-			*/
+      / all missing hidden fields
+      */
 
     $replacement .=
       '<input type="hidden" name="product_tmp" value="' .
@@ -1231,8 +1232,8 @@ function print_wp_cart_button_for_product($name, $price, $shipping = 0)
 
   if ($shipping != "") {
     /*
-		/ shipping variation combo
-		*/
+    / shipping variation combo
+    */
     if (preg_match("/\[(?P<label>\w+)/", $shipping)) {
       $shippingVariation = str_replace("[", "", $shipping);
       $shippingVariation = str_replace("]", "", $shippingVariation);
@@ -1284,38 +1285,38 @@ function print_wp_cart_button_for_product($name, $price, $shipping = 0)
 /*
 function print_wp_cart_button_for_product($name, $price, $shipping=0, $variation='' ) {
 
-	// test if the price have variations
-	if ($price != '') {
+  // test if the price have variations
+  if ($price != '') {
 
-		if ( is_int($price) || is_float($price)) {
-			$pricevalue = round($price,2);
-		} elseif (is_array($price)) {
+    if ( is_int($price) || is_float($price)) {
+      $pricevalue = round($price,2);
+    } elseif (is_array($price)) {
 
-		}
-	}
+    }
+  }
 
-	// test if the shipping have variations
-	if ($shipping != '') {
+  // test if the shipping have variations
+  if ($shipping != '') {
 
-		if ( is_int($shipping) || is_float($shipping)) {
-			$shippingvalue = round($shipping,2);
-		} elseif (is_array($shipping)) {
+    if ( is_int($shipping) || is_float($shipping)) {
+      $shippingvalue = round($shipping,2);
+    } elseif (is_array($shipping)) {
 
-		}
-	}
+    }
+  }
 
-	// test if there is variations of the same product
-	if ($variation != '') {
+  // test if there is variations of the same product
+  if ($variation != '') {
 
-		if ( is_string($variation) ) {
+    if ( is_string($variation) ) {
 
-		} elseif (is_array($variation)) {
+    } elseif (is_array($variation)) {
 
-		}
-	}
+    }
+  }
 
-	$content = "[wp_cart:".$name.":price:".$pricevalue.":shipping:".$shippingvalue.$variationvalue":end]";
-	print_wp_cart_action($content);
+  $content = "[wp_cart:".$name.":price:".$pricevalue.":shipping:".$shippingvalue.$variationvalue":end]";
+  print_wp_cart_action($content);
 }
 */
 /* ------------------------------- end to do -------------------------------- */
