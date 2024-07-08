@@ -183,15 +183,40 @@ export default function Edit({ attributes, setAttributes }) {
   // Generate TextControls for variations
   const variationControls = [];
 
+  if (!variations) {
+    let nArray = [];
+    if (variationNumber > 0) {
+      for (let i = 0; i < variationNumber; i++) {
+        nArray.push(["", ""]);
+      }
+    }
+    setAttributes({ variations: nArray });
+  }
   if (
-    (!variations || variations.length != variationNumber) &&
+    variations &&
+    variations.length < variationNumber &&
     variationNumber > 0
   ) {
     let nArray = [];
-    if (variations) {
+    if (Array.isArray(variations)) {
       nArray = variations;
     }
-    nArray.push(["", ""]);
+    while (nArray.length < variationNumber) {
+      nArray.push(["", ""]);
+    }
+
+    setAttributes({ variations: nArray });
+  }
+  if (
+    variations &&
+    variations.length > variationNumber &&
+    variationNumber > 0
+  ) {
+    let nArray = [];
+    nArray = variations;
+    while (nArray.length > variationNumber) {
+      nArray.pop();
+    }
     setAttributes({ variations: nArray });
   }
 

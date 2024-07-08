@@ -83,7 +83,7 @@ require "up-function.php";
 require "wpussc-function.php";
 require "wpussc-option.php";
 require "wpussc-widget.php";
-// require "blockCreator/price-variation-add-cart-block.php";
+// require "blockCreator/shipping-variation-add-cart-block.php";
 require "wpussc-gblock.php";
 
 // Reset the Cart as this is a returned customer from Paypal
@@ -140,10 +140,11 @@ if (!empty($_POST)) {
     }
 
     if ($new == true) {
-
+      error_log(var_export($_POST, true) . "\n", 3, "debug.log");
       $price = strpos($_POST["price"], ",") !== false
         ? floatval(explode(",", $_POST["price"])[1])
         : floatval($_POST["price"]);
+      $price = isset($_POST["shipping"]) ? (string) ((int) explode(",", $_POST["shipping"])[1] + (int) $price) : $price;
       $item_number = !empty($_POST["item_number"])
         ? esc_attr(sanitize_text_field($_POST["item_number"]))
         : "";
@@ -157,9 +158,9 @@ if (!empty($_POST)) {
       $cartLink = !empty($_POST["cartLink"])
         ? sanitize_text_field($_POST["cartLink"])
         : "";
-
+      $names = explode(",", stripslashes(sanitize_text_field($_POST["product"])));
       $product = [
-        "name" => stripslashes(sanitize_text_field($_POST["product"])),
+        "name" => $names[0] . "," . $names[1] . ")",
         "price" => $price,
         "quantity" => jasonwoof_format_int_1($quantity),
         "shipping" => $shipping,
@@ -1045,14 +1046,22 @@ function print_wp_cart_action($content)
       for ($i = 1; $i < sizeof($priceVariationArray); $i++) {
         $priceDigitAndWordArray = explode(",", $priceVariationArray[$i]);
 
-        $replacement .=
-          '<option value="' .
+        $replacement .= isset($priceDigitAndWordArray[2])
+          ? '<option value="' .
           esc_attr($priceDigitAndWordArray[0]) .
           "," .
           esc_attr($priceDigitAndWordArray[1] . "." . $priceDigitAndWordArray[2]) .
           '">' .
           esc_html($priceDigitAndWordArray[0]) .
-          "</option>";
+          "</option>"
+          : '<option value="' .
+          esc_attr($priceDigitAndWordArray[0]) .
+          "," .
+          esc_attr($priceDigitAndWordArray[1]) .
+          '">' .
+          esc_html($priceDigitAndWordArray[0]) .
+          "</option>"
+        ;
 
       }
 
