@@ -165,7 +165,6 @@ export default function Edit({ attributes, setAttributes }) {
 		}
 		setAttributes({ shippings: nArray });
 	}
-	console.log(shippings);
 	for (let i = 0; i < shippingNumber; i++) {
 		shippingControls.push(
 			<div className="text-control-two-container">

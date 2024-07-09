@@ -15,7 +15,6 @@ Version: v1.5
  */
 // loading language files
 load_plugin_textdomain('wp-ultra-simple-paypal-shopping-cart', false, WUSPSC_PLUGIN_DIRNAME . '/languages');
-
 /* adding a named option/value in WP : http://codex.wordpress.org/Function_Reference/add_option */
 //
 add_option('wp_cart_title',					__("Your Shopping Cart", "wp-ultra-simple-paypal-shopping-cart"));
@@ -59,7 +58,7 @@ add_option('no_item_in_cart_string',		'Cart empty');
 add_option('cart_return_from_paypal_url',	get_bloginfo('wpurl'));
 
 function isKeyDefined($key) {
-	return (isset($_POST['wpus_shopping_cart_collect_address']) ? sanitize_text_field($_POST['wpus_shopping_cart_collect_address']): "");
+	return (isset($_POST[$key]) ? sanitize_text_field($_POST[$key]): "");
 }
 
 function show_wp_cart_options_page () {
@@ -158,10 +157,10 @@ function show_wp_cart_options_page () {
 			$wp_use_aff_platform = 'checked="checked"';
 		}
 		update_option('wp_use_aff_platform', $wp_use_aff_platform);
-
 		// display_product_name
-		$display_product_name = '';
+		$display_product_name = "";
 		if (isKeyDefined('display_product_name')) { 
+
 			$display_product_name = (string)sanitize_text_field($_POST['display_product_name']);
 		}
 		update_option('display_product_name', $display_product_name);

@@ -13,7 +13,7 @@
  * @package CreateBlock
  */
 
-if (!defined('ABSPATH')) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
@@ -24,8 +24,7 @@ if (!defined('ABSPATH')) {
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
-function create_block_simple_cart_block_init()
-{
-	register_block_type(__DIR__ . '/build');
+function create_block_double_variation_add_cart_block_init() {
+	register_block_type( __DIR__ . '/build' );
 }
-add_action('init', 'create_block_simple_cart_block_init');
+add_action( 'init', 'create_block_double_variation_add_cart_block_init' );

@@ -86,6 +86,7 @@ require "wpussc-option.php";
 require "wpussc-widget.php";
 // require "blockCreator/shipping-variation-add-cart-block.php";
 // require "blockCreator/price-variation-add-cart-block.php";
+// require "blockCreator/double-variation-add-cart-block.php";
 // require "blockCreator/simple-variation-add-cart-block.php";
 // require "blockCreator/simple-add-cart-block.php";
 // require "blockCreator/simple-cart-block.php";
