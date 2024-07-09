@@ -16,7 +16,6 @@ for ($i = 0; $i < $variationNumber; $i++) {
 }
 $varlist .= "]";
 $content = "[wp_cart:" . $productName . ":price:" . $varlist . ":end]";
-// error_log(var_export($content, true), 3, "D:/Xampp/htdocs/wordpress/wp-content/plugins/wp-ultra-simple-paypal-shopping-cart/debug.log");
 ?>
 <p <?php echo get_block_wrapper_attributes(); ?>>
     <?php echo print_wp_cart_action($content) ?>
