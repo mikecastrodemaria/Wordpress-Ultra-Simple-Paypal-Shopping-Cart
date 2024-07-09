@@ -1,4 +1,5 @@
 <?php
+
 /**
 Plugin Name: WP Ultra simple Paypal Cart
 Version: 4.5.2
@@ -726,7 +727,7 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
 
     // 1 or 2 step caddy
     switch ($step) {
-      // 2 steps caddy with valication firsl
+        // 2 steps caddy with valication firsl
       case "validate":
         $output .=
           '<form action="' .
@@ -745,7 +746,7 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
         $output .= "</form>";
         break;
 
-      // 1 step with direct paypal submit
+        // 1 step with direct paypal submit
       case "paypal":
         // base URL to play with PayPal
         // https://www.sandbox.paypal.com/cgi-bin/webscr (paypal testing site)
@@ -824,10 +825,9 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
         $output .=
           '<input type="submit" id="' .
           esc_attr($css_id_checkout_style) .
-          '" class="' .
+          '" class=' .
           esc_attr($css_class_checkout_style) .
-          '"' .
-          esc_attr($displaybuttontext) .
+          $displaybuttontext.
           ' alt="' .
           __(
             "Make payments with PayPal - it's fast, free and secure!",
@@ -1048,7 +1048,7 @@ function print_wp_cart_action($content)
       for ($i = 1; $i < sizeof($priceVariationArray); $i++) {
         $priceDigitAndWordArray = explode(",", $priceVariationArray[$i]);
 
-        $replacement .= count($priceDigitAndWordArray) > 2 
+        $replacement .= count($priceDigitAndWordArray) > 2
           ? '<option value="' .
           esc_attr($priceDigitAndWordArray[0]) .
           "," .
@@ -1063,7 +1063,6 @@ function print_wp_cart_action($content)
           '">' .
           esc_html($priceDigitAndWordArray[0]) .
           "</option>";
-
       }
 
       $replacement .= "</select>" . $option_break;
@@ -1072,7 +1071,6 @@ function print_wp_cart_action($content)
         '<input type="hidden" name="price" value="' .
         esc_attr($pieces["1"]) .
         '" >';
-
     } else {
       echo _("Error: no price configured");
     }
@@ -1350,5 +1348,3 @@ add_shortcode(
 add_shortcode("always_show_wpus_shopping_cart", "us_always_show_cart_handler");
 
 add_action("wp_head", "wp_cart_add_read_form_javascript");
-
-?>
