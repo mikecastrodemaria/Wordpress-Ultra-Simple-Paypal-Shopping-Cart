@@ -247,6 +247,7 @@ Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 (thanks MaitreyaLeLion)
 = V4.6.0 =
 * New version with block of gutenberg editor
+(thanks MaitreyaLeLion)
 = V5.0.0 =
 * Polishing blocks and add shipping block
 (thanks MaitreyaLeLion)
