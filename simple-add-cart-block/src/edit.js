@@ -30,145 +30,7 @@ import "./editor.scss";
  * @return {Element} Element to render.
  */
 
-function sanitizeTextField(text) {
-	// Trim leading and trailing whitespace
-
-	let sanitized = "";
-	// Remove HTML tags
-	for (let i = 0; i < text.length; i++) {
-		if (text[i] === "<") {
-			while (text[i] !== ">" && i < text.length) {
-				i++;
-			}
-		}
-		if (
-			[
-				"a",
-				"b",
-				"c",
-				"d",
-				"e",
-				"f",
-				"g",
-				"h",
-				"i",
-				"j",
-				"k",
-				"l",
-				"m",
-				"n",
-				"o",
-				"p",
-				"q",
-				"r",
-				"s",
-				"t",
-				"u",
-				"v",
-				"w",
-				"x",
-				"y",
-				"z",
-				"A",
-				"B",
-				"C",
-				"D",
-				"E",
-				"F",
-				"G",
-				"H",
-				"I",
-				"J",
-				"K",
-				"L",
-				"M",
-				"N",
-				"O",
-				"P",
-				"Q",
-				"R",
-				"S",
-				"T",
-				"U",
-				"V",
-				"W",
-				"X",
-				"Y",
-				"Z",
-				"1",
-				"2",
-				"3",
-				"4",
-				"5",
-				"6",
-				"7",
-				"8",
-				"9",
-				"0",
-				"é",
-				"è",
-				",",
-				"ç",
-				"à",
-				"ù",
-				".",
-				"ô",
-				"î",
-				"ê",
-				"û",
-				"ö",
-				"ï",
-				"ë",
-				"ü",
-				"â",
-				"ä",
-				"€",
-				"$",
-				"£",
-				"¥",
-				"%",
-				"&",
-				"Â",
-				"Ä",
-				"Ê",
-				"Ë",
-				"Î",
-				"Ï",
-				"Ö",
-				"Ô",
-				"Û",
-				"Ü",
-				"Ù",
-				"À",
-				"Ç",
-				"É",
-				"È",
-				"Æ",
-				"Œ",
-				"œ",
-				"Å",
-				"Ø",
-				"Þ",
-				"ð",
-				"Ý",
-				"ý",
-				"þ",
-				"ÿ",
-				"ß",
-				"Ÿ",
-				"Š",
-				"š",
-				"Ž",
-				"ž",
-				" ",
-			].includes(text[i])
-		) {
-			sanitized += text[i];
-		}
-	}
-
-	return sanitized;
-}
+import { sanitizeTextField } from "./../../js/utils.js";
 
 export default function Edit({ attributes, setAttributes }) {
 	const { productName, productPrice } = attributes;
@@ -176,31 +38,33 @@ export default function Edit({ attributes, setAttributes }) {
 	return (
 		<>
 			<div {...useBlockProps()}>
-				<div id="productInfo" style={ {justifyContent: "space-between",display: "flex"}}
-				>
-					<TextControl 
-						className="productTag"
-						label={__("Product name", "wp-ultra-simple-paypal-shopping-cart")}
-						value={productName || ""}
-						onChange={(value) =>
-							setAttributes({ productName: sanitizeTextField(value) })
-						}
-						style={{ marginRight: "10px" }} // Add some space between the controls
-					/>
-					<TextControl 
-						className="productTag"
-						label={__("Product price", "wp-ultra-simple-paypal-shopping-cart")}
-						value={productPrice || ""}
-						onChange={(value) =>
-							setAttributes({ productPrice: sanitizeTextField(value) })
-						}
-					/>
+				<div className="text-control-two-container">
+					<div className="text-control-wrapper">
+						<TextControl
+							className="productTag"
+							label={__("Product name", "wp-ultra-simple-paypal-shopping-cart")}
+							value={productName || ""}
+							onChange={(value) =>
+								setAttributes({ productName: sanitizeTextField(value) })
+							}
+							style={{ marginRight: "10px" }} // Add some space between the controls
+						/>
+					</div>
+					<div className="text-control-wrapper">
+						<TextControl
+							className="productTag"
+							label={__(
+								"Product price",
+								"wp-ultra-simple-paypal-shopping-cart",
+							)}
+							value={productPrice || ""}
+							onChange={(value) =>
+								setAttributes({ productPrice: sanitizeTextField(value) })
+							}
+						/>
+					</div>
 				</div>
 			</div>
 		</>
 	);
 }
-
-// export function save() {
-// 	return null;
-// }

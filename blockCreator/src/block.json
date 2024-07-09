@@ -1,47 +1,38 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 3,
-	"name": "create-block/shipping-variation-add-cart-block",
-	"version": "0.1.0",
-	"title": "Shipping variation add cart block",
-	"category": "widgets",
-	"description": "Display a simple add to cart button for a product with a price, variation and shipping. The price is the same in all variations, and can be different for each shipping.",
-	"example": {},
-	"attributes": {
-		"productName": {
-			"type": "string"
-		},
-		"productPrice": {
-			"type": "string"
-		},
-		"variationNumber": {
-			"type": "string"
-		},
-		"variationName": {
-			"type": "string"
-		},
-		"variations": {
-			"type": "array"
-		},
-		"shippingNumber": {
-			"type": "string"
-		},
-		"shippings": {
-			"type": "array"
-		}
-	},
-	"supports": {
-		"color": {
-			"background": false,
-			"text": true
-		},
-		"html": false,
-		"typography": {
-			"fontSize": true
-		}
-	},
-	"textdomain": "wp-ultra-simple-paypal-shopping-cart",
-	"editorScript": "file:./index.js",
-	"editorStyle": "file:./index.css",
-	"render": "file:./render.php"
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "create-block/simple-cart-block",
+  "version": "0.1.0",
+  "title": "Simple cart block",
+  "category": "widgets",
+  "description": "Display a shopping cart.",
+  "example": {},
+  "attributes": {
+    "productName": {
+      "type": "string"
+    },
+    "productPrice": {
+      "type": "string"
+    },
+    "variationNumber": {
+      "type": "string"
+    },
+    "variationName": {
+      "type": "string"
+    }
+  },
+  "supports": {
+    "color": {
+      "background": false,
+      "text": true
+    },
+    "html": false,
+    "typography": {
+      "fontSize": true
+    }
+  },
+  "textdomain": "wp-ultra-simple-paypal-shopping-cart",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "render": "file:./render.php"
 }

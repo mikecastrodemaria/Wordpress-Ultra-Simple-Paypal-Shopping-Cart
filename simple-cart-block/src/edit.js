@@ -34,7 +34,7 @@ export default function Edit({ attributes, setAttributes }) {
 	return (
 		<>
 			<div {...useBlockProps()}>
-				<p>Create cart</p>
+				<p>Create shopping cart</p>
 			</div>
 		</>
 	);

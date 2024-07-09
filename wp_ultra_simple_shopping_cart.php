@@ -84,6 +84,10 @@ require "wpussc-function.php";
 require "wpussc-option.php";
 require "wpussc-widget.php";
 // require "blockCreator/shipping-variation-add-cart-block.php";
+// require "blockCreator/price-variation-add-cart-block.php";
+// require "blockCreator/simple-variation-add-cart-block.php";
+// require "blockCreator/simple-add-cart-block.php";
+// require "blockCreator/simple-cart-block.php";
 require "wpussc-gblock.php";
 
 // Reset the Cart as this is a returned customer from Paypal
@@ -120,7 +124,7 @@ if (!empty($_POST)) {
     $cookie_domain = str_replace("www", "", $domain_url);
     setcookie("cart_in_use", "true", time() + 21600, "/", $cookie_domain); //useful to not serve cached page when using with a caching plugin
 
-    $products = empty($products) ? $_SESSION["ultraSimpleCart"] : $products;
+    $products = empty($products) && isset($_SESSION["ultraSimpleCart"]) ? $_SESSION["ultraSimpleCart"] : $products;
     $new = true;
 
     if (!is_array($products)) {
@@ -140,11 +144,9 @@ if (!empty($_POST)) {
     }
 
     if ($new == true) {
-      error_log(var_export($_POST, true) . "\n", 3, "debug.log");
       $price = strpos($_POST["price"], ",") !== false
         ? floatval(explode(",", $_POST["price"])[1])
         : floatval($_POST["price"]);
-      $price = isset($_POST["shipping"]) ? (string) ((int) explode(",", $_POST["shipping"])[1] + (int) $price) : $price;
       $item_number = !empty($_POST["item_number"])
         ? esc_attr(sanitize_text_field($_POST["item_number"]))
         : "";
@@ -153,14 +155,14 @@ if (!empty($_POST)) {
         ? sanitize_text_field($_POST["quantity"])
         : "";
       $shipping = !empty($_POST["shipping"])
-        ? sanitize_text_field($_POST["shipping"])
+        ? explode(",", $_POST["shipping"])[1]
         : "";
       $cartLink = !empty($_POST["cartLink"])
         ? sanitize_text_field($_POST["cartLink"])
         : "";
       $names = explode(",", stripslashes(sanitize_text_field($_POST["product"])));
       $product = [
-        "name" => $names[0] . "," . $names[1] . ")",
+        "name" =>  $names[0] . (!empty($names[1]) ? "," . $names[1] : "") . (!empty($names[2]) ?  ")" : ""),
         "price" => $price,
         "quantity" => jasonwoof_format_int_1($quantity),
         "shipping" => $shipping,
@@ -1046,7 +1048,7 @@ function print_wp_cart_action($content)
       for ($i = 1; $i < sizeof($priceVariationArray); $i++) {
         $priceDigitAndWordArray = explode(",", $priceVariationArray[$i]);
 
-        $replacement .= isset($priceDigitAndWordArray[2])
+        $replacement .= count($priceDigitAndWordArray) > 2 
           ? '<option value="' .
           esc_attr($priceDigitAndWordArray[0]) .
           "," .
@@ -1060,8 +1062,7 @@ function print_wp_cart_action($content)
           esc_attr($priceDigitAndWordArray[1]) .
           '">' .
           esc_html($priceDigitAndWordArray[0]) .
-          "</option>"
-        ;
+          "</option>";
 
       }
 

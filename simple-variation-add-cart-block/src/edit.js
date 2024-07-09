@@ -30,145 +30,7 @@ import "./editor.scss";
  * @return {Element} Element to render.
  */
 
-function sanitizeTextField(text) {
-	// Trim leading and trailing whitespace
-
-	let sanitized = "";
-	// Remove HTML tags
-	for (let i = 0; i < text.length; i++) {
-		if (text[i] === "<") {
-			while (text[i] !== ">" && i < text.length) {
-				i++;
-			}
-		}
-		if (
-			[
-				"a",
-				"b",
-				"c",
-				"d",
-				"e",
-				"f",
-				"g",
-				"h",
-				"i",
-				"j",
-				"k",
-				"l",
-				"m",
-				"n",
-				"o",
-				"p",
-				"q",
-				"r",
-				"s",
-				"t",
-				"u",
-				"v",
-				"w",
-				"x",
-				"y",
-				"z",
-				"A",
-				"B",
-				"C",
-				"D",
-				"E",
-				"F",
-				"G",
-				"H",
-				"I",
-				"J",
-				"K",
-				"L",
-				"M",
-				"N",
-				"O",
-				"P",
-				"Q",
-				"R",
-				"S",
-				"T",
-				"U",
-				"V",
-				"W",
-				"X",
-				"Y",
-				"Z",
-				"1",
-				"2",
-				"3",
-				"4",
-				"5",
-				"6",
-				"7",
-				"8",
-				"9",
-				"0",
-				"é",
-				"è",
-				",",
-				"ç",
-				"à",
-				"ù",
-				".",
-				"ô",
-				"î",
-				"ê",
-				"û",
-				"ö",
-				"ï",
-				"ë",
-				"ü",
-				"â",
-				"ä",
-				"€",
-				"$",
-				"£",
-				"¥",
-				"%",
-				"&",
-				"Â",
-				"Ä",
-				"Ê",
-				"Ë",
-				"Î",
-				"Ï",
-				"Ö",
-				"Ô",
-				"Û",
-				"Ü",
-				"Ù",
-				"À",
-				"Ç",
-				"É",
-				"È",
-				"Æ",
-				"Œ",
-				"œ",
-				"Å",
-				"Ø",
-				"Þ",
-				"ð",
-				"Ý",
-				"ý",
-				"þ",
-				"ÿ",
-				"ß",
-				"Ÿ",
-				"Š",
-				"š",
-				"Ž",
-				"ž",
-				" ",
-			].includes(text[i])
-		) {
-			sanitized += text[i];
-		}
-	}
-
-	return sanitized;
-}
+import { sanitizeTextField } from "./../../js/utils.js";
 
 export default function Edit({ attributes, setAttributes }) {
 	const {
@@ -210,31 +72,118 @@ export default function Edit({ attributes, setAttributes }) {
 		setAttributes({ variations: nArray });
 	}
 
-	for (let i = 0; i < variationNumber; i++) {
+	for (let i = 0; i < variationNumber - (variationNumber % 2); i++) {
 		variationControls.push(
-			<TextControl
-				className="variations"
-				label={__(
-					"Variation " + (i + 1),
-					"wp-ultra-simple-paypal-shopping-cart",
-				)}
-				value={variations && variations[i] ? variations[i] : ""}
-				onChange={(value) => {
-					// Clone the variations array to create a new reference
-					let newArray = variations.map((variation, index) => {
-						if (index === i) {
-							// For the current index, return a new array with the updated value
-							return sanitizeTextField(value);
-						}
-						return variation;
-					});
+			<div className="text-control-two-container">
+				<div className="text-control-wrapper">
+					<TextControl
+						className="variations"
+						label={__(
+							"Variation " + (i + 1),
+							"wp-ultra-simple-paypal-shopping-cart",
+						)}
+						value={variations && variations[i] ? variations[i] : ""}
+						onChange={(value) => {
+							// Clone the variations array to create a new reference
+							let newArray = variations.map((variation, index) => {
+								if (index === i - 1) {
+									// For the current index, return a new array with the updated value
+									return sanitizeTextField(value);
+								}
+								return variation;
+							});
 
-					// Update the state with the new array
-					setAttributes({ variations: newArray });
-				}}
-			/>,
+							// Update the state with the new array
+							setAttributes({ variations: newArray });
+						}}
+					/>
+				</div>
+				<div className="text-control-wrapper">
+					<TextControl
+						className="variations"
+						label={__(
+							"Variation " + (i + 2),
+							"wp-ultra-simple-paypal-shopping-cart",
+						)}
+						value={variations && variations[i + 1] ? variations[i + 1] : ""}
+						onChange={(value) => {
+							// Clone the variations array to create a new reference
+
+							let newArray = variations.map((variation, index) => {
+								if (index === i) {
+									// For the current index, return a new array with the updated value
+									return sanitizeTextField(value);
+								}
+								return variation;
+							});
+
+							// Update the state with the new array
+							setAttributes({ variations: newArray });
+						}}
+					/>
+				</div>
+			</div>,
+		);
+		i++;
+	}
+	if (variationControls.length * 2 < variationNumber) {
+		const i = variationControls.length * 2;
+		variationControls.push(
+			<div className="text-control-two-container">
+				<div className="text-control-wrapper">
+					<TextControl
+						className="variations"
+						label={__(
+							"Variation " + (i + 1),
+							"wp-ultra-simple-paypal-shopping-cart",
+						)}
+						value={variations && variations[i] ? variations[i] : ""}
+						onChange={(value) => {
+							// Clone the variations array to create a new reference
+							let newArray = variations.map((variation, index) => {
+								if (index === i) {
+									// For the current index, return a new array with the updated value
+									return sanitizeTextField(value);
+								}
+								return variation;
+							});
+
+							// Update the state with the new array
+							setAttributes({ variations: newArray });
+						}}
+					/>
+				</div>
+			</div>,
 		);
 	}
+
+	// for (let i = 0; i < variationNumber; i++) {
+	// 	variationControls.push(
+	// 		<div className="text-control-wrapper">
+	// 			<TextControl
+	// 				className="variations"
+	// 				label={__(
+	// 					"Variation " + (i + 1),
+	// 					"wp-ultra-simple-paypal-shopping-cart",
+	// 				)}
+	// 				value={variations && variations[i] ? variations[i] : ""}
+	// 				onChange={(value) => {
+	// 					// Clone the variations array to create a new reference
+	// 					let newArray = variations.map((variation, index) => {
+	// 						if (index === i) {
+	// 							// For the current index, return a new array with the updated value
+	// 							return sanitizeTextField(value);
+	// 						}
+	// 						return variation;
+	// 					});
+
+	// 					// Update the state with the new array
+	// 					setAttributes({ variations: newArray });
+	// 				}}
+	// 			/>
+	// 		</div>,
+	// 	);
+	// }
 
 	return (
 		<>
@@ -243,17 +192,8 @@ export default function Edit({ attributes, setAttributes }) {
 					id="productInfo"
 					style={{ display: "flex", flexDirection: "column" }}
 				>
-					<div
-						className="product-details"
-						style={{
-							display: "flex",
-							flexWrap: "wrap",
-							flexDirection: "row",
-							justifyContent: "space-between",
-							marginBottom: "10px",
-						}}
-					>
-						<div style={{ paddingRight: "10px" }}>
+					<div className="product-details">
+						<div className="text-control-wrapper">
 							<TextControl
 								className="productTag"
 								label={__(
@@ -266,8 +206,7 @@ export default function Edit({ attributes, setAttributes }) {
 								}
 							/>
 						</div>
-						<div>
-							{" "}
+						<div className="text-control-wrapper">
 							<TextControl
 								className="productTag"
 								label={__(
@@ -281,56 +220,52 @@ export default function Edit({ attributes, setAttributes }) {
 							/>
 						</div>
 					</div>
-					<div
-						className="product-details"
-						style={{ display: "flex", flexDirection: "column" }}
-					>
-						<TextControl
-							className="variationTag"
-							label={__(
-								"Name of variation",
-								"wp-ultra-simple-paypal-shopping-cart",
-							)}
-							value={variationName || ""}
-							onChange={(value) => {
-								const newAttributes = {
-									variationName: sanitizeTextField(value),
-								};
-								setAttributes(newAttributes);
-							}}
-						/>
-						<TextControl
-							className="variationTag"
-							label={__(
-								"Number of variations",
-								"wp-ultra-simple-paypal-shopping-cart",
-							)}
-							type="number"
-							value={variationNumber || ""}
-							onChange={(value) => {
-								const newAttributes = {
-									variationNumber: sanitizeTextField(value),
-								};
-								setAttributes(newAttributes);
-							}}
-						/>
-						<div
-							style={{
-								display: "flex",
-								flexWrap: "wrap",
-								flexDirection: "row",
-								justifyContent: "space-between",
-							}}
-						>
-							{variationControls}
+					<div className="product-details">
+						<div className="text-control-wrapper">
+							<TextControl
+								className="variationTag"
+								label={__(
+									"Name of variation",
+									"wp-ultra-simple-paypal-shopping-cart",
+								)}
+								value={variationName || ""}
+								onChange={(value) => {
+									const newAttributes = {
+										variationName: sanitizeTextField(value),
+									};
+									setAttributes(newAttributes);
+								}}
+							/>
 						</div>
+						<div className="text-control-wrapper">
+							<TextControl
+								className="variationTag"
+								label={__(
+									"Number of variations",
+									"wp-ultra-simple-paypal-shopping-cart",
+								)}
+								type="number"
+								value={variationNumber || ""}
+								onChange={(value) => {
+									const newAttributes = {
+										variationNumber: sanitizeTextField(value),
+									};
+									setAttributes(newAttributes);
+								}}
+							/>
+						</div>
+					</div>
+					<div
+						className="varitaion-controls-container"
+						style={{
+							display: "flex",
+							flexDirection: "column",
+						}}
+					>
+						{variationControls}
 					</div>
 				</div>
 			</div>
 		</>
 	);
 }
-
-// export function save() {
-// 	return null;
-// }
