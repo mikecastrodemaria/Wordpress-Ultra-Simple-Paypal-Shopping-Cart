@@ -1,8 +1,9 @@
 <?php
+
 /**
 Ultra Prod WPUSSC Functions
 Version: v1.4.1
-*/
+ */
 /**
 	This program is free software; you can redistribute it
 	under the terms of the GNU General Public License version 2,
@@ -12,7 +13,7 @@ Version: v1.4.1
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	GNU General Public License for more details.
-*/
+ */
 
 $__UP_plug_prefix = "wpussc";
 
@@ -183,7 +184,6 @@ function get_the_empty_cart_content()
 	if (!$emptyCartAllowDisplay) {
 		return $output;
 	}
-
 }
 
 function wp_cart_add_custom_field()
@@ -324,7 +324,6 @@ function wuspsc_cart_css()
 {
 
 	wp_enqueue_style('wp_ultra_simple_shopping_cart_style', plugin_dir_url(__FILE__) . '/wp_ultra_simple_shopping_cart_style.css', array(), '1.0.0', 'all');
-
 }
 
 
@@ -339,7 +338,6 @@ function wuspsc_admin_register_head_cart_css()
 	wp_register_style('wp_ultra_simple_shopping_cart_admin_themes_smoothness', plugin_dir_url(__FILE__) . '/css/smooth-theme.min.css', false, '1.0.0');
 
 	wp_enqueue_style('wp_ultra_simple_shopping_cart_admin_themes_smoothness');
-
 }
 
 if (function_exists('add_image_size')) {
@@ -350,3 +348,49 @@ if (function_exists('add_image_size')) {
 
 add_action('wp_enqueue_scripts', 'wuspsc_cart_css');
 add_action('admin_enqueue_scripts', 'wuspsc_admin_register_head_cart_css');
+
+function getRelativePath($from, $to)
+{
+	// Normalize the URLs by removing the scheme (http, https) and domain, if present
+	$fromPath = preg_replace('#^https?://[^/]+/#', '', rtrim($from, '/'));
+	$toPath = preg_replace('#^https?://[^/]+/#', '', rtrim($to, '/'));
+
+	// Split paths into arrays
+	$fromParts = explode('/', $fromPath);
+	$toParts = explode('/', $toPath);
+	
+	// Remove common parts
+	while (count($fromParts) > 0 && count($toParts) > 0 && $fromParts[0] == $toParts[0]) {
+		array_shift($fromParts);
+		array_shift($toParts);
+
+	}
+
+	$relativePath = str_repeat('../', max(count($fromParts), 0));
+	
+	// Add the remaining parts of the $to path
+	$relativePath .= implode('/', $toParts);
+
+	// Special case: if the relative path is empty, both paths are the same
+	return $relativePath ?: './';
+}
+
+function processingFormValidation()
+{
+    if ($_POST['action']=="formRedirect" && isset($_POST["csrf_token"]) && $_POST["csrf_token"] == $_SESSION["csrf_token"]) {
+        // Fetching variables of the form which travels in URL
+        $name = isset($_POST['name']) ? $_POST['name'] : '';
+        $email = isset($_POST['email']) ? $_POST['email'] : '';
+        $phone = isset($_POST['phone']) ? $_POST['phone'] : '';
+        $message = isset($_POST['message']) ? $_POST['message'] : '';
+        $returnUrl = isset($_POST['returnUrl']) ? $_POST['returnUrl'] : '';
+        error_log(var_export($_POST, true), 3, "d:/XAMPP/htdocs/wordpress/debug.log");
+        if ($name != '' && $email != '' && $message != '' && $phone != '') {
+            header("Location:" . $returnUrl);
+        };
+    } else {
+        echo "<span>all field required</span>";
+    }
+}
+
+add_action("admin_post_formRedirect", "processingFormValidation");

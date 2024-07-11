@@ -29,6 +29,8 @@ function wuspsc_startsession()
   if (session_id() == "" || !isset($_SESSION)) {
     // session isn't started
     session_start();
+    ini_set('session.cookie_lifetime', 0);
+    
   }
 }
 add_action("init", "wuspsc_startsession", 1);
@@ -90,7 +92,9 @@ require "wpussc-widget.php";
 // require "blockCreator/simple-variation-add-cart-block.php";
 // require "blockCreator/simple-add-cart-block.php";
 // require "blockCreator/simple-cart-block.php";
+require "blockCreator/simple-form-block.php";
 require "wpussc-gblock.php";
+
 
 // Reset the Cart as this is a returned customer from Paypal
 if (isset($_GET["merchant_return_link"])) {
@@ -118,6 +122,9 @@ if (get_option("wpus_shopping_cart_reset_after_redirection_to_return_page")) {
 if (session_id() == "" || !isset($_SESSION)) {
   // session isn't started
   session_start();
+  if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); // Generate a new CSRF token
+  }
 }
 
 if (!empty($_POST)) {
@@ -183,7 +190,7 @@ if (!empty($_POST)) {
         echo "<br ><strong>" .
           __(
             "Shopping Cart Configuration Error! You must specify a value in the 'Checkout Page URL' field for the automatic redirection feature to work!",
-            "WUSPSC"
+            "wp-ultra-simple-paypal-shopping-cart" // I have replace WUSPSC with wp-ultra-simple-paypal-shopping-cart
           ) .
           "</strong><br >";
       } else {
@@ -226,14 +233,14 @@ if (!empty($_POST)) {
     }
     $_SESSION["ultraSimpleCart"] = $products;
   }
-
-
   if (
-    empty(isset($_POST["addcart"]) ? sanitize_text_field($_POST["addcart"]) : '') &&
+    (isset($_SESSION["ultraSimpleCart"])) &&
+    (empty(isset($_POST["addcart"]) ? sanitize_text_field($_POST["addcart"]) : '') &&
     !empty(isset($_POST["delcart"]) ? sanitize_text_field($_POST["delcart"]) : '') ||
-    empty(isset($_POST["quantity"]) ? intval($_POST["quantity"]) : 0)
+    empty(isset($_POST["quantity"]) ? intval($_POST["quantity"]) : 0))
   ) {
-    $products = $_SESSION["ultraSimpleCart"];
+    
+    $products = (array)$_SESSION["ultraSimpleCart"];
     if (!empty($products)) {
       foreach ($products as $key => $item) {
         if (
@@ -828,7 +835,7 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
           esc_attr($css_id_checkout_style) .
           '" class=' .
           esc_attr($css_class_checkout_style) .
-          $displaybuttontext.
+          $displaybuttontext .
           ' alt="' .
           __(
             "Make payments with PayPal - it's fast, free and secure!",

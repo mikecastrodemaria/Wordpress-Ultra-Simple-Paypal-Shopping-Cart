@@ -200,3 +200,46 @@ input[type=reset]:active {
     background-repeat: repeat-x;
     color: #5E5E5E;
 }
+
+/* Form block */
+.two-entry-container {
+    display: flex;
+	justify-content: space-between;
+}
+
+.address-component {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 10px;
+	
+}
+
+.name-component {
+	display: flex;
+	flex-direction: column;
+    flex: auto;
+	margin-right: 10px;
+}
+
+.two-label-address-container {
+	display: flex;
+	flex-direction: column;
+	width: 20%;
+
+}
+
+.two-input-address-container {
+	display: flex;
+	flex:auto;
+	flex-direction: column;
+
+}
+
+@media screen and (max-width: 600px) {
+	.address-component {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 10px;
+	}
+	
+}
