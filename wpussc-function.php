@@ -129,7 +129,7 @@ function get_the_price($pricestr)
 	// 	$pricearray = explode(",", $pricestr);
 	// 	$price = $pricearray[1];
 	// }
-	return (float)$pricestr;
+	return (float) $pricestr;
 }
 
 function get_the_name($namestr)
@@ -358,7 +358,7 @@ function getRelativePath($from, $to)
 	// Split paths into arrays
 	$fromParts = explode('/', $fromPath);
 	$toParts = explode('/', $toPath);
-	
+
 	// Remove common parts
 	while (count($fromParts) > 0 && count($toParts) > 0 && $fromParts[0] == $toParts[0]) {
 		array_shift($fromParts);
@@ -367,7 +367,7 @@ function getRelativePath($from, $to)
 	}
 
 	$relativePath = str_repeat('../', max(count($fromParts), 0));
-	
+
 	// Add the remaining parts of the $to path
 	$relativePath .= implode('/', $toParts);
 
@@ -375,22 +375,66 @@ function getRelativePath($from, $to)
 	return $relativePath ?: './';
 }
 
+function getCartProducts()
+{
+	if (!isset($_SESSION['ultraSimpleCart'])) {
+		return [];
+	}
+	$products = $_SESSION['ultraSimpleCart'];
+	$cartProducts = array();
+	// $cartProducts['products'] = array();
+	// $cartProducts['total'] = 0;
+	// $cartProducts['totalItems'] = 0;
+
+	if (empty($products)) {
+		return $cartProducts;
+	}
+
+	foreach ($products as $key => $item) {
+		$name = explode("(", $item["name"]);
+		$attributes = "";
+		for ($i = 1; $i < count($name); $i++) {
+			$attributes .= " - " . explode(",", $name[$i])[0];
+		}
+
+		array_push($cartProducts, $item["quantity"] . " " . $name[0] . $attributes);
+	}
+
+	// foreach ($products as $key => $item) {
+	// 	$cartProducts['products'][$key] = $item;
+	// 	$cartProducts['total'] += $item['price'] * $item['quantity'];
+	// 	$cartProducts['totalItems'] += $item['quantity'];
+	// }
+
+	return $cartProducts;
+}
+
 function processingFormValidation()
 {
-    if ($_POST['action']=="formRedirect" && isset($_POST["csrf_token"]) && $_POST["csrf_token"] == $_SESSION["csrf_token"]) {
-        // Fetching variables of the form which travels in URL
-        $name = isset($_POST['name']) ? $_POST['name'] : '';
-        $email = isset($_POST['email']) ? $_POST['email'] : '';
-        $phone = isset($_POST['phone']) ? $_POST['phone'] : '';
-        $message = isset($_POST['message']) ? $_POST['message'] : '';
-        $returnUrl = isset($_POST['returnUrl']) ? $_POST['returnUrl'] : '';
-        error_log(var_export($_POST, true), 3, "d:/XAMPP/htdocs/wordpress/debug.log");
-        if ($name != '' && $email != '' && $message != '' && $phone != '') {
-            header("Location:" . $returnUrl);
-        };
-    } else {
-        echo "<span>all field required</span>";
-    }
+	if ($_POST['action'] == "formRedirect" && isset($_POST["csrf_token"]) && $_POST["csrf_token"] == $_SESSION["csrf_token"]) {
+		$returnUrl = isset($_POST['returnUrl']) ? $_POST['returnUrl'] : '';
+
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'wpussc_form_submited';
+
+		$data = [
+			'firstName' => isset($_POST['given-name']) ? sanitize_text_field($_POST['given-name']) : '',
+			'LastName' => isset($_POST['family-name']) ? sanitize_text_field($_POST['family-name']) : '',
+			'email' => isset($_POST['email']) ? sanitize_text_field($_POST['email']) : '',
+			'phone' => isset($_POST['tel']) ? sanitize_text_field($_POST['tel']) : '',
+			'msg' => isset($_POST['message']) ? sanitize_text_field($_POST['message']) : '',
+			'street' => isset($_POST['street-address']) ? sanitize_text_field($_POST['street-address']) : '',
+			'complement' => isset($_POST['complement']) ? sanitize_text_field($_POST['complement']) : '',
+			'city' => isset($_POST['address-level2']) ? sanitize_text_field($_POST['address-level2']) : '',
+			'zip' => isset($_POST['postal-code']) ? sanitize_text_field($_POST['postal-code']) : '',
+			'country' => isset($_POST['country']) ? sanitize_text_field($_POST['country']) : '',
+			'cart' => implode("; ", getCartProducts())
+		];
+
+		$wpdb->insert($table_name, $data);
+
+		header("Location:" . $returnUrl);
+	}
 }
 
 add_action("admin_post_formRedirect", "processingFormValidation");

@@ -218,7 +218,6 @@ input[type=reset]:active {
 	display: flex;
 	flex-direction: column;
     flex: auto;
-	margin-right: 10px;
 }
 
 .two-label-address-container {
@@ -235,11 +234,29 @@ input[type=reset]:active {
 
 }
 
+.three-entry-container {
+    display: flex;
+	justify-content: space-between;
+}
+
+.message-container {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 10px;
+	height: 8cm;
+}
+
 @media screen and (max-width: 600px) {
 	.address-component {
 		display: flex;
 		flex-direction: column;
 		margin-bottom: 10px;
+	}
+	.two-label-address-container {
+		display: flex;
+		flex-direction: column;
+		width: 37%;
+	
 	}
 	
 }

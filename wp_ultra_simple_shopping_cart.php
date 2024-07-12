@@ -30,7 +30,7 @@ function wuspsc_startsession()
     // session isn't started
     session_start();
     ini_set('session.cookie_lifetime', 0);
-    
+
   }
 }
 add_action("init", "wuspsc_startsession", 1);
@@ -92,8 +92,38 @@ require "wpussc-widget.php";
 // require "blockCreator/simple-variation-add-cart-block.php";
 // require "blockCreator/simple-add-cart-block.php";
 // require "blockCreator/simple-cart-block.php";
-require "blockCreator/simple-form-block.php";
+// require "blockCreator/simple-form-block.php";
+// require "blockCreator/simple-validation-block.php";
 require "wpussc-gblock.php";
+
+function my_plugin_create_table()
+{
+  global $wpdb;
+  $table_name = $wpdb->prefix . 'wpussc_form_submited';
+
+  $charset_collate = $wpdb->get_charset_collate();
+
+  $sql = "CREATE TABLE $table_name (
+      id mediumint(9) NOT NULL AUTO_INCREMENT,
+      firstName tinytext NOT NULL,
+      LastName tinytext NOT NULL,
+      email text,
+      phone text,
+      msg text,
+      street text,
+      complement text,
+      city text,
+      zip text,
+      country text,
+      cart text,
+      PRIMARY KEY  (id)
+  ) $charset_collate;";
+
+  require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
+  dbDelta($sql);
+}
+
+register_activation_hook(__FILE__, 'my_plugin_create_table');
 
 
 // Reset the Cart as this is a returned customer from Paypal
@@ -171,7 +201,7 @@ if (!empty($_POST)) {
         : "";
       $names = explode(",", stripslashes(sanitize_text_field($_POST["product"])));
       $product = [
-        "name" =>  $names[0] . (!empty($names[1]) ? "," . $names[1] : "") . (!empty($names[2]) ?  ")" : ""),
+        "name" => $names[0] . (!empty($names[1]) ? "," . $names[1] : "") . (!empty($names[2]) ? ")" : ""),
         "price" => $price,
         "quantity" => jasonwoof_format_int_1($quantity),
         "shipping" => $shipping,
@@ -236,11 +266,11 @@ if (!empty($_POST)) {
   if (
     (isset($_SESSION["ultraSimpleCart"])) &&
     (empty(isset($_POST["addcart"]) ? sanitize_text_field($_POST["addcart"]) : '') &&
-    !empty(isset($_POST["delcart"]) ? sanitize_text_field($_POST["delcart"]) : '') ||
-    empty(isset($_POST["quantity"]) ? intval($_POST["quantity"]) : 0))
+      !empty(isset($_POST["delcart"]) ? sanitize_text_field($_POST["delcart"]) : '') ||
+      empty(isset($_POST["quantity"]) ? intval($_POST["quantity"]) : 0))
   ) {
-    
-    $products = (array)$_SESSION["ultraSimpleCart"];
+
+    $products = (array) $_SESSION["ultraSimpleCart"];
     if (!empty($products)) {
       foreach ($products as $key => $item) {
         if (
@@ -735,7 +765,7 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
 
     // 1 or 2 step caddy
     switch ($step) {
-        // 2 steps caddy with valication firsl
+      // 2 steps caddy with valication firsl
       case "validate":
         $output .=
           '<form action="' .
@@ -746,7 +776,7 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
           $output .=
             '<input type="submit" class="step_sub button-primary" name="validate" value="' .
             __(
-              "Proceed to Checkout &raquo;",
+              "Proceed to Checkout",
               "wp-ultra-simple-paypal-shopping-cart"
             ) .
             '" >';
@@ -754,7 +784,7 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
         $output .= "</form>";
         break;
 
-        // 1 step with direct paypal submit
+      // 1 step with direct paypal submit
       case "paypal":
         // base URL to play with PayPal
         // https://www.sandbox.paypal.com/cgi-bin/webscr (paypal testing site)

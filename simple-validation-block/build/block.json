@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "create-block/simple-validation-block",
+  "version": "0.1.0",
+  "title": "Simple validation block",
+  "category": "widgets",
+  "description": "Display a simple validation cart block.",
+  "example": {},
+  "attributes": {},
+  "supports": {
+    "color": {
+      "background": false,
+      "text": true
+    },
+    "html": false,
+    "typography": {
+      "fontSize": true
+    }
+  },
+  "textdomain": "wp-ultra-simple-paypal-shopping-cart",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "render": "file:./render.php"
+}
