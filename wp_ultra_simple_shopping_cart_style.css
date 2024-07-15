@@ -246,7 +246,7 @@ input[type=reset]:active {
 	height: 8cm;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
 	.address-component {
 		display: flex;
 		flex-direction: column;

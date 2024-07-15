@@ -1,6 +1,26 @@
 WordPress Ultra Simple Paypal Shopping Cart
 Mike Castro Demaria & Ultra Prod Team
 
+= v6.0.0 =
+* Adding elementor widgets 
+(thanks MaitreyaLeLion)
+
+= v5.2.0 =
+* Fix option checking and add double variation
+(thanks MaitreyaLeLion)
+
+= v5.1.0 = 
+* Polishing blocks and add shipping block
+(thanks MaitreyaLeLion)
+
+= V5.0.0 =
+* New version with block of gutenberg editor
+(thanks MaitreyaLeLion)
+
+= V4.6.0 =
+* Enhancement : compatibility with php 8 and code cleaning
+(thanks MaitreyaLeLion)
+
 = V4.5.2 =
 * Enhancement : new code cleaning
 

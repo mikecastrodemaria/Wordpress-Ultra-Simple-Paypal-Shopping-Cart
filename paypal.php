@@ -200,7 +200,20 @@ class paypal_ipn_handler
          $this->debug_log('Connection to '.$url_parsed['host'].' successfuly completed.',true);
       }
 
-      if (eregi("VERIFIED",$this->ipn_response))
+    //   if (eregi("VERIFIED",$this->ipn_response))
+    //   {
+    //      // Valid IPN transaction.
+    //      $this->debug_log('IPN successfully verified.',true);
+    //      return true;
+
+    //   }
+    //   else
+    //   {
+    //      // Invalid IPN transaction.  Check the log for details.
+    //      $this->debug_log('IPN validation failed.',false);
+    //      return false;
+    //   }
+	if (strpos($this->ipn_response, "VERIFIED") !== false)
       {
          // Valid IPN transaction.
          $this->debug_log('IPN successfully verified.',true);

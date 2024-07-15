@@ -1,18 +1,76 @@
 <?php
-
-/**
- * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
- */
-// "[wp_cart:". $productName . ":price:" . $productPrice . ":var1";
-// [wp_cart:Test Product:price:[Size|Small,1.10|Medium,2.10|Large,3.10]:end]
-// [wp_cart:PRODUCT-NAME:price:PRODUCT-PRICE:var1[VARIATION-NAME|VARIATION1|VARIATION2|VARIATION3]:end] 
-?>
-<?php
-$returnUrl = isset($attributes['returnUrl']) ? $attributes['returnUrl'] : '';
-$token = isset($_SESSION["csrf_token"]) ? $_SESSION["csrf_token"] : "";
+if (!defined('ABSPATH')) {
+	exit; // Exit if accessed directly.
+}
 
 
-$postString = '
+class Elementor_Simple_Form_Widget extends \Elementor\Widget_Base
+{
+
+	public function get_name()
+	{
+		return 'simple-form-widget';
+	}
+
+	public function get_title()
+	{
+		return esc_html__('Simple form', 'wp-ultra-simple-paypal-shopping-cart');
+	}
+
+	public function get_icon()
+	{
+		return 'eicon-bullet-list';
+	}
+
+	public function get_categories()
+	{
+		return ['general'];
+	}
+
+	public function get_keywords()
+	{
+		return ['shopping', 'form', 'checkout', 'simple', 'validation', "steps"];
+	}
+
+	public function get_custom_help_url()
+	{
+		return 'https://developers.elementor.com/docs/widgets/';
+	}
+
+	protected function get_upsale_data()
+	{
+		return [];
+	}
+
+	protected function register_controls()
+	{
+		$this->start_controls_section(
+			'product',
+			[
+				'label' => esc_html__('Product', 'wp-ultra-simple-paypal-shopping-cart'),
+				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
+			]
+		);
+		$this->add_control(
+			'return_url',
+			[
+				'label' => esc_html__('Return URL', 'wp-ultra-simple-paypal-shopping-cart'),
+				'type'  => \Elementor\Controls_Manager::TEXT,
+			]
+		);
+		$this->end_controls_section();
+	}
+
+	protected function render()
+	{
+		$settings = $this->get_settings_for_display();
+		$returnUrl = $settings['return_url'];
+		if (empty($returnUrl)) {
+			return;
+		}
+		$token = isset($_SESSION["csrf_token"]) ? $_SESSION["csrf_token"] : "";
+
+		$postString = '
     <form action="' . esc_url(admin_url('admin-post.php')) . '" method="post">
     <input type="hidden" name="action" value="formRedirect" >
     <input type="hidden" name="csrf_token" value="' . $token . '">
@@ -30,29 +88,29 @@ $postString = '
     </div>
     ';
 
-$postString .= '
+		$postString .= '
 
     <div class="two-entry-container">';
 
-if (!empty(get_option('wpus_form_include_email'))) {
-    $postString .= '
+		if (!empty(get_option('wpus_form_include_email'))) {
+			$postString .= '
         <div class="name-component" style="margin-right: 10px;">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" autocomplete="on" style="flex:1" required>
         </div>';
-}
+		}
 
-if (!empty(get_option('wpus_form_include_phone'))) {
-    $postString .= '
+		if (!empty(get_option('wpus_form_include_phone'))) {
+			$postString .= '
         <div class="name-component">
             <label for="phone">' . __("Phone Number", "wp-ultra-simple-paypal-shopping-cart") . ':</label>
             <input type="text" id="phone" name="tel" autocomplete="on" style="flex:1" required>
         </div>
     ';
-}
-$postString .= '</div>';
-if (!empty(get_option('wpus_form_include_address'))) {
-    $postString .= '
+		}
+		$postString .= '</div>';
+		if (!empty(get_option('wpus_form_include_address'))) {
+			$postString .= '
     <br>
 
     <label for="address">' . __("Address", "wp-ultra-simple-paypal-shopping-cart") . ':</label><br>
@@ -95,10 +153,10 @@ if (!empty(get_option('wpus_form_include_address'))) {
         </div>
     </div>
     ';
-}
+		}
 
-if (!empty(get_option('wpus_form_include_message'))) {
-    $postString .= '
+		if (!empty(get_option('wpus_form_include_message'))) {
+			$postString .= '
     <br>
     <div class="message-container">
         <label for="message">' . __("Message", "wp-ultra-simple-paypal-shopping-cart") . ':</label><br>
@@ -107,18 +165,16 @@ if (!empty(get_option('wpus_form_include_message'))) {
     <input type="submit" value="' . __("Submit", "wp-ultra-simple-paypal-shopping-cart") . '">
     </div>
     </form>';
-} else {
-    $postString .= '
+		} else {
+			$postString .= '
     <input type="submit" value="' . __("Submit", "wp-ultra-simple-paypal-shopping-cart") . '">
     </div>
     </form>';
+		}
+		echo $postString;
+	}
+
+	protected function content_template()
+	{
+	}
 }
-// Input for name, email, and phone number
-echo ($postString);
-
-
-
-?>
-<p <?php echo get_block_wrapper_attributes(); ?>>
-    <?php ?>
-</p>

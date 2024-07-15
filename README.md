@@ -255,6 +255,9 @@ Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 * Fix option checking and add double variation
 (thanks MaitreyaLeLion)
 = v5.2.0 = 
+* Adding elementor widgets 
+(thanks MaitreyaLeLion)
+= v6.0.0 =
 
 
 ## Upgrade Notice

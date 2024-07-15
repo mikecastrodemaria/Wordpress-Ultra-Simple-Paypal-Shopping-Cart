@@ -293,6 +293,12 @@ Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 * Polishing blocks
 (thanks MaitreyaLeLion)
 = v5.1.0 = 
+* Fix option checking and add double variation
+(thanks MaitreyaLeLion)
+= v5.2.0 = 
+* Adding elementor widgets 
+(thanks MaitreyaLeLion)
+= v6.0.0 =
 == Upgrade Notice ==
 
 Always backup you WP before any upgrade. After the upgrade it's too late.
