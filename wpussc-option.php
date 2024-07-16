@@ -209,6 +209,7 @@ function show_wp_cart_options_page()
 		update_option('wpus_form_include_message', (sanitize_text_field($_POST['wpus_form_include_message']) != '') ? 'checked="checked"' : '');
 
 		update_option('cart_validate_url', (string) sanitize_text_field($_POST["cart_validate_url"]));
+		update_option('form_submission_email', (string) sanitize_text_field($_POST["form_submission_email"]));
 		update_option('cart_return_from_paypal_url', (string) sanitize_text_field($_POST["cart_return_from_paypal_url"]));
 		update_option('cart_products_page_url', (string) sanitize_text_field($_POST["cart_products_page_url"]));
 
@@ -289,6 +290,7 @@ function show_wp_cart_options_page()
 
 	$return_url = get_option('cart_return_from_paypal_url');
 	$cart_validate_url = get_option('cart_validate_url');
+	$form_submission_email = get_option('form_submission_email');
 
 	$title = get_option('wp_cart_title');
 	//-if(empty($title)) $title = __("Your Shopping Cart", "wp-ultra-simple-paypal-shopping-cart");
@@ -609,8 +611,8 @@ jQuery(function($) {
         </h2>
         <div class="content">
             <pre>
-										<?php echo file_get_contents('readme.txt', FILE_USE_INCLUDE_PATH); ?>
-										</pre>
+																<?php echo file_get_contents('readme.txt', FILE_USE_INCLUDE_PATH); ?>
+																</pre>
         </div>
     </div>
 
@@ -905,24 +907,33 @@ jQuery(function($) {
 	</p>
 	</td>
 	<tr valign="top">
+	<th scope="row">' . __("Include email field.", "wp-ultra-simple-paypal-shopping-cart") . '</th>
 	<td>
 	<input type="checkbox" name="wpus_form_include_email" value="1" ' . $wpus_form_include_email . '>' . __("Include email field in the form", "wp-ultra-simple-paypal-shopping-cart") . '
 	</td>
 	</tr>
 	<tr valign="top">
+	<th scope="row">' . __("Include phone number field.", "wp-ultra-simple-paypal-shopping-cart") . '</th>
 	<td>
 	<input type="checkbox" name="wpus_form_include_phone" value="1" ' . $wpus_form_include_phone . '>' . __("Include phone field in the form", "wp-ultra-simple-paypal-shopping-cart") . '
 	</td>
 	</tr>
 	<tr valign="top">
+	<th scope="row">' . __("Include address fields.", "wp-ultra-simple-paypal-shopping-cart") . '</th>
 	<td> 
-	<input type="checkbox" name="wpus_form_include_address" value="1" ' . $wpus_form_include_address . '>' . __("Include address field in the form", "wp-ultra-simple-paypal-shopping-cart") . '
+	<input type="checkbox" name="wpus_form_include_address" value="1" ' . $wpus_form_include_address . '>' . __("Include address fields in the form", "wp-ultra-simple-paypal-shopping-cart") . '
 	</td>
 	</tr>
 	<tr valign="top">
+	<th scope="row">' . __("Include message field.", "wp-ultra-simple-paypal-shopping-cart") . '</th>
 	<td>
 	<input type="checkbox" name="wpus_form_include_message" value="1" ' . $wpus_form_include_message . '>' . __("Include message field in the form", "wp-ultra-simple-paypal-shopping-cart") . '
 	</td>
+	</tr>
+	<tr valign="top">
+	<th scope="row">' . __("Send an email to this address upon form submission.", "wp-ultra-simple-paypal-shopping-cart") . '</th>
+	<td><input type="text" name="form_submission_email" value="' . $form_submission_email . '" size="100">
+	<br>' . __("If you provide an email address, the form will be sent to this address upon submision.") . '</td>
 	</tr>
 </tr>
 

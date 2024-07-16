@@ -1,1 +1,46 @@
-.wp-block-create-block-simple-form-block{border-top:1px solid #000;font-size:20px;margin:20px;padding:20px}.wp-block-create-block-simple-form-block label,.wp-block-create-block-simple-form-block p{font-family:var(--wp--preset--font-family--system-sans-serif);font-size:16px;text-transform:capitalize}.wp-block-create-block-simple-form-block .text-control-wrapper{flex:1;margin:10px}@media screen and (max-width:600px){.wp-block-create-block-simple-form-block{border-top:1px solid #000;font-size:16px;margin:10px;padding:10px}label{font-family:var(--wp--preset--font-family--system-sans-serif);font-size:16px;text-transform:capitalize}.text-control-wrapper{flex:1;margin:10px}}
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/editor.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.wp-block-create-block-simple-form-block {
+  margin: 20px;
+  padding: 20px;
+  border-top: 1px solid #000000;
+  font-size: 20px;
+}
+.wp-block-create-block-simple-form-block label {
+  font-family: var(--wp--preset--font-family--system-sans-serif); /* Example: Change the font family */
+  font-size: 16px; /* Example: Change the font size */
+  text-transform: capitalize;
+}
+.wp-block-create-block-simple-form-block p {
+  font-family: var(--wp--preset--font-family--system-sans-serif); /* Example: Change the font family */
+  font-size: 16px; /* Example: Change the font size */
+  text-transform: capitalize;
+}
+.wp-block-create-block-simple-form-block .text-control-wrapper {
+  flex: 1;
+  margin: 10px;
+}
+
+@media screen and (max-width: 600px) {
+  .wp-block-create-block-simple-form-block {
+    margin: 10px;
+    padding: 10px;
+    border-top: 1px solid #000000;
+    font-size: 16px;
+  }
+  label {
+    font-family: var(--wp--preset--font-family--system-sans-serif); /* Example: Change the font family */
+    font-size: 16px; /* Example: Change the font size */
+    text-transform: capitalize;
+  }
+  .text-control-wrapper {
+    flex: 1;
+    margin: 10px;
+  }
+}

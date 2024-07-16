@@ -1,0 +1,1 @@
+{"version":3,"file":"./style-index.css","mappings":";;;AAAA;EACI;EACA;EACA;AACJ,C","sources":["webpack://copyright-date-block/./src/style.scss"],"sourcesContent":[".address-component {\r\n    display: flex;\r\n    flex-direction: row;\r\n    margin-bottom: 10px;\r\n}"],"names":[],"sourceRoot":""}

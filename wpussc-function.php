@@ -432,6 +432,26 @@ function processingFormValidation()
 		];
 
 		$wpdb->insert($table_name, $data);
+		$emailAddress = get_option('form_submission_email');
+		if (!empty($emailAddress)) {
+			error_log("Sending email to: " . $emailAddress . "\n", 3, "D:/Xampp/htdocs/wordpress/debug.log");
+			$subject = "New form submission";
+			$message = "A new form submission has been made.";
+			$message .= "\n\nFirst Name: " . $data['firstName'];
+			$message .= "\nLast Name: " . $data['LastName'];
+			$message .= "\nEmail: " . $data['email'];
+			$message .= "\nPhone: " . $data['phone'];
+			$message .= "\nMessage: " . $data['msg'];
+			$message .= "\nStreet: " . $data['street'];
+			$message .= "\nComplement: " . $data['complement'];
+			$message .= "\nCity: " . $data['city'];
+			$message .= "\nZip: " . $data['zip'];
+			$message .= "\nCountry: " . $data['country'];
+			$message .= "\nCart: " . $data['cart'];
+			$headers = 'From: ' . get_bloginfo('name') . ' <' . get_option('admin_email') . '>' . "\r\n";
+			$response = wp_mail($emailAddress, $subject, $message, $headers);
+			error_log("Email sent: " . var_export($response, true) . "\n", 3, "D:/Xampp/htdocs/wordpress/debug.log");
+		}
 
 		header("Location:" . $returnUrl);
 	}
