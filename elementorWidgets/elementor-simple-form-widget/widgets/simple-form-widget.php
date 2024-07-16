@@ -48,14 +48,14 @@ class Elementor_Simple_Form_Widget extends \Elementor\Widget_Base
 			'product',
 			[
 				'label' => esc_html__('Product', 'wp-ultra-simple-paypal-shopping-cart'),
-				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
+				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
 			]
 		);
 		$this->add_control(
 			'return_url',
 			[
 				'label' => esc_html__('Return URL', 'wp-ultra-simple-paypal-shopping-cart'),
-				'type'  => \Elementor\Controls_Manager::TEXT,
+				'type' => \Elementor\Controls_Manager::TEXT,
 			]
 		);
 		$this->end_controls_section();
@@ -116,40 +116,39 @@ class Elementor_Simple_Form_Widget extends \Elementor\Widget_Base
     <label for="address">' . __("Address", "wp-ultra-simple-paypal-shopping-cart") . ':</label><br>
 
     <div class="address-components-container">
-        <div class="two-entry-container">
-            <div class="two-label-address-container">
+        <div class="labels-container">
+            <div class="address-label">
                 <label for="street">' . __("Street", "wp-ultra-simple-paypal-shopping-cart") . ':</label>
-                <br>
+            </div>
+            <div class="address-label">
                 <label for="complement">' . __("Complement", "wp-ultra-simple-paypal-shopping-cart") . ':</label>
             </div>
-            <div class="two-input-address-container">
-                <input type="text" id="street" name="street-address" autocomplete="on" style="flex:1" required>
-                <br>
-                <input type="text" id="complement" name="complement" autocomplete="on" style="flex:1">
-            </div>
-        </div>
-        
-            
-            
-        </div>
-        <div class="address-component">
-            
-            
-        </div>
-        <div class="two-entry-container">
-            <div class="address-component" style="width:55%;margin-right:10px;justify-content: space-between">
+            <div class="address-label">
                 <label for="city">' . __("City", "wp-ultra-simple-paypal-shopping-cart") . ':</label>
-                <input type="text" id="city" name="address-level2" autocomplete="on" style="width: 72%" required>
             </div>
-            <div class="address-component" style="flex:1;justify-content: space-between">
+            <div class="address-label">
                 <label for="zip">' . __("Zip Code", "wp-ultra-simple-paypal-shopping-cart") . ':</label>
+            </div>
+            <div class="address-label">
+                <label for="country">' . __("Country", "wp-ultra-simple-paypal-shopping-cart") . ':</label>
+            </div>
+        </div>
+        <div class="inputs-container">
+            <div class="address-input">
+                <input type="text" id="street" name="street-address" autocomplete="on" required>
+            </div>
+            <div class="address-input"> 
+                <input type="text" id="complement" name="complement" autocomplete="on">
+            </div>
+            <div class="address-input">
+                <input type="text" id="city" name="address-level2" autocomplete="on" required>
+            </div>
+            <div class="address-input">
                 <input type="text" id="zip" name="postal-code" autocomplete="on" required>
             </div>
-            
-        </div>
-        <div class="address-component" style="justify-content: space-between">
-            <label for="country">' . __("Country", "wp-ultra-simple-paypal-shopping-cart") . ':</label>
-            <input type="text" id="country" name="country" autocomplete="on" style="width: 85%" required>
+            <div class="address-input">
+                <input type="text" id="country" name="country" autocomplete="on" required>
+            </div>
         </div>
     </div>
     ';

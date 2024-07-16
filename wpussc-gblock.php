@@ -1,7 +1,8 @@
 <?php
 add_action('plugins_loaded', 'load_my_plugin_files');
 
-function my_is_plugin_active($plugin_path) {
+function my_is_plugin_active($plugin_path)
+{
     $active_plugins = get_option('active_plugins');
     if (in_array($plugin_path, $active_plugins)) {
         return true;
@@ -17,7 +18,8 @@ function my_is_plugin_active($plugin_path) {
     return false;
 }
 
-function load_my_plugin_files() {
+function load_my_plugin_files()
+{
     require "gutenbergBlock/simple-cart-block/simple-cart-block.php";
     require "gutenbergBlock/simple-add-cart-block/simple-add-cart-block.php";
     require "gutenbergBlock/simple-variation-add-cart-block/simple-variation-add-cart-block.php";

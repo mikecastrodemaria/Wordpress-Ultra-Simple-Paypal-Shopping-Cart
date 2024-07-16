@@ -58,6 +58,26 @@ if (!empty(get_option('wpus_form_include_address'))) {
     <label for="address">' . __("Address", "wp-ultra-simple-paypal-shopping-cart") . ':</label><br>
 
     <div class="address-components-container">
+        <div class="label-container">
+            <label for="street">' . __("Street", "wp-ultra-simple-paypal-shopping-cart") . ':</label>
+            <label for="complement">' . __("Complement", "wp-ultra-simple-paypal-shopping-cart") . ':</label>
+            <label for="city">' . __("City", "wp-ultra-simple-paypal-shopping-cart") . ':</label>
+            <label for="country">' . __("Country", "wp-ultra-simple-paypal-shopping-cart") . ':</label>
+        </div>
+        <div class="input-container">
+            <input type="text" id="street" name="street-address" autocomplete="on" style="flex:1" required>
+            <input type="text" id="complement" name="complement" autocomplete="on" style="flex:1">
+            <input type="text" id="city" name="address-level2" autocomplete="on" style="flex:1" required>
+            <label for="zip">' . __("Zip Code", "wp-ultra-simple-paypal-shopping-cart") . ':</label>
+            <input type="text" id="zip" name="postal-code" autocomplete="on" required>
+            <input type="text" id="country" name="country" autocomplete="on" style="flex:1" required>
+    </div>
+
+
+
+
+
+    <div class="address-components-container">
         <div class="two-entry-container">
             <div class="two-label-address-container">
                 <label for="street">' . __("Street", "wp-ultra-simple-paypal-shopping-cart") . ':</label>
@@ -70,11 +90,8 @@ if (!empty(get_option('wpus_form_include_address'))) {
                 <input type="text" id="complement" name="complement" autocomplete="on" style="flex:1">
             </div>
         </div>
-        
-            
-            
-        </div>
-        <div class="address-component">
+
+
             
             
         </div>

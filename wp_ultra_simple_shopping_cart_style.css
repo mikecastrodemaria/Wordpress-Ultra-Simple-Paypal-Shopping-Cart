@@ -220,20 +220,6 @@ input[type=reset]:active {
     flex: auto;
 }
 
-.two-label-address-container {
-	display: flex;
-	flex-direction: column;
-	width: 20%;
-
-}
-
-.two-input-address-container {
-	display: flex;
-	flex:auto;
-	flex-direction: column;
-
-}
-
 .three-entry-container {
     display: flex;
 	justify-content: space-between;
@@ -246,6 +232,39 @@ input[type=reset]:active {
 	height: 8cm;
 }
 
+.labels-container {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+}
+
+.inputs-container {
+	display: flex;
+	flex-direction: column;
+	flex:auto;
+}
+
+.address-label {
+	display: flex;
+	flex:auto;
+	margin-bottom: 10px;
+}
+
+.address-input {
+	display: flex;
+	flex-direction: column;
+	flex:auto;
+	margin-bottom: 10px;
+
+}
+
+.address-components-container {
+	display: flex;
+
+}
+
+
+
 @media screen and (max-width: 700px) {
 	.address-component {
 		display: flex;
@@ -257,6 +276,11 @@ input[type=reset]:active {
 		flex-direction: column;
 		width: 37%;
 	
+	}
+	.labels-container {
+		display: flex;
+		flex-direction: column;
+		width: 35%;
 	}
 	
 }

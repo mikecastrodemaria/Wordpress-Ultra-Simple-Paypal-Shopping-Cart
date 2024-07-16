@@ -299,6 +299,9 @@ Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 * Adding elementor widgets 
 (thanks MaitreyaLeLion)
 = v6.0.0 =
+* reformating form block
+(thanks MaitreyaLeLion)
+= v6.0.1 =
 == Upgrade Notice ==
 
 Always backup you WP before any upgrade. After the upgrade it's too late.
