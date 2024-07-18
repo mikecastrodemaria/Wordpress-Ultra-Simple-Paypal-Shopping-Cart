@@ -30,7 +30,6 @@ function wuspsc_startsession()
     // session isn't started
     session_start();
     ini_set('session.cookie_lifetime', 0);
-
   }
 }
 add_action("init", "wuspsc_startsession", 1);
@@ -96,7 +95,7 @@ require "wpussc-widget.php";
 // require "blockCreator/simple-validation-block.php";
 require "wpussc-gblock.php";
 
-function my_plugin_create_table()
+function wpussc_create_table()
 {
   global $wpdb;
   $table_name = $wpdb->prefix . 'wpussc_form_submited';
@@ -119,12 +118,20 @@ function my_plugin_create_table()
       PRIMARY KEY  (id)
   ) $charset_collate;";
 
-  require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
+  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
   dbDelta($sql);
 }
 
-register_activation_hook(__FILE__, 'my_plugin_create_table');
+function wpussc_delete_table()
+{
+  global $wpdb;
+  $table_name = $wpdb->prefix . 'wpussc_form_submited';
+  $sql = "DROP TABLE IF EXISTS $table_name";
+  $wpdb->query($sql);
+}
 
+register_activation_hook(__FILE__, 'wpussc_create_table');
+register_uninstall_hook(__FILE__, 'wpussc_delete_table');
 
 // Reset the Cart as this is a returned customer from Paypal
 if (isset($_GET["merchant_return_link"])) {
@@ -171,8 +178,10 @@ if (!empty($_POST)) {
     }
 
     foreach ($products as $key => $item) {
+      $productName = explode(",", stripslashes(sanitize_text_field($_POST["product"])));
+      $productName = $productName[0] . (!empty($productName[1]) ? "," . $productName[1] : "") . (!empty($productName[2]) ? ")" : "");
       if (
-        $item["name"] != stripslashes(sanitize_text_field($_POST["product"]))
+        $item["name"] != $productName
       ) {
         continue;
       }
@@ -315,6 +324,12 @@ if (!empty($_POST)) {
 
 function print_wpus_shopping_cart($step = "paypal", $type = "page")
 {
+  if ((get_option("wp_cart_enable_email_debug") == "1") && isset($_SESSION["emailResponse"])) {
+    echo "<pre>";
+    print_r("Email Response: ");
+    var_export($_SESSION["emailResponse"]);
+    echo "</pre>";
+  }
   global $plugin_dir_name;
   global $post;
   $output = empty($output) ? "" : $output;
@@ -418,7 +433,7 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
       $wp_del_message = (!empty(get_option('wpus_shopping_cart_del_msg')))? get_option('wpus_shopping_cart_del_msg') : '';
       $wp_upd_message = (!empty(get_option('wpus_shopping_cart_upd_msg')))? get_option('wpus_shopping_cart_upd_msg') : '';
   }
-*/
+  */
 
   if (!get_option("wpus_shopping_cart_image_hide")) {
     $output .= sprintf(
@@ -458,7 +473,7 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
 
           $output .= "<div class=\"add-msg\"></div>";
       }
-*/
+    */
 
     $output .= '<table style="width: 100%;">';
 
@@ -765,7 +780,7 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
 
     // 1 or 2 step caddy
     switch ($step) {
-      // 2 steps caddy with valication firsl
+        // 2 steps caddy with valication firsl
       case "validate":
         $output .=
           '<form action="' .
@@ -784,7 +799,7 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
         $output .= "</form>";
         break;
 
-      // 1 step with direct paypal submit
+        // 1 step with direct paypal submit
       case "paypal":
         // base URL to play with PayPal
         // https://www.sandbox.paypal.com/cgi-bin/webscr (paypal testing site)
@@ -888,6 +903,159 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
   return $output;
 }
 
+/** 
+ * If the option is empty, return the default value, else return the option value.
+ * @param string $optionName
+ * @param any $default 
+ * @return any
+ */
+function getOptionHandleEmpty($optionName, $default = "")
+{
+  $optionValue = get_option($optionName);
+  if (empty($optionValue)) {
+    return $default;
+  }
+  return $optionValue;
+}
+
+/**
+ * Handle the case where each variation is being sold at the same price.
+ * @param string $match
+ * @param string $option_break
+ * @param string $var_output
+ * @return string
+ */
+function samePriceVariationComboHandler($match, $option_break, $var_output)
+{
+  $match_tmp = $match;
+
+  $pattern = "#var.*\[.*]:#";
+  preg_match_all($pattern, $match_tmp, $matchesVar);
+
+  $allVariationArray = explode(":", $matchesVar[0][0]);
+
+  for ($i = 0; $i < sizeof($allVariationArray) - 1; $i++) {
+    preg_match(
+      "/(?P<vname>\w+)\[([^\)]*)\].*/",
+      $allVariationArray[$i],
+      $variationMatches
+    );
+
+    $allVariationLabelArray = explode("|", $variationMatches[2]);
+    $variation_name = $allVariationLabelArray[0];
+
+    $var_output .=
+      '<label class="lv-label ' .
+      __UP_strtolower_utf8($variation_name) .
+      '">' .
+      esc_html($variation_name) .
+      " :</label>";
+    $variationNameValue = $i + 1;
+
+    $var_output .=
+      '<select class="sv-select variation' .
+      $variationNameValue .
+      '" name="variation' .
+      $variationNameValue .
+      '" onchange="ReadForm (this.form, false);">';
+    for ($v = 1; $v < sizeof($allVariationLabelArray); $v++) {
+      $var_output .=
+        '<option value="' .
+        esc_attr($allVariationLabelArray[$v]) .
+        '">' .
+        esc_html($allVariationLabelArray[$v]) .
+        "</option>";
+    }
+    $var_output .= "</select>" . $option_break;
+  }
+  return $var_output;
+}
+
+/**
+ * Handle the case where each variation is being sold at a different price.
+ * @param array $pieces
+ * @param string $replacement
+ * @param string $option_break
+ * @return string
+ */
+function differentPriceVariationComboHandler($pieces, $replacement, $option_break)
+{
+  $priceVariation = str_replace("[", "", $pieces["1"]);
+  $priceVariation = str_replace("]", "", $priceVariation);
+  $priceVariationArray = explode("|", $priceVariation);
+  $variation_name = $priceVariationArray[0];
+  $replacement .=
+    '<label class="lp-label ' .
+    __UP_strtolower_utf8($variation_name) .
+    '">' .
+    esc_html($variation_name) .
+    ' :</label><select class="sp-select price" name="price">';
+  for ($i = 1; $i < sizeof($priceVariationArray); $i++) {
+    $priceDigitAndWordArray = explode(",", $priceVariationArray[$i]);
+
+    $replacement .= count($priceDigitAndWordArray) > 2
+      ? '<option value="' .
+      esc_attr($priceDigitAndWordArray[0]) .
+      "," .
+      esc_attr($priceDigitAndWordArray[1] . "." . $priceDigitAndWordArray[2]) .
+      '">' .
+      esc_html($priceDigitAndWordArray[0]) .
+      "</option>"
+      : '<option value="' .
+      esc_attr($priceDigitAndWordArray[0]) .
+      "," .
+      esc_attr($priceDigitAndWordArray[1]) .
+      '">' .
+      esc_html($priceDigitAndWordArray[0]) .
+      "</option>";
+  }
+
+  $replacement .= "</select>" . $option_break;
+
+  return $replacement;
+}
+
+/**
+ * Handle the case where there is multiple shipping at differents prices.
+ * @param array $pieces
+ * @param string $replacement
+ * @param string $option_break
+ * @return string
+ */
+function shippingVariationComboHandler($pieces, $replacement, $option_break)
+{
+  // Check if the third element of pieces matches the pattern
+  if (preg_match("/\[(?P<label>\w+)/", $pieces[2], $matches)) {
+    // Extract the shipping variation without brackets and split by "|"
+    $shippingVariation = trim($pieces[2], "[]");
+    $shippingVariationArray = explode("|", $shippingVariation);
+
+    // Construct the label and select elements
+    $variation_name = $shippingVariationArray[0];
+    $replacement .= sprintf(
+      '<label class="vs-label %1$s">%2$s :</label><select class="sv-select shipping" name="shipping">',
+      esc_attr(__UP_strtolower_utf8($variation_name)),
+      esc_html($variation_name)
+    );
+
+    // Add options to the select element
+    foreach (array_slice($shippingVariationArray, 1) as $option) {
+      list($value, $label) = array_map('esc_attr', explode(",", $option, 2));
+      $replacement .= sprintf('<option value="%1$s,%2$s">%1$s</option>', $value, $label);
+    }
+
+    $replacement .= "</select>" . $option_break;
+  } elseif (!empty($pieces[2])) {
+    // Handle the case where the third element of pieces is not empty but doesn't match the pattern
+    $replacement .= sprintf(
+      '<input type="hidden" name="shipping" value="%s" >',
+      esc_attr($pieces[2])
+    );
+  }
+
+  return $replacement;
+}
+
 function print_wp_cart_action($content)
 {
   //wp_cart_add_read_form_javascript();
@@ -925,22 +1093,10 @@ function print_wp_cart_action($content)
   // use custom button ot not
   if (get_option("use_custom_button") == "1") {
     // is the cart button is custom or not
-    $addcart_button_name = esc_attr(get_option("addToCartButtonName"));
 
-    if (empty($addcart_button_name)) {
-      $addcart_button_name = $default_addcart_button_name;
-    }
-
-    $checkout_button_name = esc_attr(get_option("checkoutButtonName"));
-
-    if (empty($checkout_button_name)) {
-      $checkout_button_name = $default_checkout_button_name;
-    }
-
-    $add_cartstyle = esc_attr(get_option("add_cartstyle"));
-    if (empty($add_cartstyle)) {
-      $add_cartstyle = "wp_cart_button";
-    }
+    $addcart_button_name = getOptionHandleEmpty("addToCartButtonName", $default_addcart_button_name);
+    $checkout_button_name = getOptionHandleEmpty("checkoutButtonName", $default_checkout_button_name); // To be deleted if not used
+    $add_cartstyle = getOptionHandleEmpty("add_cartstyle", "wp_cart_button");
 
     $css_class_addcart_style = " " . $add_cartstyle;
 
@@ -968,52 +1124,13 @@ function print_wp_cart_action($content)
     $pos = strpos($match, ":var1");
 
     /*
-      / free variation combo
+      / Same price variation combo
       */
     $isVariation = strpos($match, ":var");
     if ($isVariation > 0) {
-      $match_tmp = $match;
-
-      $pattern = "#var.*\[.*]:#";
-      preg_match_all($pattern, $match_tmp, $matchesVar);
-
-      $allVariationArray = explode(":", $matchesVar[0][0]);
-
-      for ($i = 0; $i < sizeof($allVariationArray) - 1; $i++) {
-        preg_match(
-          "/(?P<vname>\w+)\[([^\)]*)\].*/",
-          $allVariationArray[$i],
-          $variationMatches
-        );
-
-        $allVariationLabelArray = explode("|", $variationMatches[2]);
-        $variation_name = $allVariationLabelArray[0];
-
-        $var_output .=
-          '<label class="lv-label ' .
-          __UP_strtolower_utf8($variation_name) .
-          '">' .
-          esc_html($variation_name) .
-          " :</label>";
-        $variationNameValue = $i + 1;
-
-        $var_output .=
-          '<select class="sv-select variation' .
-          $variationNameValue .
-          '" name="variation' .
-          $variationNameValue .
-          '" onchange="ReadForm (this.form, false);">';
-        for ($v = 1; $v < sizeof($allVariationLabelArray); $v++) {
-          $var_output .=
-            '<option value="' .
-            esc_attr($allVariationLabelArray[$v]) .
-            '">' .
-            esc_html($allVariationLabelArray[$v]) .
-            "</option>";
-        }
-        $var_output .= "</select>" . $option_break;
-      }
+      $var_output = samePriceVariationComboHandler($match, $option_break, $var_output);
     }
+
 
     $pattern = "[wp_cart:";
     $m = str_replace($pattern, "", $match);
@@ -1068,42 +1185,12 @@ function print_wp_cart_action($content)
       '" >';
 
     /*
-      / price variation combo
-      / test if the price is unique or have variation
+       price variation combo
+       test if the price is unique or have variation
       */
 
     if (preg_match("/\[(?P<label>\w+)/", $pieces["1"])) {
-      $priceVariation = str_replace("[", "", $pieces["1"]);
-      $priceVariation = str_replace("]", "", $priceVariation);
-      $priceVariationArray = explode("|", $priceVariation);
-      $variation_name = $priceVariationArray[0];
-      $replacement .=
-        '<label class="lp-label ' .
-        __UP_strtolower_utf8($variation_name) .
-        '">' .
-        esc_html($variation_name) .
-        ' :</label><select class="sp-select price" name="price">';
-      for ($i = 1; $i < sizeof($priceVariationArray); $i++) {
-        $priceDigitAndWordArray = explode(",", $priceVariationArray[$i]);
-
-        $replacement .= count($priceDigitAndWordArray) > 2
-          ? '<option value="' .
-          esc_attr($priceDigitAndWordArray[0]) .
-          "," .
-          esc_attr($priceDigitAndWordArray[1] . "." . $priceDigitAndWordArray[2]) .
-          '">' .
-          esc_html($priceDigitAndWordArray[0]) .
-          "</option>"
-          : '<option value="' .
-          esc_attr($priceDigitAndWordArray[0]) .
-          "," .
-          esc_attr($priceDigitAndWordArray[1]) .
-          '">' .
-          esc_html($priceDigitAndWordArray[0]) .
-          "</option>";
-      }
-
-      $replacement .= "</select>" . $option_break;
+      $replacement = differentPriceVariationComboHandler($pieces, $replacement, $option_break);
     } elseif ($pieces["1"] != "") {
       $replacement .=
         '<input type="hidden" name="price" value="' .
@@ -1118,40 +1205,7 @@ function print_wp_cart_action($content)
       */
 
     if (strpos($match, ":shipping") > 0) {
-      if (preg_match("/\[(?P<label>\w+)/", $pieces["2"])) {
-        $shippingVariation = str_replace("[", "", $pieces["2"]);
-        $shippingVariation = str_replace("]", "", $shippingVariation);
-        $shippingVariationArray = explode("|", $shippingVariation);
-        $variation_name = $shippingVariationArray[0];
-
-        $replacement .=
-          '<label class="vs-label ' .
-          __UP_strtolower_utf8($variation_name) .
-          '">' .
-          $variation_name .
-          ' :</label><select class="sv-select shipping" name="shipping">';
-        for ($i = 1; $i < sizeof($shippingVariationArray); $i++) {
-          $shippingDigitAndWordArray = explode(
-            ",",
-            $shippingVariationArray[$i]
-          );
-          $replacement .=
-            '<option value="' .
-            esc_attr($shippingDigitAndWordArray[0]) .
-            "," .
-            esc_attr($shippingDigitAndWordArray[1]) .
-            '">' .
-            esc_html($shippingDigitAndWordArray[0]) .
-            "</option>";
-        }
-
-        $replacement .= "</select>" . $option_break;
-      } elseif ($pieces["2"] != "") {
-        $replacement .=
-          '<input type="hidden" name="shipping" value="' .
-          esc_attr($pieces["2"]) .
-          '" >';
-      }
+      $replacement = shippingVariationComboHandler($pieces, $replacement, $option_break);
     }
 
     /*

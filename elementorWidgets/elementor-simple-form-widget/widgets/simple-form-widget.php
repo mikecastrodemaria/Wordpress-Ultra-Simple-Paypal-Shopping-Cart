@@ -19,7 +19,7 @@ class Elementor_Simple_Form_Widget extends \Elementor\Widget_Base
 
 	public function get_icon()
 	{
-		return 'eicon-bullet-list';
+		return 'eicon-product-description';
 	}
 
 	public function get_categories()

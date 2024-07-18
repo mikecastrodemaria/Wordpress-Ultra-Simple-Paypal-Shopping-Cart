@@ -19,7 +19,7 @@ class Elementor_Shipping_Variation_Add_Cart_Widget extends \Elementor\Widget_Bas
 
 	public function get_icon()
 	{
-		return 'eicon-bullet-list';
+		return 'eicon-product-add-to-cart';
 	}
 
 	public function get_categories()
@@ -74,7 +74,6 @@ class Elementor_Shipping_Variation_Add_Cart_Widget extends \Elementor\Widget_Bas
 			[
 				'label' => esc_html__('Variations', 'wp-ultra-simple-paypal-shopping-cart'),
 				'type' => \Elementor\Controls_Manager::REPEATER,
-				'title_field' => '{{{ variation }}}',
 				'fields' => [
 					[
 						'name' => 'variation',
@@ -97,7 +96,6 @@ class Elementor_Shipping_Variation_Add_Cart_Widget extends \Elementor\Widget_Bas
 			[
 				'label' => esc_html__('Shippings', 'wp-ultra-simple-paypal-shopping-cart'),
 				'type' => \Elementor\Controls_Manager::REPEATER,
-				'title_field' => '{{{ shipping }}}',
 				'fields' => [
 					[
 						'name' => 'shipping',

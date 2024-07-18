@@ -15,7 +15,7 @@ class Elementor_Simple_Add_Cart_Widget extends \Elementor\Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'eicon-bullet-list';
+		return 'eicon-product-add-to-cart';
 	}
 
 	public function get_categories() {

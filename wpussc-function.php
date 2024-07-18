@@ -382,9 +382,6 @@ function getCartProducts()
 	}
 	$products = $_SESSION['ultraSimpleCart'];
 	$cartProducts = array();
-	// $cartProducts['products'] = array();
-	// $cartProducts['total'] = 0;
-	// $cartProducts['totalItems'] = 0;
 
 	if (empty($products)) {
 		return $cartProducts;
@@ -399,13 +396,6 @@ function getCartProducts()
 
 		array_push($cartProducts, $item["quantity"] . " " . $name[0] . $attributes);
 	}
-
-	// foreach ($products as $key => $item) {
-	// 	$cartProducts['products'][$key] = $item;
-	// 	$cartProducts['total'] += $item['price'] * $item['quantity'];
-	// 	$cartProducts['totalItems'] += $item['quantity'];
-	// }
-
 	return $cartProducts;
 }
 
@@ -418,23 +408,22 @@ function processingFormValidation()
 		$table_name = $wpdb->prefix . 'wpussc_form_submited';
 
 		$data = [
-			'firstName' => isset($_POST['given-name']) ? sanitize_text_field($_POST['given-name']) : '',
-			'LastName' => isset($_POST['family-name']) ? sanitize_text_field($_POST['family-name']) : '',
-			'email' => isset($_POST['email']) ? sanitize_text_field($_POST['email']) : '',
-			'phone' => isset($_POST['tel']) ? sanitize_text_field($_POST['tel']) : '',
-			'msg' => isset($_POST['message']) ? sanitize_text_field($_POST['message']) : '',
-			'street' => isset($_POST['street-address']) ? sanitize_text_field($_POST['street-address']) : '',
-			'complement' => isset($_POST['complement']) ? sanitize_text_field($_POST['complement']) : '',
-			'city' => isset($_POST['address-level2']) ? sanitize_text_field($_POST['address-level2']) : '',
-			'zip' => isset($_POST['postal-code']) ? sanitize_text_field($_POST['postal-code']) : '',
-			'country' => isset($_POST['country']) ? sanitize_text_field($_POST['country']) : '',
-			'cart' => implode("; ", getCartProducts())
+			'firstName' => isset($_POST['given-name']) ? sanitize_text_field($_POST['given-name']) : 'Jhon',
+			'LastName' => isset($_POST['family-name']) ? sanitize_text_field($_POST['family-name']) : 'Doe',
+			'email' => isset($_POST['email']) ? sanitize_text_field($_POST['email']) : 'not.provided@mail.com',
+			'phone' => isset($_POST['tel']) ? sanitize_text_field($_POST['tel']) : '00 00 00 00 00',
+			'msg' => isset($_POST['message']) ? sanitize_text_field($_POST['message']) : 'No message',
+			'street' => isset($_POST['street-address']) ? sanitize_text_field($_POST['street-address']) : 'No address',
+			'complement' => isset($_POST['complement']) ? sanitize_text_field($_POST['complement']) : 'No complement',
+			'city' => isset($_POST['address-level2']) ? sanitize_text_field($_POST['address-level2']) : 'No address',
+			'zip' => isset($_POST['postal-code']) ? sanitize_text_field($_POST['postal-code']) : 'No address',
+			'country' => isset($_POST['country']) ? sanitize_text_field($_POST['country']) : 'No address',
+			'cart' => !empty(implode("; ", getCartProducts())) ? implode("; ", getCartProducts()) : 'Empty cart'
 		];
 
 		$wpdb->insert($table_name, $data);
 		$emailAddress = get_option('form_submission_email');
 		if (!empty($emailAddress)) {
-			error_log("Sending email to: " . $emailAddress . "\n", 3, "D:/Xampp/htdocs/wordpress/debug.log");
 			$subject = "New form submission";
 			$message = "A new form submission has been made.";
 			$message .= "\n\nFirst Name: " . $data['firstName'];
@@ -449,8 +438,7 @@ function processingFormValidation()
 			$message .= "\nCountry: " . $data['country'];
 			$message .= "\nCart: " . $data['cart'];
 			$headers = 'From: ' . get_bloginfo('name') . ' <' . get_option('admin_email') . '>' . "\r\n";
-			$response = wp_mail($emailAddress, $subject, $message, $headers);
-			error_log("Email sent: " . var_export($response, true) . "\n", 3, "D:/Xampp/htdocs/wordpress/debug.log");
+			$_SESSION["emailResponse"] = wp_mail($emailAddress, $subject, $message, $headers);
 		}
 
 		header("Location:" . $returnUrl);

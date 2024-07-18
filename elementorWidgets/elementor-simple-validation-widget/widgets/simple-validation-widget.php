@@ -15,7 +15,7 @@ class Elementor_Simple_Validation_Widget extends \Elementor\Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'eicon-bullet-list';
+		return 'eicon-cart';
 	}
 
 	public function get_categories() {

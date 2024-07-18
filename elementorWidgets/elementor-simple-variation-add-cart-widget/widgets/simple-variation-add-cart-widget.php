@@ -19,7 +19,7 @@ class Elementor_Simple_Variation_Add_Cart_Widget extends \Elementor\Widget_Base
 
 	public function get_icon()
 	{
-		return 'eicon-bullet-list';
+		return 'eicon-product-add-to-cart';
 	}
 
 	public function get_categories()
@@ -83,7 +83,6 @@ class Elementor_Simple_Variation_Add_Cart_Widget extends \Elementor\Widget_Base
 			[
 				'label' => esc_html__('Variations', 'wp-ultra-simple-paypal-shopping-cart'),
 				'type' => \Elementor\Controls_Manager::REPEATER,
-				'title_field' => '{{{ variation }}}',
 				'fields' => [
 					[
 						'name' => 'variation',

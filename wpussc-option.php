@@ -22,6 +22,7 @@ add_option('wp_cart_empty_text', __("Your cart is empty", "wp-ultra-simple-paypa
 add_option('wpus_shopping_cart_empty_hide', '1');
 
 add_option('wp_cart_enable_debug', '0');
+add_option('wp_cart_enable_email_debug', '0');
 
 add_option('wpus_shopping_cart_shipping_per_items', '0');
 add_option('wpus_display_link_in_cart', '1');
@@ -203,10 +204,10 @@ function show_wp_cart_options_page()
 		update_option('wpus_thumbnail_in_cart_width', intval($_POST["wpus_thumbnail_in_cart_width"]));
 		update_option('wpus_thumbnail_in_cart_height', intval($_POST["wpus_thumbnail_in_cart_height"]));
 
-		update_option('wpus_form_include_email', (sanitize_text_field($_POST['wpus_form_include_email']) != '') ? 'checked="checked"' : '');
-		update_option('wpus_form_include_phone', (sanitize_text_field($_POST['wpus_form_include_phone']) != '') ? 'checked="checked"' : '');
-		update_option('wpus_form_include_address', (sanitize_text_field($_POST['wpus_form_include_address']) != '') ? 'checked="checked"' : '');
-		update_option('wpus_form_include_message', (sanitize_text_field($_POST['wpus_form_include_message']) != '') ? 'checked="checked"' : '');
+		update_option('wpus_form_include_email', isKeyDefined('wpus_form_include_email') && (sanitize_text_field($_POST['wpus_form_include_email']) != '') ? 'checked="checked"' : '');
+		update_option('wpus_form_include_phone', isKeyDefined('wpus_form_include_phone') && (sanitize_text_field($_POST['wpus_form_include_phone']) != '') ? 'checked="checked"' : '');
+		update_option('wpus_form_include_address', isKeyDefined('wpus_form_include_address') && (sanitize_text_field($_POST['wpus_form_include_address']) != '') ? 'checked="checked"' : '');
+		update_option('wpus_form_include_message', isKeyDefined('wpus_form_include_message') && (sanitize_text_field($_POST['wpus_form_include_message']) != '') ? 'checked="checked"' : '');
 
 		update_option('cart_validate_url', (string) sanitize_text_field($_POST["cart_validate_url"]));
 		update_option('form_submission_email', (string) sanitize_text_field($_POST["form_submission_email"]));
@@ -244,6 +245,8 @@ function show_wp_cart_options_page()
 
 		// debug
 		update_option('wp_cart_enable_debug', (string) sanitize_text_field($_POST["wp_cart_enable_debug"]));
+
+		update_option('wp_cart_enable_email_debug', (string) sanitize_text_field($_POST["wp_cart_enable_email_debug"]));
 
 		update_option('cart_checkout_page_url', (string) sanitize_text_field($_POST["cart_checkout_page_url"]));
 
@@ -340,6 +343,10 @@ function show_wp_cart_options_page()
 	$defaultDebugChecked = get_option('wp_cart_enable_debug');
 	$defaultDebugChecked1 = ($defaultDebugChecked == "1") ? "checked" : "";
 	$defaultDebugChecked2 = ($defaultDebugChecked == "1") ? "" : "checked";
+
+	$defaultEmailDebugChecked = get_option('wp_cart_enable_email_debug');
+	$defaultEmailDebugChecked1 = ($defaultEmailDebugChecked == "1") ? "checked" : "";
+	$defaultEmailDebugChecked2 = ($defaultEmailDebugChecked == "1") ? "" : "checked";
 
 	$emptyCartText = get_option('wp_cart_empty_text');
 	$emptyCartAllowDisplay = get_option('wpus_shopping_cart_empty_hide');
@@ -912,28 +919,37 @@ jQuery(function($) {
 	<input type="checkbox" name="wpus_form_include_email" value="1" ' . $wpus_form_include_email . '>' . __("Include email field in the form", "wp-ultra-simple-paypal-shopping-cart") . '
 	</td>
 	</tr>
+
 	<tr valign="top">
 	<th scope="row">' . __("Include phone number field.", "wp-ultra-simple-paypal-shopping-cart") . '</th>
 	<td>
 	<input type="checkbox" name="wpus_form_include_phone" value="1" ' . $wpus_form_include_phone . '>' . __("Include phone field in the form", "wp-ultra-simple-paypal-shopping-cart") . '
 	</td>
 	</tr>
+
 	<tr valign="top">
 	<th scope="row">' . __("Include address fields.", "wp-ultra-simple-paypal-shopping-cart") . '</th>
 	<td> 
 	<input type="checkbox" name="wpus_form_include_address" value="1" ' . $wpus_form_include_address . '>' . __("Include address fields in the form", "wp-ultra-simple-paypal-shopping-cart") . '
 	</td>
 	</tr>
+
 	<tr valign="top">
 	<th scope="row">' . __("Include message field.", "wp-ultra-simple-paypal-shopping-cart") . '</th>
 	<td>
 	<input type="checkbox" name="wpus_form_include_message" value="1" ' . $wpus_form_include_message . '>' . __("Include message field in the form", "wp-ultra-simple-paypal-shopping-cart") . '
 	</td>
 	</tr>
+
 	<tr valign="top">
 	<th scope="row">' . __("Send an email to this address upon form submission.", "wp-ultra-simple-paypal-shopping-cart") . '</th>
 	<td><input type="text" name="form_submission_email" value="' . $form_submission_email . '" size="100">
 	<br>' . __("If you provide an email address, the form will be sent to this address upon submision.") . '</td>
+	</tr>
+
+	<tr valign="top">
+	<th scope="row">' . __("Email debug", "wp-ultra-simple-paypal-shopping-cart") . '</th>
+	<td>ON: <input type="radio" name="wp_cart_enable_email_debug" value="1" ' . $defaultEmailDebugChecked1 . '/>&nbsp;OFF: <input type="radio" name="wp_cart_enable_email_debug" value="0" ' . $defaultEmailDebugChecked2 . '/>' . '</td>
 	</tr>
 </tr>
 
