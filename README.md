@@ -1,10 +1,10 @@
 # Wordpress-Ultra-Simple-Paypal-Shopping-Cart
 
-Contributors: mikecastrodemaria , franckmaussand
+Contributors: mikecastrodemaria , emmanuel2vermorel (maitreyalelion)
 Donate link: [ultra-prod.com](http://www.ultra-prod.com/)
 Tags: shop, cart, checkout, e-shop, e-commerce, shopping, cart, paypal, sell, store, payments, widget, products, service, selling, ecommerce, shopping cart
 Requires at least: 2.6
-Tested up to: 6.5.5
+Tested up to: 6.6
 Stable tag: trunk
 License: GPLv3 or later
 
