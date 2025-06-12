@@ -1,6 +1,6 @@
 === WordPress Ultra Simple Paypal Shopping Cart ===
 Contributors: mikecastrodemaria
-Donate link: http://www.ultra-prod.com/
+Donate link: http://www.supersonique-studio.com
 Tags:  shop, cart, checkout, e-shop, e-commerce, shopping, cart, paypal, sell, store, payments, widget, products, service, selling, ecommerce, shopping cart
 Requires at least: 3.1
 Tested up to: 6.5.5
@@ -161,12 +161,12 @@ Yes.
 == Screenshots ==
 
 * screenshot-1.png screenshot-2.png screenshot-3.png screenshot-4.png screenshot-5.png
-* Visit [the plugin site](http://www.ultra-prod.com/?p=86) for more screenshots.
+* Visit [the plugin site](http://www.supersonique-studio.com) for more screenshots.
 * Support [WUSPSC forum](https://wordpress.org/support/plugin/wp-ultra-simple-paypal-shopping-cart).
 
 == Credits ==
 
-Copyright 2011-2020 by Mike Castro Demaria & Ultra Prod Team
+Copyright 2011-2020 by Mike Castro Demaria & Supersonique Studio Team
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -184,7 +184,7 @@ Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 == Changelog ==
 
-* More Changelog can be found at [Ultra Prod forum](http://www.ultra-prod.com/developpement-support/wp-ultra-simple-paypal-shopping-cart-group3/annoucements-and-updates-forum7/ "Ulra Prod forum").
+* More Changelog can be found at [Supersonique Studio forum](http://www.supersonique-studio.com/developpement-support/wp-ultra-simple-paypal-shopping-cart-group3/annoucements-and-updates-forum7/ "Ulra Prod forum").
 = 4.0.0 =
 * base improvement
 = 4.0.2 =
@@ -287,8 +287,17 @@ Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 * Enhancement : compatibility with php 8 and code cleaning
 (thanks MaitreyaLeLion)
 = V4.6.0 =
-
+* New version with block of gutenberg editor
+= V5.0.0 =
 == Upgrade Notice ==
+- Big update on backend appearance  
+- Major update to shopping cart appearance  
+- Discount codes added  
+- French, Spanish and German translations updated
+- Minor updates and fixes (thanks Jules B.)  
+
+= V5.0.2 =
+- Responsive CSS
 
 Always backup you WP before any upgrade. After the upgrade it's too late.
 We always try to make updates compatible with old version.

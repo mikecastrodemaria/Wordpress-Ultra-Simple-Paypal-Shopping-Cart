@@ -1,0 +1,38 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "create-block/price-variation-add-cart-block",
+	"version": "0.1.0",
+	"title": "Price variation add cart block",
+	"category": "widgets",
+	"description": "Display a simple add to cart button for a product with variation. The price can be different in each variation",
+	"example": {},
+	"attributes": {
+		"productName": {
+			"type": "string"
+		},
+		"variationNumber": {
+			"type": "string"
+		},
+		"variationName": {
+			"type": "string"
+		},
+		"variations": {
+			"type": "array"
+		}
+	},
+	"supports": {
+		"color": {
+			"background": false,
+			"text": true
+		},
+		"html": false,
+		"typography": {
+			"fontSize": true
+		}
+	},
+	"textdomain": "wp-ultra-simple-paypal-shopping-cart",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"render": "file:./render.php"
+}

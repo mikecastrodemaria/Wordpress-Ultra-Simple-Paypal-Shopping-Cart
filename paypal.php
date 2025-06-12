@@ -1,6 +1,6 @@
 <?php
 /**
-Ultra Prod WPUSSC Admin Options
+Supersonique Studio WPUSSC Admin Options
 Version: v1.3
 */
 

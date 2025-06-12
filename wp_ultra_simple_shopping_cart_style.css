@@ -1,202 +1,741 @@
 /*
-Ultra Prod WPUSSC CSS
-Version: v1.2
-*/
-/*
-	This program is free software; you can redistribute it
-	under the terms of the GNU General Public License version 3,
-	as published by the Free Software Foundation.
+ * Supersonique Studio WPUSSC Frontend CSS
+ * Version: v1.2
+ * 
+ * WordPress Ultra Simple PayPal Shopping Cart - Frontend Styles
+ * This file contains all the styling for the shopping cart display
+ * on the frontend of the website, organized for better maintainability.
+ */
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-*/
+/* ========== BASE CART STYLES ========== */
 
-.shopping_cart{
-	font-size:12px;
-}
-.shopping_cart h2{
-	font-size:14px;
-}
-.shopping_cart img{
-	border:none;
-}
-.shopping_cart input{
-	width:auto;
-}
-.wpus-cart-button-form input{
-	width: auto;
+/* Main shopping cart container */
+.shopping_cart {
+  font-size: 12px;
 }
 
-input[type=submit],
-input[type=reset] {
- 	cursor:pointer;
+.shopping_cart h2 {
+  font-size: 14px;
 }
 
-input[type=submit]:hover,
-input[type=reset]:hover {
-	cursor:pointer;
+.shopping_cart img {
+  border: none;
 }
 
-input[type=submit]:active,
-input[type=reset]:active {
- cursor:pointer;
+/* Form inputs within cart */
+.shopping_cart input,
+.wpus-cart-button-form input {
+  width: auto;
 }
 
-.wp_checkout_button{
-    background-image: url('images/btn_xpressCheckout-en_US.gif'); /* 145x42 px */
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    width: 145px !important;
-    height: 42px;
-    vertical-align: middle;
-    display: block;
-    position: relative;
-    margin: 10px 0;
+/* Main cart table container */
+#shopping_cart {
+  max-width: 740px;
 }
 
+#shopping_cart table > tbody > tr:not(.ppcheckout) > td {
+  padding: 3px !important;
+}
+
+/* ========== BUTTON STYLES ========== */
+
+/* General button behavior */
+input[type="submit"],
+input[type="reset"] {
+  cursor: pointer;
+}
 
 .wp_cart_checkout_button,
 .wp_cart_button {
-	margin: 4px 0 ;
+  margin: 4px 0;
 }
 
 .wp_cart_checkout_button:hover,
-.wp_cart_button:hover{
-	opacity:0.7;
+.wp_cart_button:hover {
+  opacity: 0.7;
 }
 
-.step_sub {
-	font-size:16px;
+/* PayPal checkout button with background image */
+.wp_checkout_button {
+  background-image: url("images/btn_xpressCheckout-en_US.gif");
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  width: 145px !important;
+  height: 42px;
+  vertical-align: middle;
+  display: block;
+  position: relative;
+  margin: 10px 0;
 }
 
+/* Add to cart button with gradient styling */
+.wp_cart_button {
+  background: linear-gradient(to bottom, #22e0b7 0%, #35d912 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+  border-radius: 6px;
+  border-style: none none solid;
+  border-width: medium medium 3px;
+  border-color: transparent transparent #0799ba;
+  color: #ffffff;
+  display: inline-block;
+  padding: 6px 12px 5px;
+  text-decoration: none;
+}
+
+.wp_cart_button:hover {
+  background-color: #22e0b7;
+  background-image: linear-gradient(to bottom, #8bfbe3, #67f848);
+  background-repeat: repeat-x;
+  color: #5e5e5e;
+}
+
+/* Custom PayPal button styling */
+#paypalbutton {
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border-radius: 15px;
+  width: 15vh;
+  background: var(--wp--preset--color--vivid-red, red);
+  border: var(--wp--preset--color--vivid-red, red);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.1s;
+}
+
+#paypalbutton:hover {
+  background: var(--wp--preset--color--secondary, #db0000);
+  border: var(--wp--preset--color--secondary, #db0000);
+}
+
+/* ========== FORM ELEMENTS ========== */
+
+/* Form element sizing */
+.step_sub,
 .vsubmit,
 .sv-select,
 .sp-select,
 .ss-select,
 .lv-select,
-.lp-select
+.lp-select,
 .ls-select {
-	font-size:16px;
+  font-size: 16px;
 }
 
 .lv-select,
-.lp-select
-.ls-select
-{
-	display: block;
-	width: 150px;
-	float: left;
+.lp-select,
+.ls-select {
+  display: block;
+  width: 150px;
+  float: left;
 }
 
+/* Cart button form styling */
 #wpus-cart-button-form {
-	display:inline !important;
+  display: inline !important;
 }
 
-#wpus-cart-button-form label{ margin: 0 4px 0 0; }
-#wpus-cart-button-form .submit{ margin: 4px 0 ; }
-#empty-cart { margin: 10px 0;  }
-#empty-cart a, .empty-cart-text{ display: block; }
-
-#shopping_cart {
-	padding: 5px;
+#wpus-cart-button-form label {
+  margin: 0 4px 0 0;
 }
 
+#wpus-cart-button-form .submit {
+  margin: 4px 0;
+}
+
+/* Empty cart section */
+#empty-cart {
+  margin: 10px 0;
+}
+
+#empty-cart a,
+.empty-cart-text {
+  display: block;
+}
+
+/* ========== TABLE STYLING ========== */
+
+/* Table cell typography and alignment */
 .subcell,
 .shipcell,
 .vatcell,
-.totalcel
-{
-	font-weight: bold;
-	text-align: right;
-	padding-right: 3px;
+.totalcel {
+  font-weight: bold;
+  text-align: right;
+  padding-right: 3px;
+  font-size: 20px;
 }
 
-.header-del{
-    text-align: right;
+.header-del {
+  text-align: right;
 }
 
 .header-qty,
 .center {
-	text-align: center;
+  text-align: center;
 }
 
 .header-price,
 .header-name,
 .left {
-	text-align: left;
+  text-align: left;
+  font-size: 20px;
 }
 
+td.left {
+  width: 120px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+td.center {
+  padding: 0;
+}
+
+td.trash-cell {
+  width: 100px;
+}
+
+/* Product link styling */
 .cartLink {
-	overflow: hidden;
+  overflow: hidden;
+  font-size: 25px;
+  text-align: center;
+  vertical-align: middle;
+  width: 400px;
+}
+
+td.cartLink {
+  height: 8vh !important;
+  padding: 0;
+}
+
+/* Table headers */
+.cart_labels th,
+.product_name {
+  color: #666;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 2.6em;
+  text-transform: uppercase;
 }
 
 .cart_labels th {
-	color: #666;
-	font-size: 10px;
-	font-weight: 500;
-	letter-spacing: 0.1em;
-	line-height: 2.6em;
-	text-transform: uppercase;
+  font-size: 10px;
+  text-align: center;
 }
 
-.product_name{
-	color: #666;
-	font-size: 14px;
-	font-weight: 500;
-	letter-spacing: 0.1em;
-	line-height: 2.6em;
-	text-transform: uppercase;
+.product_name {
+  font-size: 14px;
 }
 
-.pinfo {
-	border: 0 none;
-	 margin-left: 4px;
-    position: relative;
-    top: 4px;
+/* ========== INTERACTIVE ELEMENTS ========== */
+
+/* Remove and reload buttons */
+.remove-button,
+.reload-button {
+  border: none !important;
+  background: none !important;
 }
 
-.remove {
-    border: 0 none;
-    display: block;
-    height: 16px;
-    margin-left: 4px;
-    padding: 0;
-    position: relative;
-    top: 4px;
-    width: 16px;
+.remove-button {
+  display: flex !important;
 }
 
-.product-thumb {
-	margin-right: 5px;
-	margin-bottom: 0;
-	border: 0;
-	vertical-align: middle;
+button.pinfo.reload-button {
+  max-height: 50px;
 }
 
-.wp_cart_button {
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    background: linear-gradient(to bottom, #22E0B7 0%, #35D912 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
-    border-color: -moz-use-text-color -moz-use-text-color #0799BA;
-    border-image: none;
-    border-radius: 6px;
-    border-style: none none solid;
-    border-width: medium medium 3px;
-    color: #FFFFFF;
-    display: inline-block;
-    padding: 6px 12px 5px;
-    text-decoration: none;
+/* Trash button with hover effects */
+.trash-button {
+  font-size: 40px;
+  color: var(--wp--preset--color--vivid-red, red);
 }
 
-.wp_cart_button:hover {
-    background-color: #22E0B7;
-    background-image: -moz-linear-gradient(center top , #8BFBE3, #67F848);
-    background-repeat: repeat-x;
-    color: #5E5E5E;
+.remove-button:hover .trash-button {
+  scale: 1.1;
+  transition: 0.3s ease;
+}
+
+/* Reload icon with animation */
+.reload-icon {
+  font-size: 40px;
+  color: green;
+}
+
+.reload-icon:hover {
+  animation: rotateOnce 1.2s cubic-bezier(0, 0.99, 0.94, 0.89);
+}
+
+@keyframes rotateOnce {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Quantity controls */
+.div-quantity {
+  display: flex;
+  flex-direction: column;
+}
+
+input.iquantity {
+  min-width: 60px;
+  text-align: center;
+}
+
+form.update-quantity-form {
+  height: 105px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.remove-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+/* ========== PAYPAL CHECKOUT SECTION ========== */
+
+#ppcheckout .pinfo {
+  font-size: 14px;
+}
+
+#ppcheckout > td > form {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ========== DISCOUNT CODE SYSTEM ========== */
+
+/* Discount input field */
+input#wpussc_discount_code {
+  width: 200px;
+  font-weight: 600;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+/* Discount form layout */
+.discount-form {
+  margin: 10px 0;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.discount-form > label {
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  margin-right: 5px;
+}
+
+/* Discount apply button */
+input.apply-discount-button {
+  margin-right: 5px;
+  border-radius: 15px;
+  background: var(--wp--preset--color--vivid-red, red);
+  border: var(--wp--preset--color--vivid-red, red);
+  color: white;
+  font-weight: 500;
+  text-align: center;
+  font-size: 14px;
+  transition: 0.1s;
+}
+
+input.apply-discount-button:hover {
+  background: var(--wp--preset--color--secondary, #db0000);
+  border: var(--wp--preset--color--secondary, #db0000);
+}
+
+/* Discount display in cart totals */
+td.discountcell.discountlabel {
+  font-size: 20px;
+  text-align: right;
+}
+
+.discountrow .discountlabel {
+  font-weight: bold;
+}
+
+.discountrow .discountamount {
+  font-weight: bold;
+  color: #008000;
+}
+
+/* Error messages */
+.error-message {
+  color: #ff0000;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  padding: 5px 0;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+
+/* Large tablets and small desktops */
+@media screen and (max-width: 992px) {
+  /* Layout adjustments */
+  .shopping_cart table {
+    width: 100%;
+  }
+  
+  /* Font size adjustments */
+  .subcell,
+  .shipcell,
+  .vatcell,
+  .totalcel {
+    font-size: 18px;
+  }
+  
+  .header-price,
+  .header-name,
+  .left {
+    font-size: 18px;
+  }
+  
+  /* Form elements */
+  .discount-form {
+    flex-wrap: wrap;
+  }
+  
+  /* Button sizing */
+  #paypalbutton {
+    width: 12vh;
+  }
+}
+
+/* Tablets and medium screens */
+@media screen and (max-width: 768px) {
+  /* Layout adjustments */
+  #shopping_cart {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  #shopping_cart table {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  /* Improved table layout */
+  #shopping_cart table > tbody > tr:not(.ppcheckout) > td {
+    padding: 6px 3px !important;
+  }
+
+  /* Font size adjustments */
+  .cart_labels th {
+    font-size: 9px !important;
+  }
+
+  .product_name {
+    font-size: 12px !important;
+  }
+
+  .subcell,
+  .shipcell,
+  .vatcell,
+  .totalcel,
+  .header-price,
+  .header-name,
+  .left {
+    font-size: 14px !important;
+  }
+
+  td.left {
+    width: auto;
+    text-align: left;
+    font-size: 14px;
+  }
+
+  .cartLink {
+    font-size: 16px;
+    width: 100%;
+  }
+
+  td.cartLink {
+    height: auto;
+    padding: 8px;
+  }
+
+  /* Icon size adjustments */
+  .trash-button,
+  .reload-icon {
+    font-size: 30px;
+  }
+
+  /* Better quantity controls */
+  .div-quantity {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  /* Layout modifications */
+  form.update-quantity-form {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .remove-item {
+    height: auto;
+  }
+
+  /* PayPal button adjustments */
+  #paypalbutton {
+    width: 100%;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  /* Optimize checkout flow */
+  #ppcheckout > td > form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  /* Empty cart styling */
+  #empty-cart a,
+  .empty-cart-text {
+    text-align: center;
+    font-size: 14px;
+  }
+
+  /* Cart button form adjustments */
+  #wpus-cart-button-form {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  #wpus-cart-button-form label {
+    margin: 0;
+  }
+
+  .remove-button {
+    justify-content: center;
+  }
+
+  /* Improved discount form */
+  .discount-form {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+    margin: 15px 0;
+  }
+  
+  input#wpussc_discount_code {
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  .apply-discount-button {
+    margin-top: 5px;
+  }
+}
+
+/* Small phones and tablets */
+@media screen and (max-width: 576px) {
+  /* Base font size adjustments */
+  .shopping_cart {
+    font-size: 14px;
+  }
+  
+  .cart_labels th {
+    font-size: 8px !important;
+  }
+  
+  .subcell,
+  .shipcell,
+  .vatcell,
+  .totalcel,
+  .header-price,
+  .header-name,
+  .left {
+    font-size: 14px !important;
+  }
+  
+  /* Optimize cart item display */
+  .cartLink {
+    font-size: 14px;
+    text-align: left;
+    padding: 5px 0;
+  }
+  
+  td.cartLink {
+    height: auto !important;
+  }
+  
+  /* Smaller icon sizes */
+  .trash-button,
+  .reload-icon {
+    font-size: 24px;
+  }
+  
+  /* Optimize checkout buttons */
+  #paypalbutton {
+    width: 100%;
+    max-width: 200px;
+    font-size: 14px;
+    margin: 10px 0;
+  }
+  
+  
+  .totalrow td,
+  .subrow td,
+  .shiprow td,
+  .vatrow td,
+  .discountrow td {
+    width: 100% !important;
+    text-align: right !important;
+    padding: 2px 0 !important;
+  }
+  
+  /* Discount section adjustments */
+  input#wpussc_discount_code {
+    width: 100%;
+  }
+  
+  .discount-form {
+    margin: 10px 0;
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  /* Error message sizing */
+  .error-message {
+    font-size: 14px;
+    padding: 8px 0;
+  }
+}
+
+/* Very small phones */
+@media screen and (max-width: 375px) {
+  /* Very small screen adjustments */
+  .shopping_cart {
+    font-size: 12px;
+  }
+  
+  /* Compact table layout */
+  #shopping_cart table {
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+  
+  #shopping_cart table > tbody > tr:not(.ppcheckout) > td {
+    padding: 4px 2px !important;
+  }
+  
+  /* Optimize form elements */
+  input.iquantity {
+    min-width: 40px;
+    font-size: 12px;
+    padding: 2px;
+  }
+  
+  .div-quantity {
+    max-width: 100%;
+  }
+  
+  /* Hide some labels on smallest screens for space */
+  .cart_labels .header-name {
+    display: none;
+  }
+  
+  /* Smallest icon sizes */
+  .trash-button,
+  .reload-icon {
+    font-size: 20px;
+  }
+  
+  /* Optimize forms */
+  form.update-quantity-form {
+    height: auto;
+    padding: 5px 0;
+  }
+  
+  .remove-item {
+    height: auto;
+  }
+  
+  /* Smaller checkout buttons */
+  #paypalbutton {
+    padding: 8px;
+    font-size: 12px;
+  }
+  
+  /* Optimize discount section */
+  input.apply-discount-button {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+  
+  .discount-form > label {
+    font-size: 14px;
+  }
+  
+  td.discountcell.discountlabel {
+    font-size: 14px;
+  }
+}
+
+/* Mobile cart summary optimization */
+@media screen and (max-width: 480px) {
+   
+  .subcell,
+  .shipcell,
+  .vatcell,
+  .totalcel,
+  .discountcell {
+    text-align: right !important;
+    font-size: 14px !important;
+  }
+  
+  .subcelllabel,
+  .shiplabel,
+  .vatlabel,
+  .totallabel,
+  .discountlabel {
+    text-align: left !important;
+    padding-right: 10px !important;
+  }
+  
+  /* Mobile-friendly discount form */
+  .discount-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    width: 100%;
+  }
+  
+  #wpussc_discount_code {
+    width: 100%;
+    max-width: 150px;
+  }
+  
+  /* Optimize cart buttons */
+  #ppcheckout > td {
+    padding: 10px 0 !important;
+  }
+  
+  #ppcheckout > td > form {
+    width: 100%;
+    align-items: center;
+  }
 }

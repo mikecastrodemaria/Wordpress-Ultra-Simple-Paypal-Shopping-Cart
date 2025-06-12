@@ -1,56 +1,1057 @@
 /*
-Ultra Prod WPUSSC Admin CSS
-Version: v1.1
-*/
-/*
-	This program is free software; you can redistribute it
-	under the terms of the GNU General Public License version 3,
-	as published by the Free Software Foundation.
+ * Supersonique Studio WPUSPSC Admin CSS
+ * Version: v5.0.1
+ * 
+ * WordPress Ultra Simple PayPal Shopping Cart - Admin Interface Styles
+ * This file contains all the styling for the plugin's admin interface,
+ * organized in logical sections for better maintainability.
+ */
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-*/
-/* back office styles */
-#poststuff h2 { padding: 0 0 20px !important;}
+/* ========== IMPORTS ========== */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
-.icon32 { margin: 0 3px 0 0 !important; }
+/* ========== BASE TYPOGRAPHY ========== */
 
-#tabs-3 ul { display: block;}
-#tabs-3 ul li { display: inline-block; margin: 10px 20px; font-size: 1.5em;}
-#tabs-3 img { display: inline-block; margin: 10px 20px; }
-
-#tabs-3 .donate { margin: 10px auto; width:30%; text-align:left; }
-
-#tabs-5 .content { overflow: auto;border: 1px solid #666;padding: 8px; height: 800px;}
-
-#tabs-5 pre { white-space:pre-wrap; width:110ex; }
-
-.showme { /*text-decoration: blink; */  color: green; }
-
-#helpme { background-color: yellow; color: darkblue; padding: 1.2em; }
-#helpme p {
-	font-size: 1.1em;
-    font-weight: bolder;
+/* Main headings in admin area */
+#poststuff h2 {
+  padding: 0 0 20px !important;
+  font-size: 24px;
+  color: #b34700;
+  border-bottom: 2px solid #ffe0b2;
+  margin-bottom: 20px;
 }
 
+/* WordPress admin icons */
+.icon32 {
+  margin: 0 10px 0 0 !important;
+}
 
+/* Nested lists styling */
 ol li ol {
-	margin-left: 2em;
-	list-style: initial;
-	list-style-type: lower-latin;
-	margin-top: 5px;
+  margin-left: 2em;
+  list-style-type: lower-alpha;
+  margin-top: 5px;
 }
 
-div#tabs-3 h2 {
-	padding-bottom: 0 !important;
+/* ========== TABS INTERFACE ========== */
+
+/* Main tabs container */
+#tabs {
+  font-family: "Poppins", sans-serif;
+  border: 0;
+  padding: 15px;
+  border-radius: 14px;
 }
 
-div#tabs-3 div#ecebiz img {
-	width: 100%;
-	height: auto;
-	border: 1px solid #DDD;
-	border-bottom: none;
-	margin: 0;
+/* jQuery UI widget header override */
+.ui-widget-header {
+  background: none !important;
+  border: none !important;
+}
+
+/* Tab navigation container */
+.ui-tabs-nav {
+  display: flex;
+  font-weight: bold;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+/* Individual tab item */
+.ui-tabs-tab {
+  list-style: none;
+  border: none !important;
+  margin: 0;
+  background: none !important;
+  border-radius: 20px;
+}
+
+/* Tab link styling */
+.ui-tabs-anchor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: #f7f7f7;
+  text-decoration: none;
+  color: #333;
+  border: 1px solid #ccc;
+  transition: 0.2s ease;
+  min-height: 40px;
+  line-height: 1.2;
+  box-sizing: border-box;
+  box-shadow: none !important;
+}
+
+/* Tab hover state */
+.ui-tabs-anchor:hover {
+  background-color: #ededed;
+  border: 1px solid #ccc;
+}
+
+/* Active tab styling */
+.ui-tabs-active .ui-tabs-anchor {
+  background: #ffffff;
+  color: #000000;
+  border-bottom: 3px solid #e65100;
+  border-radius: 11px 11px 6px 6px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Tab content panels */
+.ui-tabs-panel {
+  margin-top: 13px;
+}
+
+#tabs > div {
+  border-top: 1px solid #ccc;
+  padding: 30px;
+}
+
+/* ========== UTILITY CLASSES ========== */
+
+/* Orange accent color for emphasis */
+.orange {
+  color: #e65100;
+  font-weight: bold;
+}
+
+/* Notice icons for alerts */
+.notice-icon {
+  color: #e53935;
+  font-size: 28px;
+}
+
+/* ========== TAB 1 - USAGE INSTRUCTIONS ========== */
+
+/* Main container for usage tab */
+#tabs-1 {
+  font-size: 15px;
+  color: #222;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 25px 30px;
+  line-height: 1.7;
+}
+
+/* Main headings with icon support */
+#tabs-1 h2 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 26px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
+}
+
+/* Section headings */
+#tabs-1 h4 {
+  font-size: 1.1rem;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+/* Paragraph styling */
+#tabs-1 p {
+  margin: 15px 0;
+  font-size: 1rem;
+}
+
+/* Link styling */
+#tabs-1 a {
+  color: #e65100;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+#tabs-1 a:hover,
+#tabs-1 a:focus {
+  color: #bf360c;
+  outline: none;
+}
+
+/* Keyboard accessibility focus */
+#tabs-1 a:focus,
+#tabs-1 a:focus-visible {
+  box-shadow: 0 0 0 3px rgba(21, 91, 153, 0.4);
+  border-radius: 4px;
+  outline: 2px dashed #e65100;
+  outline-offset: 3px;
+}
+
+/* Options fieldset container */
+#tabs-1 fieldset.options {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 25px;
+  background-color: #f9f9f9;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Responsive content within options */
+#tabs-1 fieldset.options * {
+  max-width: 100%;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+#tabs-1 fieldset.options blockquote {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* List styling */
+#tabs-1 ul {
+  padding-left: 20px;
+  margin: 15px 0;
+}
+
+#tabs-1 ul li {
+  margin-bottom: 15px;
+}
+
+#tabs-1 ul li p,
+.options > p {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Ordered lists */
+#tabs-1 ol {
+  padding-left: 25px;
+  margin-top: 10px;
+  list-style-type: decimal;
+}
+
+#tabs-1 ol li {
+  margin-bottom: 10px;
+}
+
+#tabs-1 ol li ol {
+  list-style-type: lower-alpha;
+  margin-top: 5px;
+}
+
+/* Code and text formatting */
+#tabs-1 code {
+  background-color: #eef1f4;
+  padding: 3px 6px;
+  font-family: monospace;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+#tabs-1 strong {
+  font-weight: 600;
+}
+
+#tabs-1 em {
+  font-style: italic;
+}
+
+#tabs-1 blockquote {
+  background: #f1f1f1;
+  padding: 12px 15px;
+  margin: 10px 0;
+  border-left: 4px solid #e65100;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+/* Options list styling */
+.options ul {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.options ul li {
+  padding-bottom: 20px;
+  padding-left: 20px;
+  border-radius: 12px;
+  border-left: 4px solid #c7c7c7;
+}
+
+/* ========== TAB 3 - SUPPORT AND DONATIONS ========== */
+
+/* Support tab lists */
+#tabs-3 ul {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+#tabs-3 ul li {
+  list-style: none;
+  font-size: 1.2em;
+}
+
+/* Images in support tab */
+#tabs-3 img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin: 30px 0 50px;
+}
+
+/* Donation section */
+#tabs-3 .donate {
+  margin: 20px auto;
+  width: 50%;
+  text-align: center;
+}
+
+/* Override default heading padding */
+#tabs-3 h2 {
+  padding-bottom: 0 !important;
+}
+
+/* Ecebiz section images */
+#tabs-3 div#ecebiz img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  margin: 0;
+  border-radius: 5px;
+}
+
+/* ========== TAB 4 - DISCOUNT CODES ========== */
+
+/* Discount management postboxes */
+#tabs-4 .postbox {
+  margin-bottom: 20px;
+  border-radius: 20px;
+}
+
+#tabs-4 .postbox .hndle {
+  padding: 15px;
+  margin: 0;
+  background: #f5f5f5;
+  border-bottom: 1px solid #eee;
+  cursor: default;
+  border-radius: 20px 20px 0 0;
+}
+
+#tabs-4 .postbox .inside {
+  padding: 0 0 0 15px;
+}
+
+/* Discount list specific styling */
+#tabs-4 #list-discounts .inside {
+  padding: 10px;
+}
+
+#tabs-4 #list-discounts .inside table {
+  border-radius: 10px;
+}
+
+#list-discounts tbody tr:last-of-type {
+  border-radius: 10px !important;
+}
+
+/* Form table styling */
+#tabs-4 .form-table th {
+  width: 200px;
+}
+
+#tabs-4 .wp-list-table th,
+#tabs-4 .wp-list-table td {
+  padding: 8px;
+}
+
+#tabs-4 .button-primary {
+  margin-top: 10px;
+}
+
+/* ========== TAB 5 - README ========== */
+
+/* Readme content container */
+#tabs-5 .content {
+  overflow: auto;
+  border: 1px solid #a0a0a0;
+  padding: 15px;
+  max-height: 800px;
+  background-color: #fdfdfd;
+  border-radius: 5px;
+}
+
+/* Code blocks in readme */
+#tabs-5 pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-left: 3px solid #ccc;
+  margin: 10px 0;
+}
+
+/* ========== COMMON COMPONENTS ========== */
+
+/* Help section styling */
+#helpme {
+  padding: 1.2em;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  background: #ffe0b2;
+  border: 1px solid #ffb74d;
+  font-size: 1.1em;
+  color: #333;
+  line-height: 1.6;
+  width: 100%;
+  max-width: 1000px;
+  box-sizing: border-box;
+}
+
+#helpme p {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+#helpme a {
+  color: #e65100;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+#helpme a:hover,
+#helpme a:focus {
+  color: #bf360c;
+  outline: none;
+}
+
+/* Supersonique branding image */
+#supersonique img {
+  padding: 20px 0 30px 0;
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+
+/* Large tablets and small desktops */
+@media screen and (max-width: 992px) {
+  /* General typography adjustments */
+  #poststuff h2 {
+    font-size: 22px;
+  }
+
+  /* Tabs interface adjustments */
+  .ui-tabs-nav {
+    flex-wrap: wrap;
+  }
+
+  .ui-tabs-anchor {
+    padding: 8px 15px;
+    min-height: 36px;
+  }
+
+  /* Usage tab responsive adjustments */
+  #tabs-1 {
+    padding: 20px 25px;
+  }
+
+  #tabs-1 h2 {
+    font-size: 24px;
+  }
+
+  #tabs-1 fieldset.options {
+    padding: 20px;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  #tabs-1 h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+  }
+
+  /* Form elements */
+  #tabs input[type="text"], 
+  #tabs input[type="number"], 
+  #tabs select {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  /* Content sections */
+  #tabs > div {
+    padding: 20px;
+  }
+
+  /* Discount section */
+  #tabs-4 .form-table th {
+    width: 150px;
+  }
+}
+
+/* Tablets specific adjustments */
+@media screen and (max-width: 992px) and (min-width: 769px) {
+  #tabs-1 {
+    padding: 18px 22px;
+  }
+
+  #tabs-1 fieldset.options {
+    padding: 18px;
+    margin-top: 18px;
+    max-width: calc(100% - 4px);
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+
+  #tabs-1 fieldset.options blockquote {
+    font-size: 0.9rem;
+    padding: 10px 12px;
+    overflow-x: auto;
+    word-break: break-word;
+  }
+}
+
+/* Small tablets and large phones */
+@media screen and (max-width: 768px) {
+  /* Tab navigation adjustments */
+  .ui-tabs-nav {
+    gap: 5px;
+  }
+
+  .ui-tabs-anchor {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  /* Usage tab medium screen adjustments */
+  #tabs-1 {
+    padding: 15px 20px;
+    font-size: 14px;
+  }
+
+  #tabs-1 h2 {
+    font-size: 22px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  #tabs-1 p {
+    font-size: 0.95rem;
+    margin: 12px 0;
+  }
+
+  #tabs-1 fieldset.options {
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 6px;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  #tabs-1 fieldset.options ul {
+    padding-left: 10px;
+  }
+
+  #tabs-1 fieldset.options li {
+    margin-bottom: 10px;
+  }
+
+  #tabs-1 fieldset.options blockquote {
+    padding: 8px 10px;
+    margin: 8px 0;
+    overflow-x: auto;
+  }
+
+  #tabs-1 h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+  }
+
+  #tabs-1 ul {
+    padding-left: 15px;
+    margin: 12px 0;
+  }
+
+  #tabs-1 ol {
+    padding-left: 20px;
+  }
+
+  #tabs-1 code {
+    padding: 2px 4px;
+    font-size: 0.9rem;
+    word-break: break-word;
+  }
+
+  #tabs-1 blockquote {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    overflow-x: auto;
+  }
+
+  /* Form layouts for medium screens */
+  .form-table th,
+  .form-table td {
+    display: block;
+    width: 100%;
+    padding: 8px 0;
+  }
+
+  .form-table th {
+    padding-bottom: 0;
+  }
+
+  /* Component adjustments */
+  #helpme {
+    padding: 1em;
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  #supersonique img {
+    padding: 15px 0 20px 0;
+  }
+
+  #tabs-3 .donate {
+    width: 80%;
+  }
+
+  #tabs-5 .content {
+    max-height: 500px;
+  }
+}
+
+/* Large phones specific */
+@media screen and (max-width: 768px) and (min-width: 577px) {
+  #tabs-1 {
+    padding: 12px 15px;
+    font-size: 13px;
+  }
+
+  #tabs-1 fieldset.options {
+    padding: 12px;
+    margin-top: 12px;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+    border-radius: 4px;
+    overflow-x: auto;
+  }
+
+  #tabs-1 fieldset.options ul {
+    padding-left: 8px;
+    margin: 8px 0;
+  }
+
+  #tabs-1 fieldset.options li {
+    margin-bottom: 8px;
+  }
+
+  #tabs-1 fieldset.options blockquote {
+    padding: 6px 8px;
+    margin: 6px 0;
+    font-size: 0.85rem;
+    overflow-x: auto;
+    word-break: break-word;
+  }
+
+  #tabs-1 fieldset.options h3,
+  #tabs-1 fieldset.options h4 {
+    font-size: 0.9rem;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    line-height: 1.3;
+  }
+
+  #tabs-1 fieldset.options p {
+    font-size: 0.85rem;
+    margin: 6px 0;
+    line-height: 1.4;
+  }
+}
+
+/* Small phones */
+@media screen and (max-width: 576px) {
+  /* Header adjustments */
+  #poststuff h2 {
+    font-size: 20px;
+    padding: 0 0 15px !important;
+  }
+
+  /* Tabs interface mobile */
+  #tabs {
+    padding: 10px;
+  }
+
+  .ui-tabs-nav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .ui-tabs-tab {
+    width: 100%;
+  }
+
+  .ui-tabs-anchor {
+    width: 100%;
+    text-align: center;
+    min-height: 0;
+    padding: 10px;
+  }
+
+  /* Content panels mobile */
+  #tabs > div {
+    padding: 15px 10px;
+  }
+
+  /* Form elements mobile */
+  input[type="text"], 
+  input[type="number"], 
+  select, 
+  textarea {
+    width: 100%;
+  }
+
+  /* Discount codes section mobile */
+  #tabs-4 #list-discounts .inside table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  #tabs-4 .postbox .hndle {
+    padding: 10px;
+  }
+
+  /* Usage tab small screen adjustments */
+  #tabs-1 {
+    padding: 12px 15px;
+    font-size: 13px;
+  }
+
+  #tabs-1 h2 {
+    font-size: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 15px;
+  }
+
+  #tabs-1 p {
+    font-size: 0.9rem;
+    margin: 10px 0;
+  }
+
+  #tabs-1 fieldset.options {
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  #tabs-1 fieldset.options ul {
+    padding-left: 8px;
+    margin: 8px 0;
+  }
+
+  #tabs-1 fieldset.options li {
+    margin-bottom: 8px;
+  }
+
+  #tabs-1 fieldset.options blockquote {
+    padding: 6px 8px;
+    margin: 6px 0;
+    font-size: 0.8rem;
+    overflow-x: auto;
+  }
+
+  #tabs-1 fieldset.options h3,
+  #tabs-1 fieldset.options h4 {
+    font-size: 0.9rem;
+    margin-top: 12px;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  #tabs-1 h4 {
+    font-size: 0.95rem;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #tabs-1 ul {
+    padding-left: 12px;
+    margin: 10px 0;
+  }
+
+  #tabs-1 ul li {
+    margin-bottom: 12px;
+  }
+
+  #tabs-1 ol {
+    padding-left: 15px;
+  }
+
+  #tabs-1 ol li {
+    margin-bottom: 8px;
+  }
+
+  #tabs-1 code {
+    padding: 2px 3px;
+    font-size: 0.85rem;
+    display: inline;
+    word-break: break-word;
+  }
+
+  #tabs-1 blockquote {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+    margin: 8px 0;
+    overflow-x: auto;
+  }
+
+  #tabs-1 strong {
+    font-weight: 600;
+  }
+
+  /* Component mobile adjustments */
+  #helpme {
+    padding: 0.8em;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+  }
+
+  #supersonique img {
+    padding: 10px 0 15px 0;
+  }
+
+  #tabs-6 h4 {
+    font-size: 16px;
+  }
+}
+
+/* Medium phones specific */
+@media screen and (max-width: 576px) and (min-width: 376px) {
+  #tabs-1 {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  #tabs-1 fieldset.options {
+    padding: 10px;
+    margin-top: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+    border-radius: 4px;
+    overflow-x: auto;
+  }
+
+  #tabs-1 fieldset.options ul {
+    padding-left: 6px;
+    margin: 6px 0;
+  }
+
+  #tabs-1 fieldset.options li {
+    margin-bottom: 6px;
+  }
+
+  #tabs-1 fieldset.options blockquote {
+    padding: 5px 6px;
+    margin: 5px 0;
+    font-size: 0.8rem;
+    overflow-x: auto;
+    word-break: break-word;
+  }
+
+  #tabs-1 fieldset.options h3,
+  #tabs-1 fieldset.options h4 {
+    font-size: 0.85rem;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+
+  #tabs-1 fieldset.options p {
+    font-size: 0.8rem;
+    margin: 5px 0;
+    line-height: 1.3;
+  }
+}
+
+/* Very small phones */
+@media screen and (max-width: 375px) {
+  /* Further reduction for very small screens */
+  #poststuff h2 {
+    font-size: 18px;
+  }
+
+  .ui-tabs-anchor {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  /* Usage tab very small screen adjustments */
+  #tabs-1 {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  #tabs-1 h2 {
+    font-size: 18px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+  }
+
+  #tabs-1 p {
+    font-size: 0.85rem;
+    margin: 8px 0;
+    line-height: 1.5;
+  }
+
+  #tabs-1 fieldset.options {
+    padding: 8px;
+    margin-top: 8px;
+    border-radius: 4px;
+    margin-left: 0;
+    margin-right: 0;
+    border-width: 1px;
+  }
+
+  #tabs-1 fieldset.options ul {
+    padding-left: 5px;
+    margin: 5px 0;
+  }
+
+  #tabs-1 fieldset.options li {
+    margin-bottom: 6px;
+  }
+
+  #tabs-1 fieldset.options blockquote {
+    padding: 4px 6px;
+    margin: 4px 0;
+    font-size: 0.75rem;
+    overflow-x: auto;
+    word-break: break-word;
+  }
+
+  #tabs-1 fieldset.options h3,
+  #tabs-1 fieldset.options h4 {
+    font-size: 0.85rem;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+
+  #tabs-1 fieldset.options p {
+    font-size: 0.8rem;
+    margin: 6px 0;
+    line-height: 1.3;
+  }
+
+  #tabs-1 h4 {
+    font-size: 0.9rem;
+    margin-top: 12px;
+    margin-bottom: 5px;
+  }
+
+  #tabs-1 ul {
+    padding-left: 10px;
+    margin: 8px 0;
+  }
+
+  #tabs-1 ul li {
+    margin-bottom: 10px;
+  }
+
+  #tabs-1 ol {
+    padding-left: 12px;
+  }
+
+  #tabs-1 ol li {
+    margin-bottom: 6px;
+  }
+
+  #tabs-1 code {
+    padding: 1px 2px;
+    font-size: 0.8rem;
+    word-break: break-all;
+  }
+
+  #tabs-1 blockquote {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+    margin: 6px 0;
+  }
+
+  #tabs-1 a:focus-visible {
+    outline-offset: 2px;
+  }
+
+  /* Discount form very small screens */
+  #tabs-4 .button-primary,
+  #tabs-4 .button {
+    width: 100%;
+    text-align: center;
+    margin: 5px 0;
+  }
+
+  /* Tables very small screens */
+  table.form-table {
+    margin: 0;
+  }
+
+  /* Component very small screen adjustments */
+  #tabs-5 .content {
+    max-height: 400px;
+  }
+
+  #tabs-3 .donate {
+    width: 100%;
+  }
+
+  #helpme {
+    padding: 0.7em;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+
+  #supersonique img {
+    padding: 5px 0 10px 0;
+  }
+
+  .button-primary {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }

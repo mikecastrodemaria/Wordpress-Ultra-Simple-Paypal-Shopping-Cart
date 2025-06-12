@@ -1,5 +1,5 @@
 WordPress Ultra Simple Paypal Shopping Cart
-Mike Castro Demaria & Ultra Prod Team
+Mike Castro Demaria & Supersonique Studio Team
 
 = V4.5.2 =
 * Enhancement : new code cleaning

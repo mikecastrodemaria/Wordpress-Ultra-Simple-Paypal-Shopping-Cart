@@ -1,0 +1,22 @@
+.wp-block-create-block-copyright-date-block {
+	border: 1px dotted red;
+}
+
+#productInfo {
+	background-color: #f1f1f1;
+	border: 1px solid black;
+	padding: 20px;
+	margin: 20px;
+}
+
+/* .product-details {
+	display: flex;
+	justify-content: space-between;
+
+	.producTag {
+		flex: 1;
+	}
+	.variationTag {
+		flex: 1;
+	}
+} */

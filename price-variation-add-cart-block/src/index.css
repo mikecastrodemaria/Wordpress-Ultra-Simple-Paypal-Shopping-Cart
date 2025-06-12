@@ -1,0 +1,26 @@
+.wp-block-create-block-price-variation-add-cart-block {
+	background-color: #f1f1f1;
+	border: 1px solid black;
+	padding: 20px;
+	margin: 20px;
+
+}
+
+#productInfo {
+	background-color: #f1f1f1;
+	border: 1px solid black;
+	padding: 20px;
+	margin: 20px;
+}
+
+/* .product-details {
+	display: flex;
+	justify-content: space-between;
+
+	.producTag {
+		flex: 1;
+	}
+	.variationTag {
+		flex: 1;
+	}
+} */

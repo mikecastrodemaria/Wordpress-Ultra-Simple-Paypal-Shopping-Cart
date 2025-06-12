@@ -1,6 +1,6 @@
 <?php
 /*
-Ultra Prod WPUSSC Widget
+Supersonique Studio WPUSSC Widget
 Version: v1.3.5
 */
 /*

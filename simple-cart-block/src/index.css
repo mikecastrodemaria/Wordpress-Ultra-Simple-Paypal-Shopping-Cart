@@ -1,0 +1,14 @@
+.wp-block-create-block-simple-cart-block {
+	border: 1px dotted red;
+}
+
+#productInfo {
+	padding: 20px;
+	margin: 20px;
+}
+
+.product-details {
+	display: flex;
+	justify-content: space-between;
+
+}

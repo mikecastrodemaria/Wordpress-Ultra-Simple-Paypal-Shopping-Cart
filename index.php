@@ -1,1 +1,1 @@
-<?php /* noting here */ ?>
+<?php /* nothing here */ ?>
