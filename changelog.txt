@@ -1,5 +1,17 @@
 WordPress Ultra Simple Paypal Shopping Cart
 Mike Castro Demaria & Supersonique Studio Team
+= V5.1.0 =
+* Security : PayPal IPN handler rewritten - validation over HTTPS with certificate verification (wp_remote_post, sslverify), replaces insecure plaintext fsockopen to port 80
+* Security : fix SQL injection in PayPal IPN affiliate sale queries (wpdb->prepare / wpdb->insert)
+* Security : fix PHP 8 fatal error in IPN validation (removed deprecated eregi())
+* Security : IPN debug logs moved to the private uploads directory (uploads/wpussc-logs/) protected by .htaccess instead of the publicly accessible plugin folder
+* Security : add CSRF protection (nonce) and capability check (manage_options) to all discount code admin actions (add, edit, delete, settings)
+* Security : harden session cookies (HttpOnly, Secure in HTTPS, SameSite=Lax)
+* Security : escape discount error message output (XSS) and sanitize session-stored discount values
+* Security : add ABSPATH guards to all included plugin files to block direct access
+* Bugfix : discount codes table is no longer dropped (data loss) on plugin reactivation - dbDelta only
+* Enhancement : remove deprecated unused function no_notice_get_permalink()
+* Enhancement : repository cleanup (remove .svn metadata, .DS_Store, debug.log, translation backups) and add .gitignore
 
 = V4.5.2 =
 * Enhancement : new code cleaning

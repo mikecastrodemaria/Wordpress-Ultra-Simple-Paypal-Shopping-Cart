@@ -6,10 +6,10 @@
  * @author Mike Castro Demaria
  * @copyright 2024 SuperSonique Studio
  * @license GPL v2 or later
- * @version 5.0.2
+ * @version 5.1.0
  * 
  * Plugin Name: WP Ultra simple Paypal Cart
- * Version: 5.0.2
+ * Version: 5.1.0
  * Plugin URI: https://supersonique-studio.com
  * Author: Mike Castro Demaria
  * Author URI: https://supersonique-studio.com
@@ -113,7 +113,7 @@ add_filter("plugin_action_links_$plugin", "wuspsc_settings_link");
 
 // Plugin version constant - used for cache busting and compatibility checks
 if (!defined("WUSPSC_VERSION")) {
-    define("WUSPSC_VERSION", "5.0.2");
+    define("WUSPSC_VERSION", "5.1.0");
 }
 
 // Base URL for the plugin directory - used for including assets

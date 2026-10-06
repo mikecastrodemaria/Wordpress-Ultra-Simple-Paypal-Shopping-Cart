@@ -2,9 +2,9 @@
 Contributors: mikecastrodemaria
 Donate link: http://www.supersonique-studio.com
 Tags:  shop, cart, checkout, e-shop, e-commerce, shopping, cart, paypal, sell, store, payments, widget, products, service, selling, ecommerce, shopping cart
-Requires at least: 3.1
+Requires at least: 4.9
 Tested up to: 6.5.5
-Requires PHP: 5.6
+Requires PHP: 7.2
 Stable tag: trunk
 License: GPLv3 or later
 
@@ -298,6 +298,13 @@ Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 = V5.0.2 =
 - Responsive CSS
+
+= V5.1.0 =
+- Security: PayPal IPN validation over HTTPS with certificate verification, SQL injection and PHP 8 fixes, logs moved to a private directory
+- Security: CSRF protection (nonce) and capability checks on all discount code admin actions
+- Security: hardened session cookies (HttpOnly, Secure, SameSite=Lax), XSS escaping in cart output, ABSPATH guards on all files
+- Bugfix: discount codes table no longer dropped (data loss) on plugin reactivation
+- Cleanup: repository hygiene (.svn metadata, debug.log, backups removed)
 
 Always backup you WP before any upgrade. After the upgrade it's too late.
 We always try to make updates compatible with old version.
