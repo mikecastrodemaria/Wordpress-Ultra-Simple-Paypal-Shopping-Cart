@@ -266,10 +266,14 @@ if (!empty($_POST)) {
         // Add new product if not found in existing cart
         if ($new == true) {
             // Handle price format - check for comma-separated values
+            $raw_price = isset($_POST["price"])
+                ? (string) stripslashes(sanitize_text_field($_POST["price"]))
+                : "";
+            $price_parts = explode(",", $raw_price);
             $price =
-                strpos($_POST["price"], ",") !== false
-                    ? floatval(explode(",", $_POST["price"])[1])
-                    : floatval($_POST["price"]);
+                count($price_parts) > 1
+                    ? floatval($price_parts[1])
+                    : floatval($raw_price);
                     
             // Sanitize and prepare product data
             $item_number = !empty($_POST["item_number"])

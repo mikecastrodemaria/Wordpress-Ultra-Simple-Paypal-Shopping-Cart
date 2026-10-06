@@ -12,6 +12,7 @@ Mike Castro Demaria & Supersonique Studio Team
 * Bugfix : discount codes table is no longer dropped (data loss) on plugin reactivation - dbDelta only
 * Enhancement : remove deprecated unused function no_notice_get_permalink()
 * Enhancement : repository cleanup (remove .svn metadata, .DS_Store, debug.log, translation backups) and add .gitignore
+* Enhancement : PHP 8 compatibility audit - fix unsafe price parsing (strpos on null / undefined explode offset), add PHP 8.0-8.3 lint workflow (GitHub Actions)
 
 = V4.5.2 =
 * Enhancement : new code cleaning

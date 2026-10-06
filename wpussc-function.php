@@ -582,7 +582,7 @@ function cart_not_empty()
 function wuspsc_cart_css()
 {
 	// Enqueue main plugin stylesheet with version for cache busting
-	wp_enqueue_style('wp_ultra_simple_shopping_cart_style', plugin_dir_url(__FILE__) . '/wp_ultra_simple_shopping_cart_style.css', array(), '5.0.2', 'all');
+	wp_enqueue_style('wp_ultra_simple_shopping_cart_style', plugin_dir_url(__FILE__) . '/wp_ultra_simple_shopping_cart_style.css', array(), '5.1.0', 'all');
 	
 	// Enqueue Ionicons ES module version for modern browsers
 	wp_enqueue_script(
@@ -615,7 +615,7 @@ function wuspsc_cart_css()
 function wuspsc_admin_register_head_cart_css()
 {
 	// Register and enqueue main admin stylesheet
-	wp_register_style('wp_ultra_simple_shopping_cart_admin_style', plugin_dir_url(__FILE__) . '/wp_ultra_simple_shopping_cart_admin_style.css', false, '5.0.2');
+	wp_register_style('wp_ultra_simple_shopping_cart_admin_style', plugin_dir_url(__FILE__) . '/wp_ultra_simple_shopping_cart_admin_style.css', false, '5.1.0');
 	wp_enqueue_style('wp_ultra_simple_shopping_cart_admin_style');
 
 	// Register and enqueue jQuery UI smooth theme for consistent admin UI
