@@ -7,6 +7,11 @@
  * This file handles the admin settings and configuration options 
  * for the WordPress Ultra Simple PayPal Shopping Cart plugin.
  */
+// Prevent direct access to this file
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 
 /**
  * License Information
@@ -165,13 +170,19 @@ function isKeyDefined($key)
  */
 function show_wp_cart_options_page()
 {
+    // Only administrators may view this page and process its forms.
+    if (!current_user_can("manage_options")) {
+        wp_die(esc_html__("You do not have permission to access this page."));
+    }
+
     // Handle form submission and update options
     if (isset($_POST["info_update"])) {
-        // Verify nonce for security
-        $retrieved_nonce = $_POST["_wpnonce"];
-
-        if (!wp_verify_nonce($retrieved_nonce, "delete_my_action")) {
-            die(__("Failed security check"));
+        // Verify nonce for security (CSRF protection)
+        if (
+            !isset($_POST["_wpnonce"]) ||
+            !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST["_wpnonce"])), "delete_my_action")
+        ) {
+            wp_die(esc_html__("Failed security check"));
         }
 
         // Process and update all form fields with PHP 8 compatibility
@@ -1306,8 +1317,13 @@ function show_wp_cart_options_page()
   /**
    * Handle discount code CRUD operations
    * Process form submissions for creating, updating, and deleting discount codes
+   * All operations require proper authorization and a valid nonce (CSRF protection).
    */
-  if (isset($_POST["wpussc_save_discount_settings"])) {
+  if (isset($_POST["wpussc_save_discount_settings"])
+      && current_user_can("manage_options")
+      && isset($_POST["_wpnonce"])
+      && wp_verify_nonce($_POST["_wpnonce"], "wpussc_manage_discount")
+  ) {
       // Save discount general settings
       update_option(
           "wpussc_discount_enabled",
@@ -1336,7 +1352,12 @@ function show_wp_cart_options_page()
               "wp-ultra-simple-paypal-shopping-cart"
           ) .
           "</p></div>";
-  } elseif (isset($_POST["wpussc_add_discount"])) {
+  } elseif (
+      isset($_POST["wpussc_add_discount"])
+      && current_user_can("manage_options")
+      && isset($_POST["_wpnonce"])
+      && wp_verify_nonce($_POST["_wpnonce"], "wpussc_manage_discount")
+  ) {
       // Add new discount code
       $code = isset($_POST["code"]) ? sanitize_text_field($_POST["code"]) : "";
       $type = isset($_POST["type"]) ? sanitize_text_field($_POST["type"]) : "";
@@ -1385,8 +1406,10 @@ function show_wp_cart_options_page()
               "</p></div>";
       }
   } elseif (
-      isset($_POST["delete_discount"]) &&
-      wp_verify_nonce($_REQUEST["_wpnonce"], "delete_discount")
+      isset($_POST["delete_discount"])
+      && current_user_can("manage_options")
+      && isset($_REQUEST["_wpnonce"])
+      && wp_verify_nonce($_REQUEST["_wpnonce"], "delete_discount")
   ) {
       // Delete discount code (with nonce verification for security)
       $id = intval($_POST["delete_discount"]);
@@ -1405,7 +1428,12 @@ function show_wp_cart_options_page()
               ) .
               "</p></div>";
       }
-  } elseif (isset($_POST["wpussc_edit_discount"])) {
+  } elseif (
+      isset($_POST["wpussc_edit_discount"])
+      && current_user_can("manage_options")
+      && isset($_POST["_wpnonce"])
+      && wp_verify_nonce($_POST["_wpnonce"], "wpussc_manage_discount")
+  ) {
       // Update existing discount code
       $id = isset($_POST["discount_id"]) ? intval($_POST["discount_id"]) : 0;
       $data = [
@@ -1446,6 +1474,7 @@ function show_wp_cart_options_page()
       '</span></h3>
 	<div class="inside">
 		<form method="post" action="">
+			wp_nonce_field("wpussc_manage_discount", "_wpnonce", true, false) . 
 			<table class="form-table">
 				<tr valign="top">
 					<th scope="row">' .
@@ -1703,6 +1732,7 @@ function show_wp_cart_options_page()
       '</span></h3>
 	<div class="inside">
 		<form method="post" action="" id="wpussc_edit_discount_form">
+			wp_nonce_field("wpussc_manage_discount", "_wpnonce", true, false) . 
 			<input type="hidden" name="discount_id" id="edit_discount_id" value="">
 			<table class="form-table">
 				<tr valign="top">
@@ -1832,6 +1862,7 @@ function show_wp_cart_options_page()
 	<div class="inside">
 		<table class="form-table">
 			<form method="post" action="" id="wpussc_discount_settings_form">
+				wp_nonce_field("wpussc_manage_discount", "_wpnonce", true, false) . 
 				<tr valign="top">
 					<th scope="row">' .
       __("Enable Discount Codes", "wp-ultra-simple-paypal-shopping-cart") .

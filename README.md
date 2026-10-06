@@ -3,7 +3,8 @@
 Contributors: mikecastrodemaria , franckmaussand  
 Donate link: <a href="http://www.supersonique-studio.com" target="_blank">supersonique-studio.com</a>  
 Tags: shop, cart, checkout, e-shop, e-commerce, shopping, cart, paypal, sell, store, payments, widget, products, service, selling, ecommerce, shopping cart  
-Requires at least: 2.6  
+Requires at least: 4.9  
+Requires PHP: 7.2  
 Tested up to: 6.5.5  
 Stable tag: trunk  
 License: GPLv3 or later  
@@ -295,6 +296,13 @@ More changelog can be found at the [Supersonique Studio forum](http://www.supers
 
 #### = V5.0.2 =
 - Responsive CSS
+
+#### = V5.1.0 =
+- **Security**: PayPal IPN validation over HTTPS with certificate verification, SQL injection and PHP 8 fixes, logs moved to a private directory
+- **Security**: CSRF protection (nonce) and capability checks on all discount code admin actions
+- **Security**: hardened session cookies (HttpOnly, Secure, SameSite=Lax), XSS escaping in cart output, ABSPATH guards on all files
+- **Bugfix**: discount codes table no longer dropped (data loss) on plugin reactivation
+- **Cleanup**: repository hygiene (.svn metadata, debug.log, backups removed)
 
 ## Upgrade Notice  
   

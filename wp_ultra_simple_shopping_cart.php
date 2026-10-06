@@ -6,10 +6,10 @@
  * @author Mike Castro Demaria
  * @copyright 2024 SuperSonique Studio
  * @license GPL v2 or later
- * @version 5.0.2
+ * @version 5.1.0
  * 
  * Plugin Name: WP Ultra simple Paypal Cart
- * Version: 5.0.2
+ * Version: 5.1.0
  * Plugin URI: https://supersonique-studio.com
  * Author: Mike Castro Demaria
  * Author URI: https://supersonique-studio.com
@@ -51,6 +51,19 @@ function wuspsc_startsession()
 {
     // Check if session is not already started
     if (session_id() == "" || !isset($_SESSION)) {
+        // Harden the session cookie before starting the session.
+        if (PHP_VERSION_ID < 70300) {
+            session_set_cookie_params(0, "/", "", is_ssl(), true);
+        } else {
+            session_set_cookie_params(array(
+                "lifetime" => 0,
+                "path"     => "/",
+                "domain"   => "",
+                "secure"   => is_ssl(),
+                "httponly" => true,
+                "samesite" => "Lax",
+            ));
+        }
         // Start new session for cart data storage
         session_start();
     }
@@ -100,7 +113,7 @@ add_filter("plugin_action_links_$plugin", "wuspsc_settings_link");
 
 // Plugin version constant - used for cache busting and compatibility checks
 if (!defined("WUSPSC_VERSION")) {
-    define("WUSPSC_VERSION", "5.0.2");
+    define("WUSPSC_VERSION", "5.1.0");
 }
 
 // Base URL for the plugin directory - used for including assets
@@ -253,10 +266,14 @@ if (!empty($_POST)) {
         // Add new product if not found in existing cart
         if ($new == true) {
             // Handle price format - check for comma-separated values
+            $raw_price = isset($_POST["price"])
+                ? (string) stripslashes(sanitize_text_field($_POST["price"]))
+                : "";
+            $price_parts = explode(",", $raw_price);
             $price =
-                strpos($_POST["price"], ",") !== false
-                    ? floatval(explode(",", $_POST["price"])[1])
-                    : floatval($_POST["price"]);
+                count($price_parts) > 1
+                    ? floatval($price_parts[1])
+                    : floatval($raw_price);
                     
             // Sanitize and prepare product data
             $item_number = !empty($_POST["item_number"])
@@ -845,7 +862,7 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
 
                       $output .=
                           "<tr><td colspan=\"4\" class=\"error-message\">" .
-                          $error_message .
+                          esc_html($error_message) .
                           "</td></tr>";
                   }
               } elseif (
@@ -853,8 +870,8 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
                   isset($_SESSION["wpussc_discount_amount"])
               ) {
                   // Récupération d'un code déjà appliqué
-                  $discount_code = $_SESSION["wpussc_discount_code"];
-                  $discount_applied = $_SESSION["wpussc_discount_amount"];
+                  $discount_code = sanitize_text_field($_SESSION["wpussc_discount_code"]);
+                  $discount_applied = (float) $_SESSION["wpussc_discount_amount"];
 
                   $total = $total - $discount_applied;
               }

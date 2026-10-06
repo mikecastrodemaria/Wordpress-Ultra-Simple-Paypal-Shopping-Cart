@@ -1,9 +1,0 @@
-array (
-  'quantity' => '1',
-  'product' => 'Chocolat(70%,11.74)',
-  'price' => '70%,11.74',
-  'product_tmp' => 'Chocolat',
-  'cartLink' => 'http://localhost/wordpress/cart/',
-  'addcart' => '1',
-  'Add_to_Cart' => 'Add to Cart',
-)
