@@ -51,6 +51,19 @@ function wuspsc_startsession()
 {
     // Check if session is not already started
     if (session_id() == "" || !isset($_SESSION)) {
+        // Harden the session cookie before starting the session.
+        if (PHP_VERSION_ID < 70300) {
+            session_set_cookie_params(0, "/", "", is_ssl(), true);
+        } else {
+            session_set_cookie_params(array(
+                "lifetime" => 0,
+                "path"     => "/",
+                "domain"   => "",
+                "secure"   => is_ssl(),
+                "httponly" => true,
+                "samesite" => "Lax",
+            ));
+        }
         // Start new session for cart data storage
         session_start();
     }
@@ -845,7 +858,7 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
 
                       $output .=
                           "<tr><td colspan=\"4\" class=\"error-message\">" .
-                          $error_message .
+                          esc_html($error_message) .
                           "</td></tr>";
                   }
               } elseif (
@@ -853,8 +866,8 @@ function print_wpus_shopping_cart($step = "paypal", $type = "page")
                   isset($_SESSION["wpussc_discount_amount"])
               ) {
                   // Récupération d'un code déjà appliqué
-                  $discount_code = $_SESSION["wpussc_discount_code"];
-                  $discount_applied = $_SESSION["wpussc_discount_amount"];
+                  $discount_code = sanitize_text_field($_SESSION["wpussc_discount_code"]);
+                  $discount_applied = (float) $_SESSION["wpussc_discount_amount"];
 
                   $total = $total - $discount_applied;
               }

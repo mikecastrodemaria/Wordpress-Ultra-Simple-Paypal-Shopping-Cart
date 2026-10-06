@@ -13,6 +13,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+// Prevent direct access to this file
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 
 /**
  * Creates the discount codes table when the plugin is activated.
@@ -30,8 +35,8 @@ function wpussc_create_discount_table()
     global $wpdb;
     $table_name = $wpdb->prefix . "wpussc_discount_codes";
 
-    // Drop the table if it already exists to avoid conflicts during reinstallation
-    $wpdb->query("DROP TABLE IF EXISTS $table_name");
+    // dbDelta() creates the table if missing and safely upgrades existing
+    // structures without destroying existing discount code data.
 
     $charset_collate = $wpdb->get_charset_collate();
     

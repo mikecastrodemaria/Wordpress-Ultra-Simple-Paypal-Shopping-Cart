@@ -152,26 +152,6 @@ function validate_wpus_shopping_cart_handler()
 }
 
 /**
- * Safe permalink retrieval with null check
- * 
- * @deprecated This function needs to be updated
- * @param mixed $post The post object or ID to get permalink for
- * @return string The permalink URL or empty string if post is invalid
- */
-function no_notice_get_permalink($post)
-{
-	// Check if post parameter is empty or null
-	if (empty($post)) {
-		$permlink = '';
-	} else {
-		// Get permalink using WordPress function
-		$permlink = get_permalink($post);
-	}
-
-	return $permlink;
-}
-
-/**
  * Processes content to replace shopping cart placeholder with actual cart
  * 
  * Searches for the HTML comment placeholder "<!--show-wp-shopping-cart-->"

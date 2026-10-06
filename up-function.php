@@ -3,6 +3,11 @@
 Supersonique Studio WP Functions
 Version: v1
 */
+// Prevent direct access to this file
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 /*
 	This program is free software; you can redistribute it
 	under the terms of the GNU General Public License version 2,
